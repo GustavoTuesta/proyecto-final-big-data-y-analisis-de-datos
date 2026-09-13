@@ -1,0 +1,15 @@
+{
+  "name": "proyecto-final",
+  "version": "1.0.0",
+  "description": "Presentación del Proyecto Final - Big Data y Análisis de Datos (Reveal.js)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "reveal.js": "^6.0.2"
+  }
+}

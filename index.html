@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Proyecto Final · Big Data y Análisis de Datos</title>
+
+		<link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css" />
+		<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css" id="theme" />
+		<link rel="stylesheet" href="node_modules/reveal.js/dist/plugin/highlight/monokai.css" />
+
+		<style>
+			:root {
+				--accent: #0a84ae;
+				--accent-soft: #7cdaf9;
+				--accent-light: #b6ffff;
+				--accent-dark: #076d92;
+				--surface: #f1e8f3;
+				--text: #000000;
+				--bg: #ffffff;
+				--muted: #4d5c66;
+			}
+
+			.reveal { font-size: 34px; color: var(--text); }
+			.reveal h1 { font-size: 1.6em; letter-spacing: -0.02em; }
+			.reveal h2 { font-size: 1.15em; --r-heading-color: var(--accent); margin-bottom: 0.6em; }
+			.reveal h3 { --r-heading-color: var(--accent); }
+			.reveal a { color: var(--accent); text-decoration: underline; }
+
+			.reveal section.title h1 { margin: 0.2em 0; }
+			.reveal .tag {
+				font-size: 0.5em;
+				letter-spacing: 0.25em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+			.reveal .sub {
+				color: var(--accent-dark);
+				font-size: 1.3em;
+				font-weight: 600;
+			}
+
+			.reveal .grid {
+				display: grid;
+				gap: 0.9em;
+				grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+				text-align: left;
+			}
+			.reveal .card {
+				background: var(--surface);
+				border: 1px solid var(--accent-soft);
+				border-radius: 10px;
+				padding: 0.9em 1em;
+				font-size: 0.72em;
+				color: var(--text);
+			}
+			.reveal .card h4 {
+				margin: 0 0 0.4em;
+				color: var(--accent);
+				font-size: 1.15em;
+				line-height: 1.1;
+			}
+			.reveal .card ul { margin: 0; font-size: 0.9em; }
+			.reveal .card ul li { margin: 0.15em 0; }
+
+			.reveal table {
+				font-size: 0.72em;
+				margin: 0.5em auto;
+				color: var(--text);
+				border-collapse: separate;
+				border-spacing: 0;
+				border: 1px solid var(--accent-soft);
+				border-radius: 12px;
+				overflow: hidden;
+			}
+			.reveal table th {
+				background: var(--accent-light);
+				color: var(--text);
+				border-bottom: 2px solid var(--accent);
+			}
+			.reveal table th, .reveal table td { padding: 0.5em 0.9em; }
+			.reveal table tbody td { background: #fff; }
+			.reveal table td:first-child { color: var(--accent-dark); font-weight: 600; }
+
+			.reveal .src-columns {
+				display: flex;
+				gap: 1.8em;
+				justify-content: center;
+				align-items: flex-start;
+			}
+			.reveal .src-columns > div { flex: 1; min-width: 0; }
+
+			.reveal .slides section { padding: 0.2em 0.8em; }
+			.reveal .slides section ul:not(.card ul) { width: 100%; }
+			.reveal .slides section li { text-align: left; }
+			.reveal table { width: 100%; }
+			.reveal pre { width: 100%; }
+			.reveal .quote { width: 100%; max-width: 100%; }
+			.reveal .step { width: 100%; max-width: 60em; }
+
+			.reveal code { color: #0b6ea6; }
+			.reveal pre code { color: inherit; }
+
+			.reveal .small { font-size: 0.55em; color: var(--muted); }
+			.reveal .step { font-size: 0.65em; text-align: left; margin: 0 auto; width: fit-content; }
+			.reveal .step p { margin: 0.35em 0; }
+			.reveal .step .n {
+				display: inline-block;
+				width: 1.5em; height: 1.5em;
+				line-height: 1.5em; text-align: center;
+				border-radius: 50%;
+				background: var(--accent);
+				color: var(--bg);
+				font-weight: 700;
+				margin-right: 0.5em;
+			}
+			.reveal .quote {
+				font-style: italic;
+				background: rgba(12, 183, 242, 0.08);
+				border-left: 4px solid var(--accent);
+				padding: 0.7em 1em;
+				font-size: 0.75em;
+				text-align: left;
+				max-width: 70%;
+				margin: 0 auto;
+				color: var(--text);
+			}
+			.reveal pre { font-size: 0.5em; width: 90%; margin: 0 auto; }
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<!-- 1 · Portada -->
+				<section class="title">
+					<p class="tag">Big Data y Análisis de Datos</p>
+					<h1>Proyecto Final</h1>
+					<p class="sub">
+						Ingesta, almacenamiento distribuido, modelado y visualización de datos para la
+						gestión de practicantes
+					</p>
+					<p>Empresa de formación elegida: <strong>APM Inversiones EIRL</strong></p>
+					<p class="small">
+						Apaza Puris, Jherson Matias · Bocanegra Saldaña, Arath Pedro Adilson ·
+						Borda Ocampo, Jhoat Fayer · Dominguez Tovar, Cesar David · Tuesta Puse, Matias Gustavo
+					</p>
+				</section>
+
+				<!-- 2 · Agenda -->
+				<section>
+					<h2>Contenido</h2>
+					<ul>
+						<li class="fragment">Fase 1 · Ingesta: identificación de orígenes de datos</li>
+						<li class="fragment">Fase 2 · Almacenamiento: arquitectura HDFS</li>
+						<li class="fragment">Fase 3 · Modelado: predictivo, descriptivo y pipelines MongoDB</li>
+						<li class="fragment">Fase 4 · Visualización: dashboard de KPIs en Power BI</li>
+						<li class="fragment">Conclusiones y preguntas</li>
+					</ul>
+				</section>
+
+				<!-- 3 · Fase 1: fuentes internas y externas -->
+				<section>
+					<h2>Fase 1 · Ingesta en APM Inversiones EIRL</h2>
+					<p class="sub">Identificación de orígenes de datos</p>
+					<div class="src-columns">
+						<div>
+							<p class="sub">Fuentes internas</p>
+							<table>
+								<thead>
+									<tr><th>Fuente</th><th>Datos que provee</th></tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Bot interno de Discord</td>
+										<td>Marcaciones de entrada, salida y recuperación · Justificaciones de inasistencias · Reportes de monitoreo de salas</td>
+									</tr>
+									<tr>
+										<td>Sistema Web SOFI</td>
+										<td>Datos actualizados de practicantes · Correcciones de asistencia · Estado de justificaciones y reportes</td>
+									</tr>
+									<tr>
+										<td>GitHub Actions</td>
+										<td>Commits realizados · Líneas añadidas y eliminadas · Pull requests y repositorio asociado</td>
+									</tr>
+									<tr>
+										<td>Formulario de registro</td>
+										<td>DNI y celular · Carrera, sede y semestre · Estado de matrícula</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div>
+							<p class="sub">Fuentes externas</p>
+							<table>
+								<thead>
+									<tr><th>Fuente</th><th>Datos que provee</th></tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>API de feriados nacionales (feriados.io)</td>
+										<td>Fechas de feriados y días no laborables · Descripción y año correspondiente · Base para el cálculo real de horas y asistencia</td>
+									</tr>
+									<tr>
+										<td>API RENIEC</td>
+										<td>Validación de identidad a partir del DNI · Nombres y apellidos · Autocompletado del registro del practicante</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+
+				<!-- 5 · Fase 2: HDFS definición -->
+				<section>
+					<h2>Fase 2 · Almacenamiento: HDFS</h2>
+					<p class="sub">Sistema de archivos distribuido de la empresa</p>
+					<ul>
+						<li class="fragment">Centraliza datos del bot de Discord, SOFI, GitHub Actions y registro de postulantes</li>
+						<li class="fragment">Diseñado para grandes volúmenes de datos en múltiples servidores</li>
+						<li class="fragment">Escalabilidad, alta disponibilidad y tolerancia a fallos</li>
+					</ul>
+				</section>
+
+				<!-- 6 · Fase 2: esquema de distribución -->
+				<section>
+					<h2>Esquema de distribución y segmentación</h2>
+					<table>
+						<thead>
+							<tr><th>Criterio</th><th>Parámetro / Regla</th><th>Justificación técnica</th></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Tamaño de bloque</td><td>128 MB</td>
+								<td>Minimiza la sobrecarga de metadatos en el NameNode y optimiza lecturas secuenciales</td>
+							</tr>
+							<tr>
+								<td>Factor de replicación</td><td>3</td>
+								<td>Soporta la pérdida de hasta dos nodos sin pérdida de integridad</td>
+							</tr>
+							<tr>
+								<td>Particionamiento lógico</td><td>Temporal (año/mes) y por tipo de origen</td>
+								<td>Estructura <code>/data/raw/{origen}/año=YYYY/mes=MM/</code> optimiza el filtrado en ingesta</td>
+							</tr>
+							<tr>
+								<td>Formato de almacenamiento</td><td>Parquet + Snappy / JSON raw</td>
+								<td>Reduce el almacenamiento y acelera la descompresión en consultas analíticas</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<!-- 7 · Fase 2: simulación -->
+				<section>
+					<h2>Simulación de distribución en el clúster</h2>
+					<p class="small">
+						Dataset consolidado de 320 MB (<code>apm_telemetria_consolidada.parquet</code>) · bloque de 128 MB → 3 bloques físicos
+					</p>
+					<table>
+						<thead>
+							<tr><th>Bloque físico</th><th>Tamaño</th><th>Réplica 1</th><th>Réplica 2</th><th>Réplica 3</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>BLK-101</td><td>128 MB</td><td>DataNode 1 (Rack 1)</td><td>DataNode 2 (Rack 1)</td><td>DataNode 3 (Rack 2)</td></tr>
+							<tr><td>BLK-102</td><td>128 MB</td><td>DataNode 2 (Rack 1)</td><td>DataNode 3 (Rack 2)</td><td>DataNode 4 (Rack 2)</td></tr>
+							<tr><td>BLK-103</td><td>64 MB</td><td>DataNode 3 (Rack 2)</td><td>DataNode 4 (Rack 2)</td><td>DataNode 1 (Rack 1)</td></tr>
+						</tbody>
+					</table>
+					<p class="small">Rack Awareness: las réplicas se distribuyen en distintos racks para evitar puntos únicos de falla.</p>
+				</section>
+
+				<!-- 8 · Fase 2: tolerancia a fallos -->
+				<section>
+					<h2>Tolerancia a fallos · caída de DataNode 2</h2>
+					<div class="step">
+						<p class="fragment"><span class="n">1</span>El NameNode detecta la ausencia de heartbeats (10 minutos por defecto).</p>
+						<p class="fragment"><span class="n">2</span>Identifica que BLK-101 y BLK-102 quedan sub-replicados (factor 2 en lugar de 3).</p>
+						<p class="fragment"><span class="n">3</span>Ordena a DataNodes activos replicar los bloques hacia DataNode 4, restaurando el factor 3 sin downtime para las aplicaciones.</p>
+					</div>
+				</section>
+
+				<!-- 9 · Fase 3: modelo de continuidad -->
+				<section>
+					<h2>Fase 3 · Modelado predictivo</h2>
+					<h3>Probabilidad de continuidad del practicante</h3>
+					<div class="grid">
+						<div class="card">
+							<h4>Problema y objetivo</h4>
+							<ul>
+								<li>Al finalizar el período, no se sabe quién continuará el siguiente semestre</li>
+								<li>Estimar la probabilidad de continuidad para priorizar ofertas y reducir entrevistas innecesarias</li>
+							</ul>
+						</div>
+						<div class="card">
+							<h4>Variable dependiente</h4>
+							<ul>
+								<li><code>continuara_siguiente_semestre</code> · binaria (1 = continuará)</li>
+							</ul>
+							<h4>Independientes</h4>
+							<ul>
+								<li><code>horas_cumplidas_periodo</code> · continua</li>
+								<li><code>nota_promedio_periodo</code> · continua</li>
+								<li><code>total_faltas_injustificadas</code> · discreta</li>
+								<li><code>tipo_justificacion</code> · nominal</li>
+								<li><code>registro_incidentes</code> · binaria</li>
+							</ul>
+						</div>
+					</div>
+					<p class="small">
+						Acción: si la probabilidad &gt; 70% se prioriza el contacto para ver cupos; si &lt; 30%, baja prioridad y se busca reemplazo.
+					</p>
+				</section>
+
+				<!-- 10 · Fase 3: riesgo de bajo desempeño -->
+				<section>
+					<h2>Fase 3 · Riesgo de bajo desempeño mensual</h2>
+					<div class="grid">
+						<div class="card">
+							<h4>Problema</h4>
+							<ul>
+								<li>El bajo rendimiento se detecta tarde, cuando el problema ya ocurrió</li>
+								<li>Se busca intervenir de forma preventiva</li>
+							</ul>
+							<h4>Definición</h4>
+							<ul>
+								<li>Bajo desempeño = promedio mensual ≤ 10/20</li>
+							</ul>
+						</div>
+						<div class="card">
+							<h4>Variables</h4>
+							<ul>
+								<li><code>bajo_desempeno_proximo_mes</code> · binaria</li>
+								<li><code>promedio_horas_mes_anterior</code> · continua</li>
+								<li><code>total_faltas_mes_anterior</code> · discreta</li>
+								<li><code>justificacion_mas_frecuente</code> · nominal</li>
+								<li><code>incidentes_registrados_mes_anterior</code> · binaria</li>
+							</ul>
+						</div>
+					</div>
+					<p class="small">
+						Acción: alta probabilidad de bajo desempeño → seguimiento prioritario y análisis de causas para aplicar mejoras.
+					</p>
+				</section>
+
+				<!-- 11 · Fase 3: modelado descriptivo -->
+				<section>
+					<h2>Fase 3 · Modelado descriptivo</h2>
+					<p class="sub">Tablas de negocio para la toma de decisiones</p>
+					<div class="grid">
+						<div class="card">
+							<h4>Evaluación del practicante</h4>
+							<ul>
+								<li><code>practicante_id</code>, <code>rol</code>, <code>estado_actual</code></li>
+								<li><code>nota_promedio_mensual</code> (/20), <code>horas_cumplidas</code> (cuota 36 h)</li>
+								<li><code>total_faltas</code>, <code>total_justificaciones</code></li>
+								<li><code>total_reportes</code>, <code>total_baneos</code>, <code>recuperaciones_pendientes</code></li>
+								<li><code>recomendación</code> · Sí / REVISAR / NO</li>
+							</ul>
+						</div>
+						<div class="card">
+							<h4>Seguimiento de incidentes</h4>
+							<ul>
+								<li><code>tipo_incidente</code>: tardanza, desconexión de voz, salida temprana, baneo</li>
+								<li><code>nivel_incidente</code>: puntaje según gravedad</li>
+								<li><code>incidente_mensual</code>: tendencia (sube / estable / baja)</li>
+							</ul>
+							<p class="small" style="margin-top:0.6em">
+								Detecta quienes repiten faltas, prioriza seguimiento urgente y alimenta el modelo predictivo.
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<!-- 12 · Fase 3: NoSQL -->
+				<section>
+					<h2>Fase 3 · Pipelines de MongoDB</h2>
+					<p class="sub">Procesamiento NoSQL y descubrimiento de insights</p>
+					<p class="small" style="margin-bottom:0.8em">
+						Objetivo del pipeline: identificar practicantes de la sede <strong>Lima Norte</strong> con más faltas
+						injustificadas en agosto, para alimentar acciones de retención.
+					</p>
+					<pre><code data-trim data-noescape class="language-json">/* ilustrativo */
+{
+  "$match": { "origen": "SOFI", "sede": "Lima Norte", "mes": "2024-08" },
+  "$group": { "_id": "$practicante_id",
+              "total_faltas_injustificadas": { "$sum": 1 } },
+  "$match": { "total_faltas_injustificadas": { "$gte": 3 } }
+}</code></pre>
+					<div class="quote" style="margin-top:0.8em">
+						"En Lima Norte, los practicantes con 3 o más faltas injustificadas en agosto acumulan más del 60% de las
+						horas de recuperación sin resolver: la falta injustificada es un indicador temprano de abandono, más
+						confiable que las horas pendientes por sí solas."
+					</div>
+				</section>
+
+				<!-- 13 · Fase 4: Power BI -->
+				<section>
+					<h2>Fase 4 · Visualización en Power BI</h2>
+					<p class="sub">Dashboard de seguimiento de los modelos predictivos</p>
+					<div class="grid">
+						<div class="card">
+							<h4>Tarjetas KPI</h4>
+							<ul><li>Recuento de practicantes, % continuidad, predicción</li></ul>
+						</div>
+						<div class="card">
+							<h4>Gráfico de dona</h4>
+							<ul><li>Distribución de predicciones</li></ul>
+						</div>
+						<div class="card">
+							<h4>Columnas agrupadas</h4>
+							<ul><li>Comparación de probabilidades por practicante</li></ul>
+						</div>
+						<div class="card">
+							<h4>Barras horizontales</h4>
+							<ul><li>Probabilidad de continuidad por practicante</li></ul>
+						</div>
+						<div class="card">
+							<h4>Barras agrupadas</h4>
+							<ul><li>Recomendaciones del modelo</li></ul>
+						</div>
+						<div class="card">
+							<h4>Columnas por rangos</h4>
+							<ul><li>Nivel de probabilidad</li></ul>
+						</div>
+						<div class="card">
+							<h4>Segmentadores</h4>
+							<ul><li>Filtros por practicante, recomendación y predicción</li></ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- 14 · Links del dashboard -->
+				<section>
+					<h2>Links del dashboard</h2>
+					<p class="small">Power BI · Servicio</p>
+					<p class="small">
+						<a href="https://app.powerbi.com/links/MBgghZozTi?ctid=b4a40545-7779-4b38-aff7-1f1738f80840&pbi_source=linkShare">
+							app.powerbi.com/links/MBgghZozTi
+						</a>
+					</p>
+					<p class="small">
+						<a href="https://app.powerbi.com/view?r=eyJrIjoiNTk5OWQ3MTYtZjUyZS00YjQ1LTlmZjEtZTU5MDE5MmE1NDc3IiwidCI6ImI0YTQwNTQ1LTc3NzktNGIzOC1hZmY3LTFmMTczOGY4MDg0MCIsImMiOjR9">
+							app.powerbi.com/view (integración)
+						</a>
+					</p>
+				</section>
+
+				<!-- 15 · Conclusiones -->
+				<section>
+					<h2>Conclusiones</h2>
+					<ul>
+						<li class="fragment">Ingesta integra 6 fuentes internas y externas en una única capa de datos</li>
+						<li class="fragment">HDFS garantiza disponibilidad y tolerancia a fallos mediante replicación y rack awareness</li>
+						<li class="fragment">El modelado predictivo permite anticipar continuidad y bajo desempeño</li>
+						<li class="fragment">Power BI convierte las predicciones en decisiones operativas accionables</li>
+					</ul>
+				</section>
+
+				<!-- 16 · Cierre -->
+				<section class="title">
+					<p class="tag">APM Inversiones EIRL</p>
+					<h1>¡Gracias!</h1>
+					<p class="sub">¿Preguntas?</p>
+				</section>
+
+			</div>
+		</div>
+
+		<script type="module">
+			import Reveal from './node_modules/reveal.js/dist/reveal.mjs';
+			import Markdown from './node_modules/reveal.js/dist/plugin/markdown.mjs';
+			import Highlight from './node_modules/reveal.js/dist/plugin/highlight.mjs';
+			import Notes from './node_modules/reveal.js/dist/plugin/notes.mjs';
+			import Zoom from './node_modules/reveal.js/dist/plugin/zoom.mjs';
+			import Search from './node_modules/reveal.js/dist/plugin/search.mjs';
+
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				controls: true,
+				progress: true,
+				transition: 'slide',
+				width: 1600,
+				height: 900,
+				plugins: [Markdown, Highlight, Zoom, Notes, Search],
+			});
+		</script>
+	</body>
+</html>
