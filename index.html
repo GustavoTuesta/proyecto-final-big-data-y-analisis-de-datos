@@ -6,19 +6,30 @@
 		<title>Proyecto Final · Big Data y Análisis de Datos</title>
 
 		<link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css" />
-		<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css" id="theme" />
+		<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/black.css" id="theme" />
 		<link rel="stylesheet" href="node_modules/reveal.js/dist/plugin/highlight/monokai.css" />
 
 		<style>
 			:root {
-				--accent: #0a84ae;
-				--accent-soft: #7cdaf9;
-				--accent-light: #b6ffff;
-				--accent-dark: #076d92;
-				--surface: #f1e8f3;
-				--text: #000000;
-				--bg: #ffffff;
-				--muted: #4d5c66;
+				--accent: #0cb7f2;
+				--accent-soft: rgba(12, 183, 242, 0.45);
+				--accent-light: rgba(12, 183, 242, 0.15);
+				--accent-dark: #0cb7f2;
+				--surface: #0e1524;
+				--text: #e6f1f8;
+				--bg: #060a12;
+				--muted: #8ba3b8;
+			}
+
+			body { background: var(--bg); }
+			.reveal-viewport {
+				background:
+					radial-gradient(circle at 85% -10%, rgba(12, 183, 242, 0.14), transparent 45%),
+					radial-gradient(circle at 10% 110%, rgba(12, 183, 242, 0.1), transparent 40%),
+					linear-gradient(rgba(12, 183, 242, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(12, 183, 242, 0.05) 1px, transparent 1px),
+					var(--bg);
+				background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px, auto;
 			}
 
 			.reveal { font-size: 34px; color: var(--text); }
@@ -79,8 +90,8 @@
 				border-bottom: 2px solid var(--accent);
 			}
 			.reveal table th, .reveal table td { padding: 0.5em 0.9em; }
-			.reveal table tbody td { background: #fff; }
-			.reveal table td:first-child { color: var(--accent-dark); font-weight: 600; }
+			.reveal table tbody td { background: #0b1320; }
+			.reveal table td:first-child { color: var(--accent); font-weight: 600; }
 
 			.reveal .src-columns {
 				display: flex;
@@ -98,7 +109,7 @@
 			.reveal .quote { width: 100%; max-width: 100%; }
 			.reveal .step { width: 100%; max-width: 60em; }
 
-			.reveal code { color: #0b6ea6; }
+			.reveal code { color: #4dd0ff; }
 			.reveal pre code { color: inherit; }
 
 			.reveal .small { font-size: 0.55em; color: var(--muted); }
@@ -110,7 +121,7 @@
 				line-height: 1.5em; text-align: center;
 				border-radius: 50%;
 				background: var(--accent);
-				color: var(--bg);
+				color: #05090f;
 				font-weight: 700;
 				margin-right: 0.5em;
 			}
