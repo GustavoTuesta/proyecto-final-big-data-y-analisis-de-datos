@@ -69,7 +69,7 @@
 			.reveal { font-size: 34px; color: var(--text); }
 			.reveal h1 { font-size: 1.6em; letter-spacing: -0.02em; }
 			.reveal h2 { font-size: 1.15em; --r-heading-color: var(--accent); margin-bottom: 0.6em; }
-			.reveal h3 { --r-heading-color: var(--accent); }
+			.reveal h3 { --r-heading-color: var(--muted); color: var(--muted); font-weight: 600; }
 			.reveal a { color: var(--accent); text-decoration: underline; }
 
 			.reveal section.title h1 { margin: 0.2em 0; }
@@ -84,6 +84,46 @@
 				font-size: 1.3em;
 				font-weight: 600;
 			}
+			.reveal .slide-head {
+				margin: 0 0 0.4em;
+			}
+			.reveal .slide-head .head-badge {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 1em;
+				margin-bottom: 0.35em;
+			}
+			.reveal .slide-head .head-line {
+				display: inline-block;
+				width: 90px;
+				height: 2px;
+				background: var(--accent);
+				border-radius: 2px;
+			}
+			.reveal .slide-head .head-pill {
+				background: var(--accent);
+				color: #05090f;
+				font-size: 0.42em;
+				font-weight: 700;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				padding: 0.4em 1.2em;
+				border-radius: 999px;
+				line-height: 1;
+			}
+			.reveal .slide-head h2 {
+				color: #e6f1f8;
+				font-size: 1.05em;
+				font-weight: 800;
+				margin: 0.15em 0 0.3em;
+				letter-spacing: -0.01em;
+			}
+			.reveal .slide-head .sub {
+				color: var(--muted);
+				font-size: 0.58em;
+				font-weight: 500;
+			}
 
 			.reveal .grid {
 				display: grid;
@@ -92,12 +132,13 @@
 				text-align: left;
 			}
 			.reveal .card {
-				background: var(--surface);
-				border: 1px solid var(--accent-soft);
-				border-radius: 10px;
+				background: #141e33;
+				border: 1px solid #22304f;
+				border-radius: 14px;
 				padding: 0.9em 1em;
 				font-size: 0.72em;
 				color: var(--text);
+				box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
 			}
 			.reveal .card h4 {
 				margin: 0 0 0.4em;
@@ -115,8 +156,9 @@
 				border-collapse: separate;
 				border-spacing: 0;
 				border: 1px solid var(--accent-soft);
-				border-radius: 12px;
+				border-radius: 14px;
 				overflow: hidden;
+				box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
 			}
 			.reveal table th {
 				background: var(--accent-light);
@@ -230,7 +272,14 @@
 
 				<!-- 2 · Agenda -->
 				<section>
-					<h2>Contenido</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Agenda</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Contenido</h2>
+					</div>
 					<ul>
 						<li class="fragment">Fase 1 · Ingesta: identificación de orígenes de datos</li>
 						<li class="fragment">Fase 2 · Almacenamiento: arquitectura HDFS</li>
@@ -242,8 +291,15 @@
 
 				<!-- 3 · Fase 1: fuentes internas y externas -->
 				<section>
-					<h2>Fase 1 · Ingesta en APM Inversiones EIRL</h2>
-					<p class="sub">Identificación de orígenes de datos</p>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 1</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Ingesta en APM Inversiones EIRL</h2>
+						<p class="sub">Identificación de orígenes de datos</p>
+					</div>
 					<div class="src-columns">
 						<div>
 							<p class="sub">Fuentes internas</p>
@@ -640,8 +696,15 @@
 
 				<!-- 5 · Fase 2: HDFS definición -->
 				<section>
-					<h2>Fase 2 · Almacenamiento: HDFS</h2>
-					<p class="sub">Sistema de archivos distribuido de la empresa</p>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 2</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Almacenamiento: HDFS</h2>
+						<p class="sub">Sistema de archivos distribuido de la empresa</p>
+					</div>
 					<ul>
 						<li class="fragment">Centraliza datos del bot de Discord, SOFI, GitHub Actions y registro de postulantes</li>
 						<li class="fragment">Diseñado para grandes volúmenes de datos en múltiples servidores</li>
@@ -651,7 +714,14 @@
 
 				<!-- 6 · Fase 2: esquema de distribución -->
 				<section>
-					<h2>Esquema de distribución y segmentación</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 2</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Esquema de distribución y segmentación</h2>
+					</div>
 					<table>
 						<thead>
 							<tr><th>Criterio</th><th>Parámetro / Regla</th><th>Justificación técnica</th></tr>
@@ -679,7 +749,14 @@
 
 				<!-- 7 · Fase 2: simulación -->
 				<section>
-					<h2>Simulación de distribución en el clúster</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 2</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Simulación de distribución en el clúster</h2>
+					</div>
 					<p class="small">
 						Dataset consolidado de 320 MB (<code>apm_telemetria_consolidada.parquet</code>) · bloque de 128 MB → 3 bloques físicos
 					</p>
@@ -698,7 +775,14 @@
 
 				<!-- 8 · Fase 2: tolerancia a fallos -->
 				<section>
-					<h2>Tolerancia a fallos · caída de DataNode 2</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 2</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Tolerancia a fallos · caída de DataNode 2</h2>
+					</div>
 					<div class="step">
 						<p class="fragment"><span class="n">1</span>El NameNode detecta la ausencia de heartbeats (10 minutos por defecto).</p>
 						<p class="fragment"><span class="n">2</span>Identifica que BLK-101 y BLK-102 quedan sub-replicados (factor 2 en lugar de 3).</p>
@@ -708,7 +792,14 @@
 
 				<!-- 9 · Fase 3: modelo de continuidad -->
 				<section>
-					<h2>Fase 3 · Modelado predictivo</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 3</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Modelado predictivo</h2>
+					</div>
 					<h3>Probabilidad de continuidad del practicante</h3>
 					<div class="grid">
 						<div class="card">
@@ -740,7 +831,14 @@
 
 				<!-- 10 · Fase 3: riesgo de bajo desempeño -->
 				<section>
-					<h2>Fase 3 · Riesgo de bajo desempeño mensual</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 3</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Riesgo de bajo desempeño mensual</h2>
+					</div>
 					<div class="grid">
 						<div class="card">
 							<h4>Problema</h4>
@@ -771,8 +869,15 @@
 
 				<!-- 11 · Fase 3: modelado descriptivo -->
 				<section>
-					<h2>Fase 3 · Modelado descriptivo</h2>
-					<p class="sub">Tablas de negocio para la toma de decisiones</p>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 3</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Modelado descriptivo</h2>
+						<p class="sub">Tablas de negocio para la toma de decisiones</p>
+					</div>
 					<div class="grid">
 						<div class="card">
 							<h4>Evaluación del practicante</h4>
@@ -800,8 +905,15 @@
 
 				<!-- 12 · Fase 3: NoSQL -->
 				<section>
-					<h2>Fase 3 · Pipelines de MongoDB</h2>
-					<p class="sub">Procesamiento NoSQL y descubrimiento de insights</p>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 3</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Pipelines de MongoDB</h2>
+						<p class="sub">Procesamiento NoSQL y descubrimiento de insights</p>
+					</div>
 					<p class="small" style="margin-bottom:0.8em">
 						Objetivo del pipeline: identificar practicantes de la sede <strong>Lima Norte</strong> con más faltas
 						injustificadas en agosto, para alimentar acciones de retención.
@@ -822,8 +934,15 @@
 
 				<!-- 13 · Fase 4: Power BI -->
 				<section>
-					<h2>Fase 4 · Visualización en Power BI</h2>
-					<p class="sub">Dashboard de seguimiento de los modelos predictivos</p>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 4</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Visualización en Power BI</h2>
+						<p class="sub">Dashboard de seguimiento de los modelos predictivos</p>
+					</div>
 					<div class="grid">
 						<div class="card">
 							<h4>Tarjetas KPI</h4>
@@ -858,7 +977,14 @@
 
 				<!-- 14 · Links del dashboard -->
 				<section>
-					<h2>Links del dashboard</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Fase 4</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Links del dashboard</h2>
+					</div>
 					<p class="small">Power BI · Servicio</p>
 					<p class="small">
 						<a href="https://app.powerbi.com/links/MBgghZozTi?ctid=b4a40545-7779-4b38-aff7-1f1738f80840&pbi_source=linkShare">
@@ -874,7 +1000,14 @@
 
 				<!-- 15 · Conclusiones -->
 				<section>
-					<h2>Conclusiones</h2>
+					<div class="slide-head">
+						<div class="head-badge">
+							<span class="head-line"></span>
+							<span class="head-pill">Cierre</span>
+							<span class="head-line"></span>
+						</div>
+						<h2>Conclusiones</h2>
+					</div>
 					<ul>
 						<li class="fragment">Ingesta integra 6 fuentes internas y externas en una única capa de datos</li>
 						<li class="fragment">HDFS garantiza disponibilidad y tolerancia a fallos mediante replicación y rack awareness</li>
