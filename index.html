@@ -52,7 +52,8 @@
 			}
 
 			@media (prefers-reduced-motion: reduce) {
-				.reveal-viewport, .reveal-viewport::before { animation: none; }
+				.reveal-viewport, .reveal-viewport::before,
+				.sim-stream, .sim-glow, .sim-core, .sim-phase { animation: none; }
 			}
 
 			.reveal { font-size: 34px; color: var(--text); }
@@ -145,6 +146,27 @@
 			.reveal pre { width: 100%; }
 			.reveal .quote { width: 100%; max-width: 100%; }
 			.reveal .step { width: 100%; max-width: 60em; }
+
+			.reveal .slides section.slide-sim-redesign {
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.sim-redesign {
+				width: 100%;
+				max-width: 1600px;
+				height: auto;
+				max-height: 890px;
+				display: block;
+				margin: 0 auto;
+			}
+			.sim-redesign text {
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+				user-select: none;
+			}
 
 			.reveal code { color: #4dd0ff; }
 			.reveal pre code { color: inherit; }
@@ -286,6 +308,323 @@
 							</table>
 						</div>
 					</div>
+				</section>
+
+				<!-- 4 · Fase 1: simulación de consolidación de fuentes -->
+				<section class="slide-sim-redesign">
+					<svg class="sim-redesign" viewBox="0 0 1600 900" width="100%" height="100%" role="img" aria-label="Fase 1 · Simulación: Consolidación de fuentes - Flujo de ingesta hacia un único dataset consolidado" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+						<!-- Card Drop Shadows -->
+<filter id="card-shadow" x="-10%" y="-15%" width="125%" height="135%" filterUnits="userSpaceOnUse">
+							<feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.35" />
+							<feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.2" />
+						</filter>
+
+						<filter id="center-glow" x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
+							<feDropShadow dx="0" dy="12" stdDeviation="22" flood-color="#0cb7f2" flood-opacity="0.4" />
+							<feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#0cb7f2" flood-opacity="0.25" />
+						</filter>
+
+						<filter id="badge-glow" x="-20%" y="-20%" width="140%" height="140%">
+							<feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0cb7f2" flood-opacity="0.5" />
+						</filter>
+
+							<!-- Gradients for Cards and Badges -->
+							<linearGradient id="center-card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+								<stop offset="0%" stop-color="#0e2f52" />
+								<stop offset="100%" stop-color="#0a2240" />
+							</linearGradient>
+
+							<linearGradient id="center-badge-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+								<stop offset="0%" stop-color="#14d3ff" />
+								<stop offset="100%" stop-color="#0cb7f2" />
+							</linearGradient>
+
+							<linearGradient id="internal-badge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+								<stop offset="0%" stop-color="#0d3a5c" />
+								<stop offset="100%" stop-color="#092b46" />
+							</linearGradient>
+
+							<linearGradient id="external-badge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+								<stop offset="0%" stop-color="#0b3f45" />
+								<stop offset="100%" stop-color="#083036" />
+							</linearGradient>
+
+							<!-- Connector Paths for Motion and Lines -->
+							<path id="route-p1" d="M 488 318 C 555 318, 550 480, 600 480" />
+							<path id="route-p2" d="M 488 452 C 555 452, 555 505, 600 505" />
+							<path id="route-p3" d="M 488 586 C 555 586, 555 530, 600 530" />
+							<path id="route-p4" d="M 488 720 C 555 720, 550 555, 600 555" />
+							<path id="route-p5" d="M 1107 412 C 1045 412, 1050 505, 1000 505" />
+							<path id="route-p6" d="M 1107 580 C 1045 580, 1050 555, 1000 555" />
+						</defs>
+
+						<!-- ================= TOP HEADER ================= -->
+						<!-- "FASE 1" Pill Badge and Accent Lines -->
+						<line x1="620" y1="46" x2="715" y2="46" stroke="#0cb7f2" stroke-width="2" stroke-linecap="round" />
+						<line x1="885" y1="46" x2="980" y2="46" stroke="#0cb7f2" stroke-width="2" stroke-linecap="round" />
+						<rect x="732" y="30" width="136" height="32" rx="16" fill="#0cb7f2" />
+						<text x="800" y="52" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#05090f" letter-spacing="2">FASE 1</text>
+
+						<!-- Main Heading -->
+						<text x="800" y="106" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="800" fill="#e6f1f8" letter-spacing="-0.5">Simulación: Consolidación de fuentes</text>
+
+						<!-- Subtitle -->
+						<text x="800" y="145" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="500" fill="#8ba3b8">Flujo de ingesta hacia un único dataset consolidado</text>
+
+
+						<!-- ================= LEFT PANEL: FUENTES INTERNAS ================= -->
+						<!-- Outer Box Container -->
+						<rect x="58" y="218" width="454" height="578" rx="26" fill="#0d1728" stroke="#1c2a45" stroke-width="1.8" />
+
+						<!-- Pill Badge (Overlapping Top-Left) -->
+						<g>
+							<rect x="58" y="195" width="245" height="46" rx="23" fill="url(#internal-badge-grad)" />
+							<!-- Badge Icon Circle -->
+							<circle cx="82" cy="218" r="18" fill="#0cb7f2" />
+							<!-- Database Disks inside Badge Circle -->
+							<g transform="translate(74, 209) scale(0.6)">
+								<ellipse cx="13" cy="5" rx="11" ry="3.5" fill="#ffffff" />
+								<path d="M 2 5 V 12 C 2 14.5 7 16.5 13 16.5 C 19 16.5 24 14.5 24 12 V 5" fill="none" stroke="#ffffff" stroke-width="2" />
+								<path d="M 2 12 V 19 C 2 21.5 7 23.5 13 23.5 C 19 23.5 24 21.5 24 19 V 12" fill="none" stroke="#ffffff" stroke-width="2" />
+								<path d="M 2 19 V 26 C 2 28.5 7 30.5 13 30.5 C 19 30.5 24 28.5 24 26 V 19" fill="none" stroke="#ffffff" stroke-width="2" />
+							</g>
+							<text x="210" y="224" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="1.5">FUENTES INTERNAS</text>
+						</g>
+
+						<!-- Card 1: Bot Discord -->
+						<g>
+							<rect x="82" y="262" width="406" height="112" rx="16" fill="#141e33" stroke="#22304f" stroke-width="1.2" filter="url(#card-shadow)" />
+							<rect x="100" y="282" width="72" height="72" rx="16" fill="#5865F2" />
+							<!-- Discord Icon -->
+							<g transform="translate(112, 296) scale(1.35)">
+								<path d="M 28 3 C 25.8 2 23.5 1.2 21 0.8 C 20.7 1.4 20.3 2.2 20 2.9 C 17.3 2.5 14.7 2.5 12 2.9 C 11.7 2.2 11.3 1.4 11 0.8 C 8.5 1.2 6.2 2 4 3 C -0.5 9.7 -0.7 16.2 0.3 22.5 C 3.2 24.7 6 26 8.8 26.9 C 9.5 25.9 10.1 24.9 10.6 23.8 C 9.6 23.4 8.7 22.9 7.8 22.3 C 8 22.1 8.3 21.9 8.5 21.7 C 14.1 24.3 20.1 24.3 25.7 21.7 C 25.9 21.9 26.2 22.1 26.4 22.3 C 25.5 22.9 24.6 23.4 23.6 23.8 C 24.1 24.9 24.7 25.9 25.4 26.9 C 28.2 26 31 24.7 33.9 22.5 C 35.1 14.9 31.8 8.5 28 3 Z M 11.3 18.5 C 9.6 18.5 8.2 17 8.2 15.1 C 8.2 13.2 9.6 11.7 11.3 11.7 C 13 11.7 14.4 13.2 14.4 15.1 C 14.4 17 13 18.5 11.3 18.5 Z M 22.7 18.5 C 21 18.5 19.6 17 19.6 15.1 C 19.6 13.2 21 11.7 22.7 11.7 C 24.4 11.7 25.8 13.2 25.8 15.1 C 25.8 17 24.4 18.5 22.7 18.5 Z" fill="#ffffff" />
+							</g>
+							<text x="338" y="310" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#e6f1f8">Bot Discord</text>
+							<text x="338" y="336" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">Mensajes, comandos y eventos</text>
+							<text x="338" y="356" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">de asistencia y capacitación.</text>
+							<!-- Right Connector Anchor -->
+							<circle cx="488" cy="318" r="6" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.5" />
+						</g>
+
+						<!-- Card 2: SOFI -->
+						<g>
+							<rect x="82" y="396" width="406" height="112" rx="16" fill="#141e33" stroke="#22304f" stroke-width="1.2" filter="url(#card-shadow)" />
+							<rect x="100" y="416" width="72" height="72" rx="16" fill="#2a8bf2" />
+							<!-- Database Stack Icon -->
+							<g transform="translate(116, 428) scale(1.1)">
+								<ellipse cx="18" cy="8" rx="14" ry="4.5" fill="#ffffff" />
+								<path d="M 4 8 V 16 C 4 18.5 10.3 21 18 21 C 25.7 21 32 18.5 32 16 V 8" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linejoin="round" />
+								<path d="M 4 16 V 24 C 4 26.5 10.3 29 18 29 C 25.7 29 32 26.5 32 24 V 16" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linejoin="round" />
+								<path d="M 4 24 V 32 C 4 34.5 10.3 37 18 37 C 25.7 37 32 34.5 32 32 V 24" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linejoin="round" />
+							</g>
+							<text x="338" y="444" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#e6f1f8">SOFI</text>
+							<text x="338" y="470" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">Registros de asistencia,</text>
+							<text x="338" y="490" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">justificaciones y correcciones.</text>
+							<!-- Right Connector Anchor -->
+							<circle cx="488" cy="452" r="6" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.5" />
+						</g>
+
+						<!-- Card 3: GitHub Actions -->
+						<g>
+							<rect x="82" y="530" width="406" height="112" rx="16" fill="#141e33" stroke="#22304f" stroke-width="1.2" filter="url(#card-shadow)" />
+							<rect x="100" y="550" width="72" height="72" rx="16" fill="#252d3e" />
+							<!-- GitHub Octocat Icon -->
+							<g transform="translate(116, 562) scale(1.15)">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C7.16 0 0 7.16 0 16C0 23.08 4.58 29.06 10.94 31.18C11.74 31.32 12.04 30.84 12.04 30.42C12.04 30.04 12.02 28.78 12.02 27.44C7.58 28.4 6.64 25.54 6.64 25.54C5.92 23.7 4.88 23.2 4.88 23.2C3.42 22.2 4.98 22.22 4.98 22.22C6.6 22.34 7.46 23.88 7.46 23.88C8.88 26.32 11.2 25.62 12.12 25.2C12.26 24.16 12.68 23.46 13.14 23.06C9.6 22.66 5.88 21.28 5.88 15.16C5.88 13.42 6.5 12 7.52 10.88C7.36 10.48 6.8 8.86 7.68 6.66C7.68 6.66 9.02 6.24 12.04 8.28C13.3 7.92 14.66 7.76 16 7.74C17.34 7.76 18.7 7.92 19.98 8.28C23 6.22 24.32 6.66 24.32 6.66C25.22 8.86 24.66 10.48 24.5 10.88C25.52 12 26.14 13.42 26.14 15.16C26.14 21.3 22.4 22.66 18.84 23.04C19.42 23.54 19.92 24.5 19.92 26.02C19.92 28.2 19.9 29.96 19.9 30.42C19.9 30.84 20.18 31.34 21.02 31.18C27.4 29.04 32 23.06 32 16C32 7.16 24.84 0 16 0Z" fill="#ffffff"/>
+							</g>
+							<text x="338" y="578" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#e6f1f8">GitHub Actions</text>
+							<text x="338" y="604" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">Reportes de trabajo en</text>
+							<text x="338" y="624" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">formación y tecnologías.</text>
+							<!-- Right Connector Anchor -->
+							<circle cx="488" cy="586" r="6" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.5" />
+						</g>
+
+						<!-- Card 4: Formulario de registro -->
+						<g>
+							<rect x="82" y="664" width="406" height="112" rx="16" fill="#141e33" stroke="#22304f" stroke-width="1.2" filter="url(#card-shadow)" />
+							<rect x="100" y="684" width="72" height="72" rx="16" fill="#2a8bf2" />
+							<!-- Document Form Icon -->
+							<g transform="translate(118, 696) scale(1.15)">
+								<path d="M 4 2 C 2.9 2 2 2.9 2 4 V 30 C 2 31.1 2.9 32 4 32 H 24 C 25.1 32 26 31.1 26 30 V 10 L 18 2 H 4 Z" fill="#ffffff" />
+								<path d="M 18 2 V 10 H 26" fill="#2a8bf2" opacity="0.3" />
+								<line x1="7" y1="14" x2="21" y2="14" stroke="#2a8bf2" stroke-width="2.2" stroke-linecap="round" />
+								<line x1="7" y1="19" x2="21" y2="19" stroke="#2a8bf2" stroke-width="2.2" stroke-linecap="round" />
+								<line x1="7" y1="24" x2="16" y2="24" stroke="#2a8bf2" stroke-width="2.2" stroke-linecap="round" />
+							</g>
+							<text x="338" y="712" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#e6f1f8">Formulario de registro</text>
+							<text x="338" y="738" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">Datos iniciales y actualización</text>
+							<text x="338" y="758" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">de información del practicante.</text>
+							<!-- Right Connector Anchor -->
+							<circle cx="488" cy="720" r="6" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.5" />
+						</g>
+
+
+						<!-- ================= CONNECTORS (CURVED PATHS) ================= -->
+						<!-- Left Side Curves (Blue) -->
+						<path d="M 488 318 C 555 318, 550 480, 600 480" fill="none" stroke="#0cb7f2" stroke-width="2.5" />
+						<path d="M 488 452 C 555 452, 555 505, 600 505" fill="none" stroke="#0cb7f2" stroke-width="2.5" />
+						<path d="M 488 586 C 555 586, 555 530, 600 530" fill="none" stroke="#0cb7f2" stroke-width="2.5" />
+						<path d="M 488 720 C 555 720, 550 555, 600 555" fill="none" stroke="#0cb7f2" stroke-width="2.5" />
+
+						<!-- Left Entry Anchor Ports on Center Box -->
+						<circle cx="600" cy="480" r="4.5" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.2" />
+						<circle cx="600" cy="505" r="4.5" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.2" />
+						<circle cx="600" cy="530" r="4.5" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.2" />
+						<circle cx="600" cy="555" r="4.5" fill="#ffffff" stroke="#0cb7f2" stroke-width="2.2" />
+
+						<!-- Right Side Curves (Teal) -->
+						<path d="M 1107 412 C 1045 412, 1050 505, 1000 505" fill="none" stroke="#11d0b8" stroke-width="2.5" />
+						<path d="M 1107 580 C 1045 580, 1050 555, 1000 555" fill="none" stroke="#11d0b8" stroke-width="2.5" />
+
+						<!-- Right Entry Anchor Ports on Center Box -->
+						<circle cx="1000" cy="505" r="4.5" fill="#ffffff" stroke="#11d0b8" stroke-width="2.2" />
+						<circle cx="1000" cy="555" r="4.5" fill="#ffffff" stroke="#11d0b8" stroke-width="2.2" />
+
+
+						<!-- ================= ANIMATED DATA STREAM PARTICLES ================= -->
+						<!-- Particles from Bot Discord -->
+						<g>
+							<circle r="7" fill="#0cb7f2" opacity="0.35" />
+							<circle r="3.5" fill="#ffffff" />
+							<animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"><mpath href="#route-p1" xlink:href="#route-p1" /></animateMotion>
+						</g>
+						<!-- Particles from SOFI -->
+						<g>
+							<circle r="7" fill="#0cb7f2" opacity="0.35" />
+							<circle r="3.5" fill="#ffffff" />
+							<animateMotion dur="2.4s" repeatCount="indefinite" begin="0.6s"><mpath href="#route-p2" xlink:href="#route-p2" /></animateMotion>
+						</g>
+						<!-- Particles from GitHub Actions -->
+						<g>
+							<circle r="7" fill="#0cb7f2" opacity="0.35" />
+							<circle r="3.5" fill="#ffffff" />
+							<animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s"><mpath href="#route-p3" xlink:href="#route-p3" /></animateMotion>
+						</g>
+						<!-- Particles from Formulario -->
+						<g>
+							<circle r="7" fill="#0cb7f2" opacity="0.35" />
+							<circle r="3.5" fill="#ffffff" />
+							<animateMotion dur="2.4s" repeatCount="indefinite" begin="1.8s"><mpath href="#route-p4" xlink:href="#route-p4" /></animateMotion>
+						</g>
+						<!-- Particles from feriados.io -->
+						<g>
+							<circle r="7" fill="#11d0b8" opacity="0.35" />
+							<circle r="3.5" fill="#ffffff" />
+							<animateMotion dur="2.4s" repeatCount="indefinite" begin="0.3s"><mpath href="#route-p5" xlink:href="#route-p5" /></animateMotion>
+						</g>
+						<!-- Particles from API RENIEC -->
+						<g>
+							<circle r="7" fill="#11d0b8" opacity="0.35" />
+							<circle r="3.5" fill="#ffffff" />
+							<animateMotion dur="2.4s" repeatCount="indefinite" begin="0.9s"><mpath href="#route-p6" xlink:href="#route-p6" /></animateMotion>
+						</g>
+
+
+						<!-- ================= CENTER PANEL: ARCHIVO CONSOLIDADO ================= -->
+						<g>
+							<!-- Main Card Container -->
+							<rect x="600" y="325" width="400" height="345" rx="24" fill="url(#center-card-grad)" filter="url(#center-glow)" stroke="#0cb7f2" stroke-width="2" />
+
+							<!-- Glowing Center Badge -->
+							<circle cx="800" cy="388" r="42" fill="url(#center-badge-grad)" filter="url(#badge-glow)" />
+							<!-- Sparkle dots -->
+							<circle cx="744" cy="365" r="2.5" fill="#8fe3ff" opacity="0.85" />
+							<circle cx="856" cy="402" r="2.5" fill="#8fe3ff" opacity="0.85" />
+							<circle cx="848" cy="362" r="1.8" fill="#ffffff" opacity="0.9" />
+
+							<!-- Center Database Stack Icon -->
+							<g transform="translate(784, 370) scale(1.05)">
+								<ellipse cx="15" cy="6" rx="13" ry="4.5" fill="#ffffff" />
+								<path d="M 2 6 V 13 C 2 15.5 7.8 18 15 18 C 22.2 18 28 15.5 28 13 V 6" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
+								<path d="M 2 13 V 20 C 2 22.5 7.8 25 15 25 C 22.2 25 28 22.5 28 20 V 13" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
+								<path d="M 2 20 V 27 C 2 29.5 7.8 32 15 32 C 22.2 32 28 29.5 28 27 V 20" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
+							</g>
+
+							<!-- Subtitle Header -->
+							<text x="800" y="462" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="800" fill="#ffffff" letter-spacing="2.5">ARCHIVO CONSOLIDADO</text>
+
+							<!-- Parquet Pill Container -->
+							<rect x="622" y="486" width="356" height="62" rx="18" fill="#0c84c4" stroke="#2ab8f2" stroke-width="1.5" />
+							<!-- Parquet File Icon -->
+							<g transform="translate(650, 501) scale(1.1)">
+								<path d="M 4 2 C 2.9 2 2 2.9 2 4 V 26 C 2 27.1 2.9 28 4 28 H 20 C 21.1 28 22 27.1 22 26 V 9 L 15 2 H 4 Z" fill="#ffffff" />
+								<path d="M 15 2 V 9 H 22" fill="#0a5f9e" opacity="0.3" />
+								<circle cx="8" cy="19" r="2" fill="#0a5f9e" />
+								<line x1="12" y1="17" x2="18" y2="17" stroke="#0a5f9e" stroke-width="1.8" stroke-linecap="round" />
+								<line x1="12" y1="21" x2="18" y2="21" stroke="#0a5f9e" stroke-width="1.8" stroke-linecap="round" />
+							</g>
+							<!-- Parquet Filename -->
+							<text x="684" y="525" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#ffffff">apm_telemetria_consolidada.parquet</text>
+
+							<!-- Bottom Description -->
+							<text x="800" y="588" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#cde2fc">Dataset único con la información</text>
+							<text x="800" y="612" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#cde2fc">integrada de todas las fuentes.</text>
+						</g>
+
+
+						<!-- ================= RIGHT PANEL: FUENTES EXTERNAS ================= -->
+						<!-- Outer Box Container -->
+						<rect x="1088" y="298" width="454" height="380" rx="26" fill="#0d1728" stroke="#1c2a45" stroke-width="1.8" />
+
+						<!-- Pill Badge (Overlapping Top-Left) -->
+						<g>
+							<rect x="1088" y="275" width="245" height="46" rx="23" fill="url(#external-badge-grad)" />
+							<!-- Badge Icon Circle -->
+							<circle cx="1112" cy="298" r="18" fill="#11d0b8" />
+							<!-- Cloud Icon inside Badge Circle -->
+							<g transform="translate(1101, 289) scale(0.9)">
+								<path d="M 19.4 15 A 6.5 6.5 0 0 0 17 3.5 A 8 8 0 0 0 2 8 A 6 6 0 0 0 3 20 H 19 A 5 5 0 0 0 19.4 15 Z" fill="#ffffff" />
+							</g>
+							<text x="1240" y="304" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="1.5">FUENTES EXTERNAS</text>
+						</g>
+
+						<!-- Card 1: feriados.io -->
+						<g>
+							<!-- Left Connector Anchor -->
+							<circle cx="1107" cy="412" r="6" fill="#ffffff" stroke="#11d0b8" stroke-width="2.5" />
+							<rect x="1112" y="356" width="406" height="112" rx="16" fill="#141e33" stroke="#22304f" stroke-width="1.2" filter="url(#card-shadow)" />
+							<rect x="1130" y="376" width="72" height="72" rx="16" fill="#0fa8b8" />
+							<!-- Globe Icon -->
+							<g transform="translate(1148, 394) scale(1.15)">
+								<circle cx="16" cy="16" r="14" fill="none" stroke="#ffffff" stroke-width="2.4" />
+								<ellipse cx="16" cy="16" rx="6.5" ry="14" fill="none" stroke="#ffffff" stroke-width="2.2" />
+								<line x1="2" y1="16" x2="30" y2="16" stroke="#ffffff" stroke-width="2.4" />
+								<path d="M 4.5 9.5 Q 16 13 27.5 9.5" fill="none" stroke="#ffffff" stroke-width="1.8" />
+								<path d="M 4.5 22.5 Q 16 19 27.5 22.5" fill="none" stroke="#ffffff" stroke-width="1.8" />
+							</g>
+							<text x="1368" y="404" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#e6f1f8">feriados.io</text>
+							<text x="1368" y="430" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">Fechas de feriados nacionales</text>
+							<text x="1368" y="450" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">del Perú.</text>
+						</g>
+
+						<!-- Card 2: API RENIEC -->
+						<g>
+							<!-- Left Connector Anchor -->
+							<circle cx="1107" cy="580" r="6" fill="#ffffff" stroke="#11d0b8" stroke-width="2.5" />
+							<rect x="1112" y="524" width="406" height="112" rx="16" fill="#141e33" stroke="#22304f" stroke-width="1.2" filter="url(#card-shadow)" />
+							<rect x="1130" y="544" width="72" height="72" rx="16" fill="#0f7d8a" />
+							<!-- Government / Bank Columns Icon -->
+							<g transform="translate(1148, 562) scale(1.15)">
+								<!-- Triangular Pediment -->
+								<polygon points="16,2 2,9 30,9" fill="#ffffff" />
+								<!-- Frieze Bar -->
+								<rect x="3" y="10" width="26" height="2.5" rx="0.5" fill="#ffffff" />
+								<!-- Columns -->
+								<rect x="5.5" y="13.5" width="3.2" height="11.5" rx="0.8" fill="#ffffff" />
+								<rect x="11.8" y="13.5" width="3.2" height="11.5" rx="0.8" fill="#ffffff" />
+								<rect x="17.2" y="13.5" width="3.2" height="11.5" rx="0.8" fill="#ffffff" />
+								<rect x="23.3" y="13.5" width="3.2" height="11.5" rx="0.8" fill="#ffffff" />
+								<!-- Steps Base -->
+								<rect x="3" y="26" width="26" height="2" rx="0.5" fill="#ffffff" />
+								<rect x="1" y="28.5" width="30" height="2.5" rx="0.5" fill="#ffffff" />
+							</g>
+							<text x="1368" y="572" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#e6f1f8">API RENIEC</text>
+							<text x="1368" y="598" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">Validación de identidad a partir</text>
+							<text x="1368" y="618" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8ba3b8">del DNI (nombres y apellidos).</text>
+						</g>
+
+					</svg>
 				</section>
 
 				<!-- 5 · Fase 2: HDFS definición -->
