@@ -15,21 +15,44 @@
 				--accent-soft: rgba(12, 183, 242, 0.45);
 				--accent-light: rgba(12, 183, 242, 0.15);
 				--accent-dark: #0cb7f2;
-				--surface: #0e1524;
+				--surface: #131d30;
 				--text: #e6f1f8;
-				--bg: #060a12;
+				--bg: #0b1322;
 				--muted: #8ba3b8;
 			}
 
 			body { background: var(--bg); }
 			.reveal-viewport {
 				background:
-					radial-gradient(circle at 85% -10%, rgba(12, 183, 242, 0.14), transparent 45%),
-					radial-gradient(circle at 10% 110%, rgba(12, 183, 242, 0.1), transparent 40%),
 					linear-gradient(rgba(12, 183, 242, 0.05) 1px, transparent 1px),
 					linear-gradient(90deg, rgba(12, 183, 242, 0.05) 1px, transparent 1px),
 					var(--bg);
-				background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px, auto;
+				background-size: 48px 48px, 48px 48px, auto;
+				animation: grid-drift 24s linear infinite;
+			}
+			.reveal-viewport::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				background:
+					radial-gradient(circle at 85% -10%, rgba(12, 183, 242, 0.16), transparent 45%),
+					radial-gradient(circle at 10% 110%, rgba(12, 183, 242, 0.12), transparent 40%);
+				animation: glow-breathe 6s ease-in-out infinite alternate;
+			}
+
+			@keyframes grid-drift {
+				from { background-position: 0 0, 0 0, 0 0; }
+				to { background-position: 48px 48px, 48px 48px, 0 0; }
+			}
+
+			@keyframes glow-breathe {
+				from { opacity: 0.65; }
+				to { opacity: 1; }
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.reveal-viewport, .reveal-viewport::before { animation: none; }
 			}
 
 			.reveal { font-size: 34px; color: var(--text); }
@@ -90,7 +113,16 @@
 				border-bottom: 2px solid var(--accent);
 			}
 			.reveal table th, .reveal table td { padding: 0.5em 0.9em; }
-			.reveal table tbody td { background: #0b1320; }
+			.reveal table th { text-align: center; }
+			.reveal table td { text-align: justify; }
+			.reveal table td .prov-list {
+				margin: 0;
+				padding-left: 1.1em;
+				list-style: disc;
+				text-align: left;
+			}
+			.reveal table td .prov-list li { margin: 0.1em 0; }
+			.reveal table tbody td { background: #101a2c; }
 			.reveal table td:first-child { color: var(--accent); font-weight: 600; }
 
 			.reveal .src-columns {
@@ -100,6 +132,11 @@
 				align-items: flex-start;
 			}
 			.reveal .src-columns > div { flex: 1; min-width: 0; }
+			.reveal .src-columns table { font-size: 0.6em; }
+			.reveal .src-columns table th:first-child,
+			.reveal .src-columns table td:first-child { width: 18%; }
+			.reveal .src-columns table th:nth-child(2),
+			.reveal .src-columns table td:nth-child(2) { width: 32%; }
 
 			.reveal .slides section { padding: 0.2em 0.8em; }
 			.reveal .slides section ul:not(.card ul) { width: 100%; }
@@ -179,25 +216,45 @@
 							<p class="sub">Fuentes internas</p>
 							<table>
 								<thead>
-									<tr><th>Fuente</th><th>Datos que provee</th></tr>
+									<tr><th>Fuente</th><th>Descripción</th><th>Datos que provee</th></tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>Bot interno de Discord</td>
-										<td>Marcaciones de entrada, salida y recuperación · Justificaciones de inasistencias · Reportes de monitoreo de salas</td>
-									</tr>
-									<tr>
-										<td>Sistema Web SOFI</td>
-										<td>Datos actualizados de practicantes · Correcciones de asistencia · Estado de justificaciones y reportes</td>
-									</tr>
-									<tr>
-										<td>GitHub Actions</td>
-										<td>Commits realizados · Líneas añadidas y eliminadas · Pull requests y repositorio asociado</td>
-									</tr>
-									<tr>
-										<td>Formulario de registro</td>
-										<td>DNI y celular · Carrera, sede y semestre · Estado de matrícula</td>
-									</tr>
+<tr>
+									<td>Bot interno de Discord</td>
+									<td>Canal interno donde el personal registra su asistencia</td>
+									<td><ul class="prov-list">
+										<li>Marcaciones de entrada, salida y recuperación</li>
+										<li>Justificaciones de inasistencias</li>
+										<li>Reportes de monitoreo de salas</li>
+									</ul></td>
+								</tr>
+								<tr>
+									<td>Sistema Web SOFI</td>
+									<td>Plataforma web de gestión de practicantes</td>
+									<td><ul class="prov-list">
+										<li>Datos actualizados de practicantes</li>
+										<li>Correcciones de asistencia</li>
+										<li>Estado de justificaciones y reportes</li>
+									</ul></td>
+								</tr>
+								<tr>
+									<td>GitHub Actions</td>
+									<td>Automatización de versiones y despliegues del equipo de desarrollo</td>
+									<td><ul class="prov-list">
+										<li>Commits realizados</li>
+										<li>Líneas añadidas y eliminadas</li>
+										<li>Pull requests y repositorio asociado</li>
+									</ul></td>
+								</tr>
+								<tr>
+									<td>Formulario de registro</td>
+									<td>Inscripción de postulantes a prácticas</td>
+									<td><ul class="prov-list">
+										<li>DNI y celular</li>
+										<li>Carrera, sede y semestre</li>
+										<li>Estado de matrícula</li>
+									</ul></td>
+								</tr>
 								</tbody>
 							</table>
 						</div>
@@ -205,17 +262,26 @@
 							<p class="sub">Fuentes externas</p>
 							<table>
 								<thead>
-									<tr><th>Fuente</th><th>Datos que provee</th></tr>
+									<tr><th>Fuente</th><th>Descripción</th><th>Datos que provee</th></tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>API de feriados nacionales (feriados.io)</td>
-										<td>Fechas de feriados y días no laborables · Descripción y año correspondiente · Base para el cálculo real de horas y asistencia</td>
-									</tr>
-									<tr>
-										<td>API RENIEC</td>
-										<td>Validación de identidad a partir del DNI · Nombres y apellidos · Autocompletado del registro del practicante</td>
-									</tr>
+<tr>
+									<td>API de feriados nacionales (feriados.io)</td>
+									<td>Servicio externo de feriados oficiales del Perú</td>
+									<td><ul class="prov-list">
+										<li>Fecha, nombre y año de cada feriado</li>
+										<li>Base para el cálculo de horas y asistencia</li>
+									</ul></td>
+								</tr>
+								<tr>
+									<td>API RENIEC</td>
+									<td>Validación de identidad de postulantes (DNI)</td>
+									<td><ul class="prov-list">
+										<li>Validación de identidad a partir del DNI</li>
+										<li>Nombres y apellidos</li>
+										<li>Autocompletado del registro del practicante</li>
+									</ul></td>
+								</tr>
 								</tbody>
 							</table>
 						</div>
