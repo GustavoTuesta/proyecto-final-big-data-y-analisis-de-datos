@@ -1,0 +1,184 @@
+:root {
+	--accent: #0cb7f2;
+	--accent-soft: rgba(12, 183, 242, 0.45);
+	--accent-light: rgba(12, 183, 242, 0.15);
+	--accent-dark: #0cb7f2;
+	--surface: #131d30;
+	--text: #e6f1f8;
+	--bg: #000000;
+	--muted: #8ba3b8;
+	--pill-bg: #0cb7f2;
+	--pill-text: #05090f;
+}
+
+body {
+	background: var(--bg);
+}
+
+.reveal-viewport {
+	background:
+		linear-gradient(rgba(12, 183, 242, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(12, 183, 242, 0.05) 1px, transparent 1px),
+		var(--bg);
+	background-size: 48px 48px, 48px 48px, auto;
+	animation: grid-drift 24s linear infinite;
+}
+
+.reveal-viewport::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(circle at 85% -10%, rgba(12, 183, 242, 0.16), transparent 45%),
+		radial-gradient(circle at 10% 110%, rgba(12, 183, 242, 0.12), transparent 40%);
+	animation: glow-breathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes grid-drift {
+	from {
+		background-position: 0 0, 0 0, 0 0;
+	}
+
+	to {
+		background-position: 48px 48px, 48px 48px, 0 0;
+	}
+}
+
+@keyframes glow-breathe {
+	from {
+		opacity: 0.65;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal-viewport,
+	.reveal-viewport::before,
+	.sim-stream,
+	.sim-glow,
+	.sim-core,
+	.sim-phase,
+	.sim2-pulse-cyan,
+	.sim2-pulse-blue,
+	.sim2-pulse-green {
+		animation: none;
+	}
+}
+
+#bg-canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.reveal {
+	font-size: 34px;
+	color: var(--text);
+}
+
+.reveal h1 {
+	font-size: 1.6em;
+	letter-spacing: -0.02em;
+	text-transform: none;
+}
+
+.reveal h2 {
+	font-size: 1.15em;
+	--r-heading-color: var(--accent);
+	margin-bottom: 0.6em;
+	text-transform: none;
+}
+
+.reveal h3 {
+	--r-heading-color: var(--muted);
+	color: var(--muted);
+	font-weight: 600;
+	text-transform: none;
+}
+
+.reveal a {
+	color: var(--accent);
+	text-decoration: underline;
+}
+
+.reveal section.title h1 {
+	margin: 0.2em 0;
+}
+
+.reveal .tag {
+	font-size: 0.5em;
+	letter-spacing: 0.25em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.reveal .sub {
+	color: var(--accent-dark);
+	font-size: 1.3em;
+	font-weight: 600;
+}
+
+.reveal code {
+	color: #4dd0ff;
+}
+
+.reveal pre code {
+	color: inherit;
+}
+
+.reveal .small {
+	font-size: 0.55em;
+	color: var(--muted);
+}
+
+.reveal .step {
+	font-size: 0.65em;
+	text-align: left;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 60em;
+}
+
+.reveal .step p {
+	margin: 0.35em 0;
+}
+
+.reveal .step .n {
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+	line-height: 1.5em;
+	text-align: center;
+	border-radius: 50%;
+	background: var(--accent);
+	color: #05090f;
+	font-weight: 700;
+	margin-right: 0.5em;
+}
+
+.reveal .quote {
+	font-style: italic;
+	background: rgba(12, 183, 242, 0.08);
+	border-left: 4px solid var(--accent);
+	padding: 0.7em 1em;
+	font-size: 0.75em;
+	text-align: left;
+	width: 100%;
+	max-width: 100%;
+	margin: 0 auto;
+	color: var(--text);
+}
+
+.reveal pre {
+	font-size: 0.5em;
+	width: 100%;
+	margin: 0 auto;
+}

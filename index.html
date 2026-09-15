@@ -10,506 +10,13 @@
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/black.css" id="theme" />
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/plugin/highlight/monokai.css" />
 
-	<style>
-		:root {
-			--accent: #0cb7f2;
-			--accent-soft: rgba(12, 183, 242, 0.45);
-			--accent-light: rgba(12, 183, 242, 0.15);
-			--accent-dark: #0cb7f2;
-			--surface: #131d30;
-			--text: #e6f1f8;
-			--bg: #000000;
-			--muted: #8ba3b8;
-		}
-
-		body {
-			background: var(--bg);
-		}
-
-		.reveal-viewport {
-			background:
-				linear-gradient(rgba(12, 183, 242, 0.05) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(12, 183, 242, 0.05) 1px, transparent 1px),
-				var(--bg);
-			background-size: 48px 48px, 48px 48px, auto;
-			animation: grid-drift 24s linear infinite;
-		}
-
-		.reveal-viewport::before {
-			content: "";
-			position: absolute;
-			inset: 0;
-			pointer-events: none;
-			background:
-				radial-gradient(circle at 85% -10%, rgba(12, 183, 242, 0.16), transparent 45%),
-				radial-gradient(circle at 10% 110%, rgba(12, 183, 242, 0.12), transparent 40%);
-			animation: glow-breathe 6s ease-in-out infinite alternate;
-		}
-
-		@keyframes grid-drift {
-			from {
-				background-position: 0 0, 0 0, 0 0;
-			}
-
-			to {
-				background-position: 48px 48px, 48px 48px, 0 0;
-			}
-		}
-
-		@keyframes glow-breathe {
-			from {
-				opacity: 0.65;
-			}
-
-			to {
-				opacity: 1;
-			}
-		}
-
-		@media (prefers-reduced-motion: reduce) {
-
-			.reveal-viewport,
-			.reveal-viewport::before,
-			.sim-stream,
-			.sim-glow,
-			.sim-core,
-			.sim-phase {
-				animation: none;
-			}
-		}
-
-		#bg-canvas {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100vw;
-			height: 100vh;
-			z-index: 0;
-			pointer-events: none;
-		}
-
-		.reveal {
-			font-size: 34px;
-			color: var(--text);
-		}
-
-		.reveal h1 {
-			font-size: 1.6em;
-			letter-spacing: -0.02em;
-		}
-
-		.reveal h2 {
-			font-size: 1.15em;
-			--r-heading-color: var(--accent);
-			margin-bottom: 0.6em;
-		}
-
-		.reveal h3 {
-			--r-heading-color: var(--muted);
-			color: var(--muted);
-			font-weight: 600;
-		}
-
-		.reveal a {
-			color: var(--accent);
-			text-decoration: underline;
-		}
-
-		.reveal section.title h1 {
-			margin: 0.2em 0;
-		}
-
-		.reveal .tag {
-			font-size: 0.5em;
-			letter-spacing: 0.25em;
-			text-transform: uppercase;
-			color: var(--accent);
-		}
-
-		.reveal .sub {
-			color: var(--accent-dark);
-			font-size: 1.3em;
-			font-weight: 600;
-		}
-
-		.reveal .slide-head {
-			margin: 0 0 0.4em;
-		}
-
-		.reveal .slide-head .head-badge {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 1em;
-			margin-bottom: 0.35em;
-		}
-
-		.reveal .slide-head .head-line {
-			display: inline-block;
-			width: 90px;
-			height: 2px;
-			background: var(--accent);
-			border-radius: 2px;
-		}
-
-		.reveal .slide-head .head-pill {
-			background: var(--accent);
-			color: #05090f;
-			font-size: 0.42em;
-			font-weight: 700;
-			letter-spacing: 2px;
-			text-transform: uppercase;
-			padding: 0.4em 1.2em;
-			border-radius: 999px;
-			line-height: 1;
-		}
-
-		.reveal .slide-head h2 {
-			color: #e6f1f8;
-			font-size: 1.05em;
-			font-weight: 800;
-			margin: 0.15em 0 0.3em;
-			letter-spacing: -0.01em;
-		}
-
-		.reveal .slide-head .sub {
-			color: var(--muted);
-			font-size: 0.58em;
-			font-weight: 500;
-		}
-
-		.reveal .grid {
-			display: grid;
-			gap: 0.9em;
-			grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-			text-align: left;
-		}
-
-		.reveal .card {
-			background: #141e33;
-			border: 1px solid #22304f;
-			border-radius: 14px;
-			padding: 0.9em 1em;
-			font-size: 0.72em;
-			color: var(--text);
-			box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
-		}
-
-		.reveal .card h4 {
-			margin: 0 0 0.4em;
-			color: var(--accent);
-			font-size: 1.15em;
-			line-height: 1.1;
-		}
-
-		.reveal .card ul {
-			margin: 0;
-			font-size: 0.9em;
-		}
-
-		.reveal .card ul li {
-			margin: 0.15em 0;
-		}
-
-		.reveal table {
-			font-size: 0.72em;
-			margin: 0.5em auto;
-			color: var(--text);
-			border-collapse: separate;
-			border-spacing: 0;
-			border: 1px solid var(--accent-soft);
-			border-radius: 14px;
-			overflow: hidden;
-			box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
-		}
-
-		.reveal table th {
-			background: var(--accent-light);
-			color: var(--text);
-			border-bottom: 2px solid var(--accent);
-		}
-
-		.reveal table th,
-		.reveal table td {
-			padding: 0.5em 0.9em;
-		}
-
-		.reveal table th {
-			text-align: center;
-		}
-
-		.reveal table td {
-			text-align: justify;
-		}
-
-		.reveal table td .prov-list {
-			margin: 0;
-			padding-left: 1.1em;
-			list-style: disc;
-			text-align: left;
-		}
-
-		.reveal table td .prov-list li {
-			margin: 0.1em 0;
-		}
-
-		.reveal table tbody td {
-			background: #101a2c;
-		}
-
-		.reveal table td:first-child {
-			color: var(--accent);
-			font-weight: 600;
-		}
-
-		.reveal .src-columns {
-			display: flex;
-			gap: 1.8em;
-			justify-content: center;
-			align-items: flex-start;
-		}
-
-		.reveal .src-columns>div {
-			flex: 1;
-			min-width: 0;
-		}
-
-		.reveal .src-columns table {
-			font-size: 0.6em;
-		}
-
-		.reveal .src-columns table th:first-child,
-		.reveal .src-columns table td:first-child {
-			width: 18%;
-		}
-
-		.reveal .src-columns table th:nth-child(2),
-		.reveal .src-columns table td:nth-child(2) {
-			width: 32%;
-		}
-
-		.reveal .pred-layout {
-			display: flex;
-			gap: 1.5em;
-			justify-content: center;
-			align-items: stretch;
-			text-align: left;
-			margin-top: 0.2em;
-		}
-
-		.reveal .pred-layout>.card {
-			flex: 0 0 38%;
-			font-size: 0.62em;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-start;
-		}
-
-		.reveal .pred-layout>.card h4 {
-			margin: 0.55em 0 0.25em;
-			font-size: 1.08em;
-			color: var(--accent);
-		}
-
-		.reveal .pred-layout>.card h4:first-child {
-			margin-top: 0;
-		}
-
-		.reveal .pred-layout>.card p {
-			margin: 0 0 0.4em;
-			line-height: 1.35;
-		}
-
-		.reveal .pred-layout>.card ul {
-			margin: 0.2em 0 0;
-			padding-left: 1.2em;
-		}
-
-		.reveal .pred-layout>.card ul li {
-			margin: 0.2em 0;
-		}
-
-		.reveal .pred-layout>.pred-table-col {
-			flex: 1;
-			min-width: 0;
-			display: flex;
-			flex-direction: column;
-		}
-
-		.reveal .pred-layout .pred-table-title {
-			color: var(--accent);
-			font-size: 0.68em;
-			font-weight: 700;
-			margin: 0 0 0.35em;
-			line-height: 1.2;
-			text-align: left;
-		}
-
-		.reveal .pred-layout table {
-			margin: 0;
-			width: 100%;
-			font-size: 0.58em;
-		}
-
-		.reveal .pred-layout table th,
-		.reveal .pred-layout table td {
-			padding: 0.42em 0.75em;
-		}
-
-		.reveal .pred-layout table td {
-			text-align: left;
-		}
-
-		.reveal table.desc-table {
-			width: 100%;
-			max-width: 1420px;
-			margin: 0.3em auto;
-		}
-
-		.reveal table.desc-table th:first-child,
-		.reveal table.desc-table td:first-child {
-			width: 25%;
-			text-align: left;
-		}
-
-		.reveal table.desc-table th:nth-child(2),
-		.reveal table.desc-table td:nth-child(2) {
-			width: 15%;
-			text-align: center;
-		}
-
-		.reveal table.desc-table th:nth-child(3),
-		.reveal table.desc-table td:nth-child(3) {
-			width: 60%;
-			text-align: left;
-		}
-
-		.reveal table.desc-table-eval {
-			font-size: 0.52em;
-		}
-
-		.reveal table.desc-table-eval th,
-		.reveal table.desc-table-eval td {
-			padding: 0.35em 0.8em;
-		}
-
-		.reveal table.desc-table-inc {
-			font-size: 0.62em;
-		}
-
-		.reveal table.desc-table-inc th,
-		.reveal table.desc-table-inc td {
-			padding: 0.52em 0.9em;
-		}
-
-		.reveal .slides section {
-			padding: 0.2em 0.8em;
-		}
-
-		.reveal .slides section ul:not(.card ul) {
-			width: 100%;
-		}
-
-		.reveal .slides section li {
-			text-align: left;
-		}
-
-		.reveal table {
-			width: 100%;
-		}
-
-		.reveal pre {
-			width: 100%;
-		}
-
-		.reveal .quote {
-			width: 100%;
-			max-width: 100%;
-		}
-
-		.reveal .step {
-			width: 100%;
-			max-width: 60em;
-		}
-
-		.reveal .slides section.slide-sim-redesign {
-			padding: 0;
-			width: 100%;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.sim-redesign {
-			width: 100%;
-			max-width: 1600px;
-			height: auto;
-			max-height: 890px;
-			display: block;
-			margin: 0 auto;
-		}
-
-		.sim-redesign text {
-			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-			user-select: none;
-		}
-
-		.reveal code {
-			color: #4dd0ff;
-		}
-
-		.reveal pre code {
-			color: inherit;
-		}
-
-		.reveal .small {
-			font-size: 0.55em;
-			color: var(--muted);
-		}
-
-		.reveal .step {
-			font-size: 0.65em;
-			text-align: left;
-			margin: 0 auto;
-			width: fit-content;
-		}
-
-		.reveal .step p {
-			margin: 0.35em 0;
-		}
-
-		.reveal .step .n {
-			display: inline-block;
-			width: 1.5em;
-			height: 1.5em;
-			line-height: 1.5em;
-			text-align: center;
-			border-radius: 50%;
-			background: var(--accent);
-			color: #05090f;
-			font-weight: 700;
-			margin-right: 0.5em;
-		}
-
-		.reveal .quote {
-			font-style: italic;
-			background: rgba(12, 183, 242, 0.08);
-			border-left: 4px solid var(--accent);
-			padding: 0.7em 1em;
-			font-size: 0.75em;
-			text-align: left;
-			max-width: 70%;
-			margin: 0 auto;
-			color: var(--text);
-		}
-
-		.reveal pre {
-			font-size: 0.5em;
-			width: 90%;
-			margin: 0 auto;
-		}
-	</style>
+	<!-- Custom Presentation Styles -->
+	<link rel="stylesheet" href="css/theme.css" />
+	<link rel="stylesheet" href="css/components.css" />
+	<link rel="stylesheet" href="css/simulations.css" />
+	<link rel="stylesheet" href="css/calculator.css" />
+	<link rel="stylesheet" href="css/pipelines.css" />
+	<link rel="stylesheet" href="css/fase4.css" />
 </head>
 
 <body>
@@ -517,144 +24,110 @@
 	<div class="reveal">
 		<div class="slides">
 
-			<!-- 1 · Portada -->
-			<section class="title">
-				<p class="tag">Big Data y Análisis de Datos</p>
-				<h1>Proyecto Final</h1>
-				<p class="sub">
-					Ingesta, almacenamiento distribuido, modelado y visualización de datos para la
-					gestión de practicantes
-				</p>
-				<p>Empresa de formación elegida: <strong>APM Inversiones EIRL</strong></p>
-				<p class="small">
-					Apaza Puris, Jherson Matias · Bocanegra Saldaña, Arath Pedro Adilson ·
-					Borda Ocampo, Jhoat Fayer · Dominguez Tovar, Cesar David · Tuesta Puse, Matias Gustavo
-				</p>
-			</section>
+						<!-- 1 · Portada Formal -->
+			<section class="slide-portada">
+				<div class="portada-container">
+					<!-- Cabecera Institucional SENATI -->
+					<div class="portada-header">
+						<div class="senati-brand">
+							<svg class="senati-logo" viewBox="0 0 240 60" width="180" height="45" role="img" aria-label="Logo SENATI">
+								<g transform="scale(0.65)">
+									<path fill="#0cb7f2" d="M 26 0 L 74 0 L 84 17 L 31 17 L 21 38 L 65 38 L 57 55 L 14 55 L 0 28 Z" />
+									<path fill="#0cb7f2" transform="rotate(180 42 42.5)" d="M 26 0 L 74 0 L 84 17 L 31 17 L 21 38 L 65 38 L 57 55 L 14 55 L 0 28 Z" />
+								</g>
+								<text x="72" y="38" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="900" fill="#0cb7f2" letter-spacing="3">SENATI</text>
+							</svg>
+						</div>
+						<div class="portada-badge">
+							<span class="badge-pill">Proyecto Final · Sustentación</span>
+						</div>
+					</div>
 
-			<!-- 2 · Agenda -->
-			<section>
-				<div class="slide-head">
-					<div class="head-badge">
-						<span class="head-line"></span>
-						<span class="head-pill">Agenda</span>
-						<span class="head-line"></span>
+					<!-- Bloque de Título Principal -->
+					<div class="portada-main">
+						<h1 class="portada-title">Big Data y Análisis de Datos</h1>
+						<p class="portada-subtitle">
+							Ingesta, almacenamiento distribuido en HDFS, modelado predictivo/NoSQL y visualización en Power BI orientados a la gestión y retención de practicantes
+						</p>
 					</div>
-					<h2>Contenido</h2>
-				</div>
-				<ul>
-					<li class="fragment">Fase 1 · Ingesta: identificación de orígenes de datos</li>
-					<li class="fragment">Fase 2 · Almacenamiento: arquitectura HDFS</li>
-					<li class="fragment">Fase 3 · Modelado: predictivo, descriptivo y pipelines MongoDB</li>
-					<li class="fragment">Fase 4 · Visualización: dashboard de KPIs en Power BI</li>
-					<li class="fragment">Conclusiones y preguntas</li>
-				</ul>
-			</section>
 
-			<!-- 3 · Fase 1: fuentes internas y externas -->
-			<section>
-				<div class="slide-head">
-					<div class="head-badge">
-						<span class="head-line"></span>
-						<span class="head-pill">Fase 1</span>
-						<span class="head-line"></span>
+					<!-- Tarjetas de Metadatos de Negocio y Equipo -->
+					<div class="portada-grid">
+						<!-- Empresa de Formación -->
+						<div class="portada-card">
+							<div class="card-tag">Empresa de Formación Práctica</div>
+							<h3 class="empresa-name">APM Inversiones EIRL</h3>
+							<p class="empresa-desc">
+								Desarrollo de soluciones tecnológicas, plataformas web y servicios digitales empresariales, con un programa intensivo de formación profesional y gestión de practicantes en modalidad remota.
+							</p>
+						</div>
+
+						<!-- Integrantes del Proyecto -->
+						<div class="portada-card">
+							<div class="card-tag">Integrantes del Equipo</div>
+							<div class="integrantes-list">
+								<div class="integrante-item">
+									<span class="dot"></span>
+									<span>Apaza Puris, Jherson Matias</span>
+								</div>
+								<div class="integrante-item">
+									<span class="dot"></span>
+									<span>Bocanegra Saldaña, Arath Pedro Adilson</span>
+								</div>
+								<div class="integrante-item">
+									<span class="dot"></span>
+									<span>Borda Ocampo, Jhoat Fayer</span>
+								</div>
+								<div class="integrante-item">
+									<span class="dot"></span>
+									<span>Dominguez Tovar, Cesar David</span>
+								</div>
+								<div class="integrante-item">
+									<span class="dot"></span>
+									<span>Tuesta Puse, Matias Gustavo</span>
+								</div>
+							</div>
+						</div>
 					</div>
-					<h2>Ingesta en APM Inversiones EIRL</h2>
-					<p class="sub">Identificación de orígenes de datos</p>
 				</div>
-				<div class="src-columns">
-					<div>
-						<p class="sub">Fuentes internas</p>
-						<table>
-							<thead>
-								<tr>
-									<th>Fuente</th>
-									<th>Descripción</th>
-									<th>Datos que provee</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Bot interno de Discord</td>
-									<td>Canal interno donde el personal registra su asistencia</td>
-									<td>
-										<ul class="prov-list">
-											<li>Marcaciones de entrada, salida y recuperación</li>
-											<li>Justificaciones de inasistencias</li>
-											<li>Reportes de monitoreo de salas</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>Sistema Web SOFI</td>
-									<td>Plataforma web de gestión de practicantes</td>
-									<td>
-										<ul class="prov-list">
-											<li>Datos actualizados de practicantes</li>
-											<li>Correcciones de asistencia</li>
-											<li>Estado de justificaciones y reportes</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>GitHub Actions</td>
-									<td>Automatización de versiones y despliegues del equipo de desarrollo</td>
-									<td>
-										<ul class="prov-list">
-											<li>Commits realizados</li>
-											<li>Líneas añadidas y eliminadas</li>
-											<li>Pull requests y repositorio asociado</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>Formulario de registro</td>
-									<td>Inscripción de postulantes a prácticas</td>
-									<td>
-										<ul class="prov-list">
-											<li>DNI y celular</li>
-											<li>Carrera, sede y semestre</li>
-											<li>Estado de matrícula</li>
-										</ul>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+			</section>
+ 
+			<!-- Fase 1: Introducción -->
+			<section class="slide-fase-intro">
+				<div class="fase-intro-container">
+					<div class="fase-intro-badge">
+						<span class="badge-dot"></span>
+						<span class="badge-text">Arquitectura & Ingesta</span>
 					</div>
-					<div>
-						<p class="sub">Fuentes externas</p>
-						<table>
-							<thead>
-								<tr>
-									<th>Fuente</th>
-									<th>Descripción</th>
-									<th>Datos que provee</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>API de feriados nacionales (feriados.io)</td>
-									<td>Servicio externo de feriados oficiales del Perú</td>
-									<td>
-										<ul class="prov-list">
-											<li>Fecha, nombre y año de cada feriado</li>
-											<li>Base para el cálculo de horas y asistencia</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>API RENIEC</td>
-									<td>Validación de identidad de postulantes (DNI)</td>
-									<td>
-										<ul class="prov-list">
-											<li>Validación de identidad a partir del DNI</li>
-											<li>Nombres y apellidos</li>
-											<li>Autocompletado del registro del practicante</li>
-										</ul>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+					<div class="fase-intro-title-block">
+						<span class="fase-intro-number">Fase 1</span>
+						<h2 class="fase-intro-title">Ingesta y Consolidación de Datos</h2>
+					</div>
+					<p class="fase-intro-desc">
+						Captura, validación y consolidación de datos transaccionales, conductuales y académicos provenientes de 6 fuentes heterogéneas hacia una zona cruda centralizada (Data Lake), estandarizando identidades mediante la API de RENIEC.
+					</p>
+					<div class="fase-intro-cards">
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+								<h3 class="fase-intro-card-title">6 Fuentes Heterogéneas</h3>
+							</div>
+							<p class="fase-intro-card-text">Extracción de MySQL, SQL Server, MongoDB, planillas Excel, logs CSV y validación DNI en RENIEC.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+								<h3 class="fase-intro-card-title">Limpieza y Validación</h3>
+							</div>
+							<p class="fase-intro-card-text">Depuración de duplicados, normalización de formatos de fecha/hora y cruce de identidad por DNI.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+								<h3 class="fase-intro-card-title">Dataset Consolidado</h3>
+							</div>
+							<p class="fase-intro-card-text">Generación de un dataset maestro de 320 MB particionado por año/mes en formato Parquet y Snappy.</p>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -716,9 +189,8 @@
 					<!-- "FASE 1" Pill Badge and Accent Lines -->
 					<line x1="620" y1="46" x2="715" y2="46" stroke="#0cb7f2" stroke-width="2" stroke-linecap="round" />
 					<line x1="885" y1="46" x2="980" y2="46" stroke="#0cb7f2" stroke-width="2" stroke-linecap="round" />
-					<rect x="732" y="30" width="136" height="32" rx="16" fill="#0cb7f2" />
-					<text x="800" y="52" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif"
-						font-size="14" font-weight="700" fill="#05090f" letter-spacing="2">FASE 1</text>
+					<rect class="sim-head-pill" x="732" y="30" width="136" height="32" rx="16" />
+					<text x="800" y="52" text-anchor="middle" class="sim-head-pill-text">FASE 1</text>
 
 					<!-- Main Heading -->
 					<text x="800" y="106" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif"
@@ -1060,71 +532,48 @@
 				</svg>
 			</section>
 
-			<!-- 5 · Fase 2: HDFS definición -->
-			<section>
-				<div class="slide-head">
-					<div class="head-badge">
-						<span class="head-line"></span>
-						<span class="head-pill">Fase 2</span>
-						<span class="head-line"></span>
+			<!-- Fase 2: Introducción -->
+			<section class="slide-fase-intro">
+				<div class="fase-intro-container">
+					<div class="fase-intro-badge">
+						<span class="badge-dot"></span>
+						<span class="badge-text">Big Data & Alta Disponibilidad</span>
 					</div>
-					<h2>Almacenamiento: HDFS</h2>
-					<p class="sub">Sistema de archivos distribuido de la empresa</p>
+					<div class="fase-intro-title-block">
+						<span class="fase-intro-number">Fase 2</span>
+						<h2 class="fase-intro-title">Almacenamiento Distribuido y Tolerancia a Fallos</h2>
+					</div>
+					<p class="fase-intro-desc">
+						Distribución física del dataset consolidado en un clúster Apache Hadoop HDFS con topología de múltiples racks, bloque estándar de 128 MB, factor de replicación 3 y conmutación automática ante incidentes.
+					</p>
+					<div class="fase-intro-cards">
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+								<h3 class="fase-intro-card-title">Clúster Hadoop HDFS</h3>
+							</div>
+							<p class="fase-intro-card-text">NameNode coordinador y 4 DataNodes distribuidos en dos dominios de falla físicos (Rack 1 y Rack 2).</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+								<h3 class="fase-intro-card-title">Bloques y Replicación 3</h3>
+							</div>
+							<p class="fase-intro-card-text">División en bloques físicos (BLK-101, 102, 103) triplemente replicados cruzando racks para máxima resiliencia.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+								<h3 class="fase-intro-card-title">Auto-Recuperación</h3>
+							</div>
+							<p class="fase-intro-card-text">Detección de caída de nodos por timeout de heartbeat y re-replicación inmediata hacia nodos en standby sin downtime.</p>
+						</div>
+					</div>
 				</div>
-				<ul>
-					<li class="fragment">Centraliza datos del bot de Discord, SOFI, GitHub Actions y registro de
-						postulantes</li>
-					<li class="fragment">Diseñado para grandes volúmenes de datos en múltiples servidores</li>
-					<li class="fragment">Escalabilidad, alta disponibilidad y tolerancia a fallos</li>
-				</ul>
 			</section>
 
-			<!-- 6 · Fase 2: esquema de distribución -->
-			<section>
-				<div class="slide-head">
-					<div class="head-badge">
-						<span class="head-line"></span>
-						<span class="head-pill">Fase 2</span>
-						<span class="head-line"></span>
-					</div>
-					<h2>Esquema de distribución y segmentación</h2>
-				</div>
-				<table>
-					<thead>
-						<tr>
-							<th>Criterio</th>
-							<th>Parámetro / Regla</th>
-							<th>Justificación técnica</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Tamaño de bloque</td>
-							<td>128 MB</td>
-							<td>Minimiza la sobrecarga de metadatos en el NameNode y optimiza lecturas secuenciales</td>
-						</tr>
-						<tr>
-							<td>Factor de replicación</td>
-							<td>3</td>
-							<td>Soporta la pérdida de hasta dos nodos sin pérdida de integridad</td>
-						</tr>
-						<tr>
-							<td>Particionamiento lógico</td>
-							<td>Temporal (año/mes) y por tipo de origen</td>
-							<td>Estructura <code>/data/raw/{origen}/año=YYYY/mes=MM/</code> optimiza el filtrado en
-								ingesta</td>
-						</tr>
-						<tr>
-							<td>Formato de almacenamiento</td>
-							<td>Parquet + Snappy / JSON raw</td>
-							<td>Reduce el almacenamiento y acelera la descompresión en consultas analíticas</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-
-			<!-- 7 · Fase 2: simulación -->
-			<section>
+			<!-- 5 · Fase 2: simulación de distribución en el clúster -->
+			<section class="slide-sim-redesign slide-title-top">
 				<div class="slide-head">
 					<div class="head-badge">
 						<span class="head-line"></span>
@@ -1132,50 +581,320 @@
 						<span class="head-line"></span>
 					</div>
 					<h2>Simulación de distribución en el clúster</h2>
+					<p class="sub">Dataset consolidado de 320 MB · 3 bloques físicos · Factor de replicación 3</p>
 				</div>
-				<p class="small">
-					Dataset consolidado de 320 MB (<code>apm_telemetria_consolidada.parquet</code>) · bloque de 128 MB →
-					3 bloques físicos
-				</p>
-				<table>
-					<thead>
-						<tr>
-							<th>Bloque físico</th>
-							<th>Tamaño</th>
-							<th>Réplica 1</th>
-							<th>Réplica 2</th>
-							<th>Réplica 3</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>BLK-101</td>
-							<td>128 MB</td>
-							<td>DataNode 1 (Rack 1)</td>
-							<td>DataNode 2 (Rack 1)</td>
-							<td>DataNode 3 (Rack 2)</td>
-						</tr>
-						<tr>
-							<td>BLK-102</td>
-							<td>128 MB</td>
-							<td>DataNode 2 (Rack 1)</td>
-							<td>DataNode 3 (Rack 2)</td>
-							<td>DataNode 4 (Rack 2)</td>
-						</tr>
-						<tr>
-							<td>BLK-103</td>
-							<td>64 MB</td>
-							<td>DataNode 3 (Rack 2)</td>
-							<td>DataNode 4 (Rack 2)</td>
-							<td>DataNode 1 (Rack 1)</td>
-						</tr>
-					</tbody>
-				</table>
-				<p class="small">Rack Awareness: las réplicas se distribuyen en distintos racks para evitar puntos
-					únicos de falla.</p>
+				<div class="slide-cards-layout">
+					<div class="stack">
+						<div class="card">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+								Tamaño de bloque
+							</h4>
+							<p class="rule">128 MB</p>
+							<p>Minimiza la sobrecarga de metadatos en el NameNode y optimiza lecturas secuenciales</p>
+						</div>
+						<div class="card">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+								Factor de replicación
+							</h4>
+							<p class="rule">3</p>
+							<p>Soporta la pérdida de hasta dos nodos sin pérdida de integridad</p>
+						</div>
+						<div class="card">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><line x1="3" y1="10" x2="9" y2="10"/></svg>
+								Particionamiento lógico
+							</h4>
+							<p class="rule">Temporal (año/mes) y por tipo de origen</p>
+							<p>Estructura <code>/data/raw/{origen}/año=YYYY/mes=MM/</code> optimiza el filtrado en ingesta</p>
+						</div>
+						<div class="card">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+								Formato de almacenamiento
+							</h4>
+							<p class="rule">Parquet + Snappy / JSON raw</p>
+							<p>Reduce el almacenamiento y acelera la descompresión en consultas analíticas</p>
+						</div>
+					</div>
+					<svg class="sim-redesign" viewBox="170 160 1260 555" width="100%" height="100%" role="img"
+					aria-label="Fase 2 · Simulación de distribución en el clúster"
+					xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<defs>
+						<!-- Filters -->
+						<filter id="sim2-card-shadow" x="-10%" y="-15%" width="125%" height="135%" filterUnits="userSpaceOnUse">
+							<feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45" />
+							<feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.25" />
+						</filter>
+
+						<!-- Gradients for Block Cards -->
+						<linearGradient id="sim2-card-blk101" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#0f2640" />
+							<stop offset="100%" stop-color="#0b1726" />
+						</linearGradient>
+						<linearGradient id="sim2-card-blk102" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#122045" />
+							<stop offset="100%" stop-color="#0b1429" />
+						</linearGradient>
+						<linearGradient id="sim2-card-blk103" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#0e2a2c" />
+							<stop offset="100%" stop-color="#091a1c" />
+						</linearGradient>
+
+						<!-- Gradient for DataNode cards -->
+						<linearGradient id="sim2-datanode-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#142036" />
+							<stop offset="100%" stop-color="#0d1626" />
+						</linearGradient>
+
+						<!-- Connector Paths for Motion and Lines -->
+						<path id="route-s2-c1" d="M 400 276 C 400 340, 390 360, 390 420" />
+						<path id="route-s2-c2" d="M 400 276 C 360 350, 350 490, 390 575" />
+						<path id="route-s2-c3" d="M 400 276 C 420 350, 920 340, 970 420" />
+						<path id="route-s2-b1" d="M 800 276 C 780 370, 570 480, 580 575" />
+						<path id="route-s2-b2" d="M 800 276 C 820 340, 1040 350, 1080 420" />
+						<path id="route-s2-g1" d="M 1200 276 C 1140 330, 640 330, 580 420" />
+						<path id="route-s2-g2" d="M 1200 276 C 1200 340, 1190 360, 1190 420" />
+						<path id="route-s2-b3" d="M 800 276 C 780 330, 510 330, 470 420" />
+						<path id="route-s2-g3" d="M 1200 276 C 1100 340, 560 420, 470 575" />
+					</defs>
+
+					<!-- ================= TOP ROW: BLOCKS ================= -->
+					<!-- Card 1: BLK-101 (Cyan) -->
+					<g filter="url(#sim2-card-shadow)">
+						<rect x="230" y="180" width="340" height="88" rx="16" fill="url(#sim2-card-blk101)" stroke="#0cb7f2" stroke-width="1.6" />
+						<!-- 3D Cube Icon -->
+						<g transform="translate(254, 202)">
+							<!-- Top face -->
+							<polygon points="22,3 42,13 22,23 2,13" fill="#38d1ff" stroke="#05090f" stroke-width="1" />
+							<!-- Left face -->
+							<polygon points="2,13 22,23 22,43 2,33" fill="#0cb7f2" stroke="#05090f" stroke-width="1" />
+							<!-- Right face -->
+							<polygon points="22,23 42,13 42,33 22,43" fill="#0786b0" stroke="#05090f" stroke-width="1" />
+						</g>
+						<text x="315" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#0cb7f2">BLK-101</text>
+						<text x="315" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">128 MB · 3 Réplicas</text>
+					</g>
+
+					<!-- Card 2: BLK-102 (Blue) -->
+					<g filter="url(#sim2-card-shadow)">
+						<rect x="630" y="180" width="340" height="88" rx="16" fill="url(#sim2-card-blk102)" stroke="#3b82f6" stroke-width="1.6" />
+						<!-- 3D Cube Icon -->
+						<g transform="translate(654, 202)">
+							<!-- Top face -->
+							<polygon points="22,3 42,13 22,23 2,13" fill="#60a5fa" stroke="#05090f" stroke-width="1" />
+							<!-- Left face -->
+							<polygon points="2,13 22,23 22,43 2,33" fill="#3b82f6" stroke="#05090f" stroke-width="1" />
+							<!-- Right face -->
+							<polygon points="22,23 42,13 42,33 22,43" fill="#1d4ed8" stroke="#05090f" stroke-width="1" />
+						</g>
+						<text x="715" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#60a5fa">BLK-102</text>
+						<text x="715" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">128 MB · 3 Réplicas</text>
+					</g>
+
+					<!-- Card 3: BLK-103 (Green) -->
+					<g filter="url(#sim2-card-shadow)">
+						<rect x="1030" y="180" width="340" height="88" rx="16" fill="url(#sim2-card-blk103)" stroke="#10b981" stroke-width="1.6" />
+						<!-- 3D Cube Icon -->
+						<g transform="translate(1054, 202)">
+							<!-- Top face -->
+							<polygon points="22,3 42,13 22,23 2,13" fill="#34d399" stroke="#05090f" stroke-width="1" />
+							<!-- Left face -->
+							<polygon points="2,13 22,23 22,43 2,33" fill="#10b981" stroke="#05090f" stroke-width="1" />
+							<!-- Right face -->
+							<polygon points="22,23 42,13 42,33 22,43" fill="#047857" stroke="#05090f" stroke-width="1" />
+						</g>
+						<text x="1115" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#10b981">BLK-103</text>
+						<text x="1115" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">64 MB · 3 Réplicas</text>
+					</g>
+
+					<!-- ================= RACK 1 (LEFT) ================= -->
+					<!-- Rack 1 Container -->
+					<rect x="180" y="365" width="580" height="340" rx="20" fill="rgba(10, 18, 32, 0.45)" stroke="rgba(56, 189, 248, 0.22)" stroke-width="1.4" stroke-dasharray="6 6" />
+					<!-- Rack 1 Label Badge -->
+					<rect x="370" y="348" width="200" height="28" rx="14" fill="#0c1728" stroke="rgba(12, 183, 242, 0.4)" stroke-width="1.2" />
+					<text x="470" y="367" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" letter-spacing="2" fill="#7dd3fc">RACK 1 · DOMINIO A</text>
+
+					<!-- DataNode 1 -->
+					<g filter="url(#sim2-card-shadow)">
+						<rect x="220" y="420" width="500" height="88" rx="16" fill="url(#sim2-datanode-grad)" stroke="#1e3252" stroke-width="1.5" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(396, 439)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#0cb7f2" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#0cb7f2" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#0cb7f2" />
+						</g>
+						<text x="434" y="455" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#ffffff">DataNode 1</text>
+						<!-- Centered Status Pill -->
+						<rect x="415" y="469" width="110" height="24" rx="12" fill="rgba(12, 183, 242, 0.12)" stroke="rgba(12, 183, 242, 0.35)" stroke-width="1" />
+						<text x="470" y="485" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#38d1ff">ACTIVO</text>
+					</g>
+					<!-- DataNode 2 -->
+					<g filter="url(#sim2-card-shadow)">
+						<rect x="220" y="575" width="500" height="88" rx="16" fill="url(#sim2-datanode-grad)" stroke="#1e3252" stroke-width="1.5" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(396, 594)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#0cb7f2" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#0cb7f2" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#0cb7f2" />
+						</g>
+						<text x="434" y="610" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#ffffff">DataNode 2</text>
+						<!-- Centered Status Pill -->
+						<rect x="415" y="624" width="110" height="24" rx="12" fill="rgba(12, 183, 242, 0.12)" stroke="rgba(12, 183, 242, 0.35)" stroke-width="1" />
+						<text x="470" y="640" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#38d1ff">ACTIVO</text>
+					</g>
+					<!-- ================= RACK 2 (RIGHT) ================= -->
+					<!-- Rack 2 Container -->
+					<rect x="840" y="365" width="580" height="340" rx="20" fill="rgba(10, 18, 32, 0.45)" stroke="rgba(56, 189, 248, 0.22)" stroke-width="1.4" stroke-dasharray="6 6" />
+					<!-- Rack 2 Label Badge -->
+					<rect x="1030" y="348" width="200" height="28" rx="14" fill="#0c1728" stroke="rgba(12, 183, 242, 0.4)" stroke-width="1.2" />
+					<text x="1130" y="367" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" letter-spacing="2" fill="#7dd3fc">RACK 2 · DOMINIO B</text>
+
+					<!-- DataNode 3 -->
+					<g filter="url(#sim2-card-shadow)">
+						<rect x="880" y="420" width="500" height="88" rx="16" fill="url(#sim2-datanode-grad)" stroke="#1e3252" stroke-width="1.5" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(1056, 439)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#0cb7f2" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#0cb7f2" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#0cb7f2" />
+						</g>
+						<text x="1094" y="455" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#ffffff">DataNode 3</text>
+						<!-- Centered Status Pill -->
+						<rect x="1075" y="469" width="110" height="24" rx="12" fill="rgba(12, 183, 242, 0.12)" stroke="rgba(12, 183, 242, 0.35)" stroke-width="1" />
+						<text x="1130" y="485" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#38d1ff">ACTIVO</text>
+					</g>
+					<!-- DataNode 4 -->
+					<g filter="url(#sim2-card-shadow)" opacity="0.65">
+						<rect x="880" y="575" width="500" height="88" rx="16" fill="#101a2b" stroke="#2d3d58" stroke-width="1.5" stroke-dasharray="6 6" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(1056, 594)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#64748b" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#64748b" />
+						</g>
+						<text x="1094" y="610" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#94a3b8">DataNode 4</text>
+						<!-- Centered Standby Pill -->
+						<rect x="1075" y="624" width="110" height="24" rx="12" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(148, 163, 184, 0.25)" stroke-width="1" />
+						<text x="1130" y="640" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#94a3b8">STANDBY</text>
+					</g>
+					<!-- ================= CONNECTOR PATHS ================= -->
+					<!-- Cyan lines (BLK-101) -->
+					<!-- To DataNode 1 R1 -->
+					<path d="M 400 276 C 400 340, 390 360, 390 420" fill="none" stroke="#0cb7f2" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 2 R2 -->
+					<path d="M 400 276 C 360 350, 350 490, 390 575" fill="none" stroke="#0cb7f2" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 3 R3 (Rack 2) -->
+					<path d="M 400 276 C 420 350, 920 340, 970 420" fill="none" stroke="#0cb7f2" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 4 (STANDBY) -->
+					<path d="M 400 276 C 440 360, 1080 400, 1130 575" fill="none" stroke="#55707f" stroke-width="1.8" stroke-opacity="0.22" stroke-dasharray="4 6" />
+
+					<!-- Blue lines (BLK-102) -->
+					<!-- To DataNode 2 R1 -->
+					<path d="M 800 276 C 780 370, 570 480, 580 575" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 1 -->
+					<path d="M 800 276 C 780 330, 510 330, 470 420" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 3 R2 (Rack 2) -->
+					<path d="M 800 276 C 820 340, 1040 350, 1080 420" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 4 R3 (STANDBY) -->
+					<path d="M 800 276 C 820 380, 1010 490, 1025 575" fill="none" stroke="#55707f" stroke-width="1.8" stroke-opacity="0.22" stroke-dasharray="4 6" />
+
+					<!-- Green lines (BLK-103) -->
+					<!-- To DataNode 1 R3 (Rack 1) -->
+					<path d="M 1200 276 C 1140 330, 640 330, 580 420" fill="none" stroke="#10b981" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 2 -->
+					<path d="M 1200 276 C 1100 340, 560 420, 470 575" fill="none" stroke="#10b981" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 3 R1 (Rack 2) -->
+					<path d="M 1200 276 C 1200 340, 1190 360, 1190 420" fill="none" stroke="#10b981" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 4 R2 (STANDBY) -->
+					<path d="M 1200 276 C 1230 350, 1225 490, 1190 575" fill="none" stroke="#55707f" stroke-width="1.8" stroke-opacity="0.22" stroke-dasharray="4 6" />
+
+					<!-- ================= ANIMATED DATA STREAM PARTICLES ================= -->
+					<!-- Particles from BLK-101 to DataNode 1 R1 -->
+					<g>
+						<circle r="5" fill="#0cb7f2" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="0s">
+							<mpath href="#route-s2-c1" xlink:href="#route-s2-c1" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-101 to DataNode 2 R2 -->
+					<g>
+						<circle r="5" fill="#0cb7f2" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="0.6s">
+							<mpath href="#route-s2-c2" xlink:href="#route-s2-c2" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-101 to DataNode 3 R3 (Rack 2) -->
+					<g>
+						<circle r="5" fill="#0cb7f2" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="4.6s" repeatCount="indefinite" begin="1.2s">
+							<mpath href="#route-s2-c3" xlink:href="#route-s2-c3" />
+						</animateMotion>
+					</g>
+
+					<!-- Particles from BLK-102 to DataNode 2 R1 -->
+					<g>
+						<circle r="5" fill="#3b82f6" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="1.8s">
+							<mpath href="#route-s2-b1" xlink:href="#route-s2-b1" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-102 to DataNode 1 -->
+					<g>
+						<circle r="5" fill="#3b82f6" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="3.6s" repeatCount="indefinite" begin="0.6s">
+							<mpath href="#route-s2-b3" xlink:href="#route-s2-b3" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-102 to DataNode 3 R2 (Rack 2) -->
+					<g>
+						<circle r="5" fill="#3b82f6" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="3.2s" repeatCount="indefinite" begin="0.3s">
+							<mpath href="#route-s2-b2" xlink:href="#route-s2-b2" />
+						</animateMotion>
+					</g>
+
+					<!-- Particles from BLK-103 to DataNode 1 R3 (Rack 1) -->
+					<g>
+						<circle r="5" fill="#10b981" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="4.6s" repeatCount="indefinite" begin="0.9s">
+							<mpath href="#route-s2-g1" xlink:href="#route-s2-g1" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-103 to DataNode 2 -->
+					<g>
+						<circle r="5" fill="#10b981" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="3.6s" repeatCount="indefinite" begin="1.4s">
+							<mpath href="#route-s2-g3" xlink:href="#route-s2-g3" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-103 to DataNode 3 R1 (Rack 2) -->
+					<g>
+						<circle r="5" fill="#10b981" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="1.5s">
+							<mpath href="#route-s2-g2" xlink:href="#route-s2-g2" />
+						</animateMotion>
+					</g>
+
+					
+
+
+
+				</svg>
+				</div>
 			</section>
 
-			<!-- 8 · Fase 2: tolerancia a fallos -->
+			<!-- 9 · Fase 2: tolerancia a fallos -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
@@ -1184,6 +903,7 @@
 						<span class="head-line"></span>
 					</div>
 					<h2>Tolerancia a fallos · caída de DataNode 2</h2>
+					<p class="sub">Detección de ausencia de heartbeats y recuperación de réplicas</p>
 				</div>
 				<div class="step">
 					<p class="fragment"><span class="n">1</span>El NameNode detecta la ausencia de heartbeats (10
@@ -1195,12 +915,369 @@
 				</div>
 			</section>
 
-			<!-- 9 · Fase 3: modelo de continuidad -->
+			<!-- 9.1 · Fase 2: simulación de tolerancia a fallos · caída de DataNode 2 -->
+			<section class="slide-sim-redesign slide-title-top">
+				<div class="slide-head">
+					<div class="head-badge">
+						<span class="head-line"></span>
+						<span class="head-pill">Fase 2 · Tolerancia a fallos</span>
+						<span class="head-line"></span>
+					</div>
+					<h2>Simulación de tolerancia a fallos · caída de DataNode 2</h2>
+					<p class="sub">Dataset consolidado de 320 MB · caída de DataNode 2 · réplicas redirigidas a DataNode 4</p>
+				</div>
+				<div class="slide-cards-layout">
+					<div class="stack">
+						<div class="card card-alert">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+								Detección de falla
+							</h4>
+							<p class="rule">Heartbeat Timeout (10m)</p>
+							<p>DataNode 2 deja de reportar al NameNode. Se marca el nodo como no disponible.</p>
+						</div>
+						<div class="card card-success">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+								Re-replicación activa
+							</h4>
+							<p class="rule">DataNode 4 activado</p>
+							<p>NameNode comanda clonación inmediata de bloques sanos hacia el nodo en standby.</p>
+						</div>
+						<div class="card card-success">
+							<h4>
+								<svg class="card-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+								Integridad restaurada
+							</h4>
+							<p class="rule">Cero Downtime · Factor 3</p>
+							<p>Se restablece el factor de redundancia 3 sin interrumpir la operación del clúster.</p>
+						</div>
+					</div>
+					<svg class="sim-redesign" viewBox="170 160 1260 555" width="100%" height="100%" role="img"
+					aria-label="Fase 2 · Simulación de tolerancia a fallos · caída de DataNode 2"
+					xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<defs>
+						<!-- Filters -->
+						<filter id="sim3-card-shadow" x="-10%" y="-15%" width="125%" height="135%" filterUnits="userSpaceOnUse">
+							<feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45" />
+							<feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.25" />
+						</filter>
+
+						<!-- Gradients for Block Cards -->
+						<linearGradient id="sim3-card-blk101" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#0f2640" />
+							<stop offset="100%" stop-color="#0b1726" />
+						</linearGradient>
+						<linearGradient id="sim3-card-blk102" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#122045" />
+							<stop offset="100%" stop-color="#0b1429" />
+						</linearGradient>
+						<linearGradient id="sim3-card-blk103" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#0e2a2c" />
+							<stop offset="100%" stop-color="#091a1c" />
+						</linearGradient>
+
+						<!-- Gradient for DataNode cards -->
+						<linearGradient id="sim3-datanode-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" stop-color="#142036" />
+							<stop offset="100%" stop-color="#0d1626" />
+						</linearGradient>
+
+						<!-- Connector Paths for Motion and Lines -->
+						<path id="route-s3-c1" d="M 400 276 C 400 340, 390 360, 390 420" />
+						<path id="route-s3-c2" d="M 400 276 C 360 350, 350 490, 390 575" />
+						<path id="route-s3-c3" d="M 400 276 C 420 350, 920 340, 970 420" />
+						<path id="route-s3-b1" d="M 800 276 C 780 370, 570 480, 580 575" />
+						<path id="route-s3-b2" d="M 800 276 C 820 340, 1040 350, 1080 420" />
+						<path id="route-s3-g1" d="M 1200 276 C 1140 330, 640 330, 580 420" />
+						<path id="route-s3-g2" d="M 1200 276 C 1200 340, 1190 360, 1190 420" />
+						<path id="route-s3-b3" d="M 800 276 C 780 330, 510 330, 470 420" />
+						<path id="route-s3-g3" d="M 1200 276 C 1100 340, 560 420, 470 575" />
+						<path id="route-s3-c4" d="M 400 276 C 440 360, 1080 400, 1130 575" />
+						<path id="route-s3-b4" d="M 800 276 C 820 380, 1010 490, 1025 575" />
+						<path id="route-s3-g4" d="M 1200 276 C 1230 350, 1225 490, 1190 575" />
+					</defs>
+
+					<!-- ================= TOP ROW: BLOCKS ================= -->
+					<!-- Card 1: BLK-101 (Cyan) -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="230" y="180" width="340" height="88" rx="16" fill="url(#sim3-card-blk101)" stroke="#0cb7f2" stroke-width="1.6" />
+						<!-- 3D Cube Icon -->
+						<g transform="translate(254, 202)">
+							<!-- Top face -->
+							<polygon points="22,3 42,13 22,23 2,13" fill="#38d1ff" stroke="#05090f" stroke-width="1" />
+							<!-- Left face -->
+							<polygon points="2,13 22,23 22,43 2,33" fill="#0cb7f2" stroke="#05090f" stroke-width="1" />
+							<!-- Right face -->
+							<polygon points="22,23 42,13 42,33 22,43" fill="#0786b0" stroke="#05090f" stroke-width="1" />
+						</g>
+						<text x="315" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#0cb7f2">BLK-101</text>
+						<text x="315" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">128 MB · 3 Réplicas</text>
+					</g>
+
+					<!-- Card 2: BLK-102 (Blue) -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="630" y="180" width="340" height="88" rx="16" fill="url(#sim3-card-blk102)" stroke="#3b82f6" stroke-width="1.6" />
+						<!-- 3D Cube Icon -->
+						<g transform="translate(654, 202)">
+							<!-- Top face -->
+							<polygon points="22,3 42,13 22,23 2,13" fill="#60a5fa" stroke="#05090f" stroke-width="1" />
+							<!-- Left face -->
+							<polygon points="2,13 22,23 22,43 2,33" fill="#3b82f6" stroke="#05090f" stroke-width="1" />
+							<!-- Right face -->
+							<polygon points="22,23 42,13 42,33 22,43" fill="#1d4ed8" stroke="#05090f" stroke-width="1" />
+						</g>
+						<text x="715" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#60a5fa">BLK-102</text>
+						<text x="715" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">128 MB · 3 Réplicas</text>
+					</g>
+
+					<!-- Card 3: BLK-103 (Green) -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="1030" y="180" width="340" height="88" rx="16" fill="url(#sim3-card-blk103)" stroke="#10b981" stroke-width="1.6" />
+						<!-- 3D Cube Icon -->
+						<g transform="translate(1054, 202)">
+							<!-- Top face -->
+							<polygon points="22,3 42,13 22,23 2,13" fill="#34d399" stroke="#05090f" stroke-width="1" />
+							<!-- Left face -->
+							<polygon points="2,13 22,23 22,43 2,33" fill="#10b981" stroke="#05090f" stroke-width="1" />
+							<!-- Right face -->
+							<polygon points="22,23 42,13 42,33 22,43" fill="#047857" stroke="#05090f" stroke-width="1" />
+						</g>
+						<text x="1115" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#10b981">BLK-103</text>
+						<text x="1115" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">64 MB · 3 Réplicas</text>
+					</g>
+
+					<!-- ================= RACK 1 (LEFT) ================= -->
+					<!-- Rack 1 Container -->
+					<rect x="180" y="365" width="580" height="340" rx="20" fill="rgba(10, 18, 32, 0.45)" stroke="rgba(56, 189, 248, 0.22)" stroke-width="1.4" stroke-dasharray="6 6" />
+					<!-- Rack 1 Label Badge -->
+					<rect x="370" y="348" width="200" height="28" rx="14" fill="#0c1728" stroke="rgba(12, 183, 242, 0.4)" stroke-width="1.2" />
+					<text x="470" y="367" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" letter-spacing="2" fill="#7dd3fc">RACK 1 · DOMINIO A</text>
+
+					<!-- DataNode 1 -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="220" y="420" width="500" height="88" rx="16" fill="url(#sim3-datanode-grad)" stroke="#1e3252" stroke-width="1.5" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(396, 439)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#0cb7f2" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#0cb7f2" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#0cb7f2" />
+						</g>
+						<text x="434" y="455" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#ffffff">DataNode 1</text>
+						<!-- Centered Status Pill -->
+						<rect x="415" y="469" width="110" height="24" rx="12" fill="rgba(12, 183, 242, 0.12)" stroke="rgba(12, 183, 242, 0.35)" stroke-width="1" />
+						<text x="470" y="485" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#38d1ff">ACTIVO</text>
+					</g>
+					<!-- DataNode 2 -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="220" y="575" width="500" height="88" rx="16" fill="#180b0e" stroke="#ef4444" stroke-width="2.2" />
+						<!-- Server Blade Icon (Error) -->
+						<g transform="translate(396, 594)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#12080a" stroke="#ef4444" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#ef4444" />
+						</g>
+						<text x="434" y="610" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#fca5a5">DataNode 2</text>
+						<!-- Centered Alert Pill -->
+						<rect x="420" y="624" width="100" height="24" rx="12" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="1.2" />
+						<text x="470" y="640" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="1.5" fill="#fca5a5">CAÍDO</text>
+					</g>
+					<!-- ================= RACK 2 (RIGHT) ================= -->
+					<!-- Rack 2 Container -->
+					<rect x="840" y="365" width="580" height="340" rx="20" fill="rgba(10, 18, 32, 0.45)" stroke="rgba(56, 189, 248, 0.22)" stroke-width="1.4" stroke-dasharray="6 6" />
+					<!-- Rack 2 Label Badge -->
+					<rect x="1030" y="348" width="200" height="28" rx="14" fill="#0c1728" stroke="rgba(12, 183, 242, 0.4)" stroke-width="1.2" />
+					<text x="1130" y="367" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" letter-spacing="2" fill="#7dd3fc">RACK 2 · DOMINIO B</text>
+
+					<!-- DataNode 3 -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="880" y="420" width="500" height="88" rx="16" fill="url(#sim3-datanode-grad)" stroke="#1e3252" stroke-width="1.5" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(1056, 439)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#0cb7f2" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#0cb7f2" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#0cb7f2" />
+						</g>
+						<text x="1094" y="455" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#ffffff">DataNode 3</text>
+						<!-- Centered Status Pill -->
+						<rect x="1075" y="469" width="110" height="24" rx="12" fill="rgba(12, 183, 242, 0.12)" stroke="rgba(12, 183, 242, 0.35)" stroke-width="1" />
+						<text x="1130" y="485" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#38d1ff">ACTIVO</text>
+					</g>
+					<!-- DataNode 4 -->
+					<g filter="url(#sim3-card-shadow)">
+						<rect x="880" y="575" width="500" height="88" rx="16" fill="url(#sim3-datanode-grad)" stroke="#0cb7f2" stroke-width="2.2" />
+						<!-- Server Blade Icon -->
+						<g transform="translate(1056, 594)">
+							<rect x="0" y="0" width="28" height="18" rx="4" fill="#07111e" stroke="#0cb7f2" stroke-width="1.6" />
+							<line x1="5" y1="9" x2="15" y2="9" stroke="#0cb7f2" stroke-width="1.8" stroke-linecap="round" />
+							<circle cx="21" cy="9" r="2" fill="#0cb7f2" />
+						</g>
+						<text x="1094" y="610" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#38d1ff">DataNode 4</text>
+						<!-- Centered Active Recovery Pill -->
+						<rect x="1035" y="624" width="190" height="24" rx="12" fill="rgba(12, 183, 242, 0.2)" stroke="#0cb7f2" stroke-width="1.2" />
+						<text x="1130" y="640" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="1.2" fill="#38d1ff">RECUPERANDO RÉPLICAS</text>
+					</g>
+					<!-- ================= CONNECTOR PATHS ================= -->
+					<!-- Cyan lines (BLK-101) -->
+					<!-- To DataNode 1 R1 -->
+					<path d="M 400 276 C 400 340, 390 360, 390 420" fill="none" stroke="#0cb7f2" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 2 R2 -->
+					<path d="M 400 276 C 360 350, 350 490, 390 575" fill="none" stroke="#ef4444" stroke-width="2" stroke-opacity="0.35" stroke-dasharray="6 4" />
+					<!-- To DataNode 3 R3 (Rack 2) -->
+					<path d="M 400 276 C 420 350, 920 340, 970 420" fill="none" stroke="#0cb7f2" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 4 (ACTIVADO) -->
+					<path d="M 400 276 C 440 360, 1080 400, 1130 575" fill="none" stroke="#0cb7f2" stroke-width="2.2" stroke-opacity="0.85" />
+
+					<!-- Blue lines (BLK-102) -->
+					<!-- To DataNode 2 R1 -->
+					<path d="M 800 276 C 780 370, 570 480, 580 575" fill="none" stroke="#ef4444" stroke-width="2" stroke-opacity="0.35" stroke-dasharray="6 4" />
+					<!-- To DataNode 1 -->
+					<path d="M 800 276 C 780 330, 510 330, 470 420" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 3 R2 (Rack 2) -->
+					<path d="M 800 276 C 820 340, 1040 350, 1080 420" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 4 R3 (ACTIVADO) -->
+					<path d="M 800 276 C 820 380, 1010 490, 1025 575" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-opacity="0.85" />
+
+					<!-- Green lines (BLK-103) -->
+					<!-- To DataNode 1 R3 (Rack 1) -->
+					<path d="M 1200 276 C 1140 330, 640 330, 580 420" fill="none" stroke="#10b981" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 2 -->
+					<path d="M 1200 276 C 1100 340, 560 420, 470 575" fill="none" stroke="#ef4444" stroke-width="2" stroke-opacity="0.35" stroke-dasharray="6 4" />
+					<!-- To DataNode 3 R1 (Rack 2) -->
+					<path d="M 1200 276 C 1200 340, 1190 360, 1190 420" fill="none" stroke="#10b981" stroke-width="2.2" stroke-opacity="0.85" />
+					<!-- To DataNode 4 R2 (ACTIVADO) -->
+					<path d="M 1200 276 C 1230 350, 1225 490, 1190 575" fill="none" stroke="#10b981" stroke-width="2.2" stroke-opacity="0.85" />
+
+					<!-- ================= ANIMATED DATA STREAM PARTICLES ================= -->
+					<!-- Particles from BLK-101 to DataNode 1 R1 -->
+					<g>
+						<circle r="5" fill="#0cb7f2" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="0s">
+							<mpath href="#route-s3-c1" xlink:href="#route-s3-c1" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-101 to DataNode 4 (tras falla) -->
+					<g>
+						<circle r="5" fill="#0cb7f2" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="0.6s">
+							<mpath href="#route-s3-c4" xlink:href="#route-s3-c4" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-101 to DataNode 3 R3 (Rack 2) -->
+					<g>
+						<circle r="5" fill="#0cb7f2" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="4.6s" repeatCount="indefinite" begin="1.2s">
+							<mpath href="#route-s3-c3" xlink:href="#route-s3-c3" />
+						</animateMotion>
+					</g>
+
+					<!-- Particles from BLK-102 to DataNode 4 (tras falla) -->
+					<g>
+						<circle r="5" fill="#3b82f6" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="1.8s">
+							<mpath href="#route-s3-b4" xlink:href="#route-s3-b4" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-102 to DataNode 1 -->
+					<g>
+						<circle r="5" fill="#3b82f6" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="3.6s" repeatCount="indefinite" begin="0.6s">
+							<mpath href="#route-s3-b3" xlink:href="#route-s3-b3" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-102 to DataNode 3 R2 (Rack 2) -->
+					<g>
+						<circle r="5" fill="#3b82f6" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="3.2s" repeatCount="indefinite" begin="0.3s">
+							<mpath href="#route-s3-b2" xlink:href="#route-s3-b2" />
+						</animateMotion>
+					</g>
+
+					<!-- Particles from BLK-103 to DataNode 1 R3 (Rack 1) -->
+					<g>
+						<circle r="5" fill="#10b981" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="4.6s" repeatCount="indefinite" begin="0.9s">
+							<mpath href="#route-s3-g1" xlink:href="#route-s3-g1" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-103 to DataNode 4 (tras falla) -->
+					<g>
+						<circle r="5" fill="#10b981" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="3.6s" repeatCount="indefinite" begin="1.4s">
+							<mpath href="#route-s3-g4" xlink:href="#route-s3-g4" />
+						</animateMotion>
+					</g>
+					<!-- Particles from BLK-103 to DataNode 3 R1 (Rack 2) -->
+					<g>
+						<circle r="5" fill="#10b981" opacity="0.3" />
+						<circle r="2.5" fill="#ffffff" />
+						<animateMotion dur="2.4s" repeatCount="indefinite" begin="1.5s">
+							<mpath href="#route-s3-g2" xlink:href="#route-s3-g2" />
+						</animateMotion>
+					</g>
+
+					
+
+
+
+				</svg>
+				</div>
+			</section>
+
+			<!-- Fase 3: Introducción -->
+			<section class="slide-fase-intro">
+				<div class="fase-intro-container">
+					<div class="fase-intro-badge">
+						<span class="badge-dot"></span>
+						<span class="badge-text">Analítica Avanzada & NoSQL</span>
+					</div>
+					<div class="fase-intro-title-block">
+						<span class="fase-intro-number">Fase 3</span>
+						<h2 class="fase-intro-title">Procesamiento NoSQL y Modelado Predictivo</h2>
+					</div>
+					<p class="fase-intro-desc">
+						Estructuración de datos en colecciones MongoDB para consultas de alto rendimiento y entrenamiento de algoritmos de Machine Learning que predicen la continuidad del practicante y detectan riesgos de deserción temprana.
+					</p>
+					<div class="fase-intro-cards">
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+								<h3 class="fase-intro-card-title">Pipelines de MongoDB</h3>
+							</div>
+							<p class="fase-intro-card-text">Etapas de <code>$unwind</code>, <code>$group</code> y <code>$project</code> para agregaciones directas sin bloqueos relacionales.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+								<h3 class="fase-intro-card-title">Modelos Predictivos</h3>
+							</div>
+							<p class="fase-intro-card-text">Clasificación de probabilidad de continuidad semestral y detección de practicantes con bajo desempeño.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+								<h3 class="fase-intro-card-title">Simulador Interactivo</h3>
+							</div>
+							<p class="fase-intro-card-text">Calculadora integrada en tiempo real para simular scoring probabilístico según horas, incidentes y sede.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 10 · Fase 3: modelo de continuidad -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
 						<span class="head-line"></span>
-						<span class="head-pill">Fase 3 · A. Modelado Predictivo</span>
+						<span class="head-pill">Fase 3 · Modelado Predictivo</span>
 						<span class="head-line"></span>
 					</div>
 					<h2>Probabilidad de Continuidad del Practicante al Siguiente Semestre</h2>
@@ -1216,8 +1293,7 @@
 							priorizar oportunidades y entrevistas.</p>
 
 						<h4>3. Describir la predicción a realizar:</h4>
-						<p>El modelo calculará el porcentaje de probabilidad de que un practicante presente bajo
-							desempeño el próximo mes.</p>
+						<p>Predecir si cada practicante activo continuará en la empresa el siguiente semestre (1 = continuará, 0 = no continuará) para priorizar retención y planificar cupos.</p>
 					</div>
 					<div class="pred-table-col">
 						<h4 class="pred-table-title">4. Matriz de Variables (Diccionario de Predicción):</h4>
@@ -1233,7 +1309,7 @@
 								<tr>
 									<td>continuara_siguiente_semestre</td>
 									<td>Dependiente</td>
-									<td>Cualitativa continua</td>
+									<td>Cualitativa binaria</td>
 								</tr>
 								<tr>
 									<td>horas_cumplidas_periodo</td>
@@ -1266,12 +1342,12 @@
 				</div>
 			</section>
 
-			<!-- 10 · Fase 3: riesgo de bajo desempeño -->
+			<!-- 11 · Fase 3: riesgo de bajo desempeño -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
 						<span class="head-line"></span>
-						<span class="head-pill">Fase 3 · A. Modelado Predictivo</span>
+						<span class="head-pill">Fase 3 · Modelado Predictivo</span>
 						<span class="head-line"></span>
 					</div>
 					<h2>Predicción de Riesgo de Bajo Desempeño Mensual de los Practicantes</h2>
@@ -1336,7 +1412,141 @@
 				</div>
 			</section>
 
-			<!-- 11 · Fase 3: tabla de evaluación del practicante -->
+			<!-- 12 · Fase 3: calculadora predictiva interactiva -->
+			<section>
+				<div class="slide-head">
+					<div class="head-badge">
+						<span class="head-line"></span>
+						<span class="head-pill">Fase 3 · Simulador Interactivo</span>
+						<span class="head-line"></span>
+					</div>
+					<h2>Calculadora Predictiva · Gestión y Retención</h2>
+					<p class="sub">Simulador en tiempo real de los modelos predictivos de APM Inversiones EIRL</p>
+				</div>
+
+				<div id="pred-calculator" class="calc-container" data-prevent-swipe>
+					<!-- Columna Izquierda: Variables de Entrada -->
+					<div class="calc-card">
+						<div class="calc-tabs">
+							<button type="button" id="tab-continuidad" class="calc-tab-btn active">
+								<svg class="calc-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+								<span>Modelo 1: Continuidad Semestral</span>
+							</button>
+							<button type="button" id="tab-desempeno" class="calc-tab-btn">
+								<svg class="calc-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+								<span>Modelo 2: Riesgo Bajo Desempeño</span>
+							</button>
+						</div>
+
+						<div class="calc-presets">
+							<span class="calc-presets-label">Perfiles tipo:</span>
+							<button type="button" id="preset-destacado" class="calc-preset-btn">
+								<svg class="calc-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+								<span>Sobresaliente</span>
+							</button>
+							<button type="button" id="preset-seguimiento" class="calc-preset-btn">
+								<svg class="calc-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+								<span>Promedio</span>
+							</button>
+							<button type="button" id="preset-riesgo" class="calc-preset-btn">
+								<svg class="calc-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+								<span>En Riesgo</span>
+							</button>
+						</div>
+
+						<div class="calc-form-grid">
+							<div class="calc-field" id="calc-field-nota">
+								<div class="calc-field-header">
+									<span>Nota Promedio del Período (/20)</span>
+									<span id="calc-val-nota" class="calc-field-val">15.0 / 20</span>
+								</div>
+								<input type="range" id="calc-nota" class="calc-slider" min="0" max="20" step="0.5" value="15.0" />
+							</div>
+
+							<div class="calc-field">
+								<div class="calc-field-header">
+									<span id="calc-label-horas">Cumplimiento de Horas (% del Periodo)</span>
+									<span id="calc-val-horas" class="calc-field-val">90%</span>
+								</div>
+								<input type="range" id="calc-horas" class="calc-slider" min="40" max="110" step="1" value="90" />
+							</div>
+
+							<div class="calc-field">
+								<div class="calc-field-header">
+									<span>Faltas Injustificadas Acumuladas</span>
+									<span id="calc-val-faltas" class="calc-field-val">0 faltas</span>
+								</div>
+								<input type="range" id="calc-faltas" class="calc-slider" min="0" max="8" step="1" value="0" />
+							</div>
+
+							<div class="calc-field">
+								<div class="calc-field-header">
+									<span>Tipo de Justificación Más Frecuente</span>
+								</div>
+								<div class="calc-pill-group">
+									<div class="calc-pill-option calc-justif-btn selected" data-val="academica">Académica</div>
+									<div class="calc-pill-option calc-justif-btn" data-val="medica">Médica</div>
+									<div class="calc-pill-option calc-justif-btn" data-val="personal">Personal</div>
+									<div class="calc-pill-option calc-justif-btn" data-val="sin_justificar">Sin Justificar</div>
+								</div>
+							</div>
+
+							<div class="calc-field">
+								<div class="calc-field-header">
+									<span>Registro de Incidentes Disciplinarios</span>
+								</div>
+								<div class="calc-pill-group">
+									<div class="calc-pill-option calc-inc-btn selected" data-val="0">Sin Incidentes (0)</div>
+									<div class="calc-pill-option calc-inc-btn" data-val="1">Con Reportes (1)</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Columna Derecha: Resultados y Recomendación -->
+					<div class="calc-card">
+						<div class="calc-results-panel">
+							<div class="calc-metric-box">
+								<div id="calc-metric-title" class="calc-metric-title">Probabilidad de Continuidad al Siguiente Semestre</div>
+								<div id="calc-metric-number" class="calc-metric-number">--%</div>
+								<div class="calc-progress-track">
+									<div id="calc-progress-bar" class="calc-progress-bar"></div>
+								</div>
+								<div class="calc-badges-row">
+									<span id="calc-badge-prediction" class="calc-badge calc-badge-prediction">Predicción: --</span>
+									<span id="calc-badge-level" class="calc-badge calc-badge-level">Rango: --</span>
+								</div>
+							</div>
+
+							<div class="calc-submetrics">
+								<div class="calc-subcard">
+									<div id="calc-sub1-title" class="calc-subcard-title">Horas Efectivas vs Meta</div>
+									<div id="calc-sub1-val" class="calc-subcard-val">--</div>
+								</div>
+								<div class="calc-subcard">
+									<div id="calc-sub2-title" class="calc-subcard-title">Impacto Disciplinario</div>
+									<div id="calc-sub2-val" class="calc-subcard-val">--</div>
+								</div>
+							</div>
+
+							<div class="calc-action-card">
+								<div id="calc-action-badge" class="calc-action-badge">Recomendación de Negocio</div>
+								<p id="calc-action-desc" class="calc-action-desc">Evaluando variables...</p>
+							</div>
+
+							<div class="calc-formula-card">
+								<div class="calc-formula-header">
+									<span>Fundamento Matemático · Función Sigmoide Logística</span>
+									<span id="calc-formula-desc">P = 1 / (1 + e^(-z))</span>
+								</div>
+								<p id="calc-formula-code" class="calc-formula-code">z = ...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 13 · Fase 3: tabla de evaluación del practicante -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
@@ -1411,7 +1621,7 @@
 				</table>
 			</section>
 
-			<!-- 12 · Fase 3: tabla de seguimiento de incidentes -->
+			<!-- 13 · Fase 3: tabla de seguimiento de incidentes -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
@@ -1455,38 +1665,347 @@
 				</table>
 			</section>
 
-			<!-- 12 · Fase 3: NoSQL -->
+			<!-- 14 · Fase 3: NoSQL Pipelines Explorer -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
 						<span class="head-line"></span>
-						<span class="head-pill">Fase 3</span>
+						<span class="head-pill">Fase 3 · Procesamiento NoSQL</span>
 						<span class="head-line"></span>
 					</div>
-					<h2>Pipelines de MongoDB</h2>
-					<p class="sub">Procesamiento NoSQL y descubrimiento de insights</p>
+					<h2>Pipelines de MongoDB & Insights</h2>
+					<p class="sub">Agregación distribuida de telemetría y descubrimiento de patrones en APM Inversiones EIRL</p>
 				</div>
-				<p class="small" style="margin-bottom:0.8em">
-					Objetivo del pipeline: identificar practicantes de la sede <strong>Lima Norte</strong> con más
-					faltas
-					injustificadas en agosto, para alimentar acciones de retención.
-				</p>
-				<pre><code data-trim data-noescape class="language-json">/* ilustrativo */
-{
-  "$match": { "origen": "SOFI", "sede": "Lima Norte", "mes": "2024-08" },
-  "$group": { "_id": "$practicante_id",
-              "total_faltas_injustificadas": { "$sum": 1 } },
-  "$match": { "total_faltas_injustificadas": { "$gte": 3 } }
+
+				<div id="pipeline-explorer" class="pipeline-layout" data-prevent-swipe>
+					<!-- Barra de Navegación Vertical (Tarjetas) -->
+					<div class="pipeline-nav">
+						<!-- Tarjeta 1: Retención (Activa por defecto) -->
+						<button type="button" class="pipeline-card active" data-target="retencion">
+							<div class="pipeline-card-header">
+								<svg class="pipeline-card-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+								<span class="pipeline-card-badge">Pipeline 1 · Principal</span>
+							</div>
+							<h4 class="pipeline-card-title">Retención y Faltas Injustificadas</h4>
+							<p class="pipeline-card-desc">Filtra la sede Lima Norte en agosto, desanida marcaciones ($unwind), totaliza inasistencias y segmenta en riesgo Alto.</p>
+						</button>
+
+						<!-- Tarjeta 2: Incidentes Disciplinarios -->
+						<button type="button" class="pipeline-card" data-target="incidentes">
+							<div class="pipeline-card-header">
+								<svg class="pipeline-card-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+								<span class="pipeline-card-badge">Pipeline 2</span>
+							</div>
+							<h4 class="pipeline-card-title">Severidad de Incidentes Disciplinarios</h4>
+							<p class="pipeline-card-desc">Agrupa reportes de telemetría y pondera su gravedad técnica (baneos, tardanzas, voz) para predecir sanciones.</p>
+						</button>
+
+						<!-- Tarjeta 3: Cumplimiento de Horas -->
+						<button type="button" class="pipeline-card" data-target="horas">
+							<div class="pipeline-card-header">
+								<svg class="pipeline-card-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+								<span class="pipeline-card-badge">Pipeline 3</span>
+							</div>
+							<h4 class="pipeline-card-title">Cumplimiento de Horas Efectivas</h4>
+							<p class="pipeline-card-desc">Acumula horas convalidadas frente a la cuota mensual obligatoria (144h) para alimentar la variable de rendimiento.</p>
+						</button>
+
+						<!-- Tarjeta 4: Esquema JSON Modelo -->
+						<button type="button" class="pipeline-card" data-target="esquema">
+							<div class="pipeline-card-header">
+								<svg class="pipeline-card-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+								<span class="pipeline-card-badge">Esquema BSON</span>
+							</div>
+							<h4 class="pipeline-card-title">Documento Origen (Modelo NoSQL)</h4>
+							<p class="pipeline-card-desc">Estructura semiestructurada de la colección asistencias con arreglo embebido de registros diarios de marcación.</p>
+						</button>
+					</div>
+
+					<!-- Panel Derecho: Visor de Código & Insight -->
+					<div class="pipeline-viewer">
+						<!-- Pane 1: Retención -->
+						<div id="pane-retencion" class="pipeline-pane active">
+							<div class="pipeline-viewer-header">
+								<div>
+									<span class="pipeline-viewer-tag">Colección: db.asistencias</span>
+									<h3 class="pipeline-viewer-title">Pipeline de Detección de Faltas y Abandono</h3>
+								</div>
+								<div class="pipeline-stages-row">
+									<span class="pipeline-stage-pill">$match</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$unwind</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$group</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$project</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$sort</span>
+								</div>
+							</div>
+							<div class="pipeline-code-box">
+								<pre><code class="language-javascript">db.asistencias.aggregate([
+  // 1. $match: Filtrar sede Lima Norte y período mensual de agosto 2026
+  {
+    $match: {
+      sede: "Lima Norte",
+      "registros.fecha_asistencia": { $regex: /^2026-08/ }
+    }
+  },
+  // 2. $unwind: Descomponer el arreglo de marcaciones diarias en documentos individuales
+  { $unwind: "$registros" },
+  // 3. $group: Consolidar métricas por practicante sumando faltas y horas pendientes
+  {
+    $group: {
+      _id: "$_id",
+      nombre_practicante: { $first: "$nombre_practicante" },
+      total_faltas_injustificadas: {
+        $sum: { $cond: [{ $eq: ["$registros.estado_justificacion", "injustificada"] }, 1, 0] }
+      },
+      total_horas_pendientes: { $sum: "$registros.horas_acumuladas" }
+    }
+  },
+  // 4. $project: Calcular el campo derivado nivel_riesgo (regla de negocio >= 3 faltas)
+  {
+    $project: {
+      _id: 0,
+      practicante: "$nombre_practicante",
+      faltas_injustificadas: "$total_faltas_injustificadas",
+      horas_pendientes: "$total_horas_pendientes",
+      nivel_riesgo: {
+        $cond: [{ $gte: ["$total_faltas_injustificadas", 3] }, "Alto", "Bajo"]
+      }
+    }
+  },
+  // 5. $sort: Ordenar descendentemente por faltas para priorizar la intervención
+  { $sort: { faltas_injustificadas: -1 } }
+]);</code></pre>
+							</div>
+							<div class="pipeline-insight-box">
+								<svg class="pipeline-insight-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+								<div>
+									<strong>Insight de Negocio (APM Inversiones):</strong> En Lima Norte, los practicantes con <strong>3 o más faltas injustificadas</strong> acumulan más del 60% de las horas pendientes sin resolver. La falta injustificada demostró ser un predictor de deserción temprano mucho más confiable que las horas pendientes por sí solas.
+								</div>
+							</div>
+						</div>
+
+						<!-- Pane 2: Incidentes -->
+						<div id="pane-incidentes" class="pipeline-pane">
+							<div class="pipeline-viewer-header">
+								<div>
+									<span class="pipeline-viewer-tag">Colección: db.incidentes</span>
+									<h3 class="pipeline-viewer-title">Pipeline de Severidad y Score Disciplinario</h3>
+								</div>
+								<div class="pipeline-stages-row">
+									<span class="pipeline-stage-pill">$match</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$group</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$project</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$sort</span>
+								</div>
+							</div>
+							<div class="pipeline-code-box">
+								<pre><code class="language-javascript">db.incidentes.aggregate([
+  // 1. $match: Filtrar reportes disciplinarios confirmados durante el mes
+  { $match: { estado: "confirmado", fecha: { $gte: ISODate("2026-08-01") } } },
+  // 2. $group: Ponderar la gravedad técnica acumulada por practicante
+  {
+    $group: {
+      _id: "$practicante_id",
+      total_reportes: { $sum: 1 },
+      total_baneos: {
+        $sum: { $cond: [{ $eq: ["$tipo_incidente", "baneo"] }, 1, 0] }
+      },
+      puntaje_gravedad: {
+        $sum: {
+          $switch: {
+            branches: [
+              { case: { $eq: ["$tipo_incidente", "baneo"] }, then: 5.0 },
+              { case: { $eq: ["$tipo_incidente", "salida_temprana"] }, then: 2.5 },
+              { case: { $eq: ["$tipo_incidente", "desconexion_voz"] }, then: 1.5 }
+            ],
+            default: 1.0 // Tardanzas leves o reconexiones móviles
+          }
+        }
+      }
+    }
+  },
+  // 3. $project: Generar métrica nivel_incidente normalizada para el modelo predictivo
+  {
+    $project: {
+      _id: 1,
+      total_reportes: 1,
+      total_baneos: 1,
+      nivel_incidente: { $round: ["$puntaje_gravedad", 2] }
+    }
+  },
+  { $sort: { nivel_incidente: -1 } }
+]);</code></pre>
+							</div>
+							<div class="pipeline-insight-box">
+								<svg class="pipeline-insight-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+								<div>
+									<strong>Aplicación Técnica (Fase 3-B):</strong> Pondera la severidad de faltas en Discord y SOFI. Alimenta directamente la variable <code>nivel_incidente</code> y <code>registro_incidentes</code> en los modelos predictivos de continuidad y desempeño mensual.
+								</div>
+							</div>
+						</div>
+
+						<!-- Pane 3: Horas -->
+						<div id="pane-horas" class="pipeline-pane">
+							<div class="pipeline-viewer-header">
+								<div>
+									<span class="pipeline-viewer-tag">Colección: db.asistencias</span>
+									<h3 class="pipeline-viewer-title">Pipeline de Horas Efectivas vs Cuota (36h/sem)</h3>
+								</div>
+								<div class="pipeline-stages-row">
+									<span class="pipeline-stage-pill">$unwind</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$match</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$group</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$project</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">$sort</span>
+								</div>
+							</div>
+							<div class="pipeline-code-box">
+								<pre><code class="language-javascript">db.asistencias.aggregate([
+  // 1. $unwind: Descomponer el historial de marcaciones
+  { $unwind: "$registros" },
+  // 2. $match: Contabilizar únicamente marcaciones validadas o justificadas
+  { $match: { "registros.estado_justificacion": { $in: ["asistio", "justificada"] } } },
+  // 3. $group: Acumular total de horas efectivas logradas por persona
+  {
+    $group: {
+      _id: "$_id",
+      nombre: { $first: "$nombre_practicante" },
+      horas_logradas: { $sum: "$registros.horas_acumuladas" }
+    }
+  },
+  // 4. $project: Calcular % de cumplimiento frente a la meta (144 hrs = 36h x 4 sem)
+  {
+    $project: {
+      _id: 0,
+      practicante_id: "$_id",
+      practicante: "$nombre",
+      horas_logradas: 1,
+      pct_horas_cumplidas: {
+        $round: [{ $multiply: [{ $divide: ["$horas_logradas", 144] }, 100] }, 1]
+      },
+      estado_cuota: {
+        $cond: [{ $gte: ["$horas_logradas", 144] }, "Cuota Cumplida", "Déficit de Horas"]
+      }
+    }
+  },
+  { $sort: { pct_horas_cumplidas: -1 } }
+]);</code></pre>
+							</div>
+							<div class="pipeline-insight-box">
+								<svg class="pipeline-insight-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+								<div>
+									<strong>Vínculo Predictivo:</strong> Alimenta <code>horas_cumplidas_periodo</code> en la matriz de predicción. Practicantes con cumplimiento inferior al 75% presentan 3 veces mayor riesgo de baja calificación o retiro voluntario.
+								</div>
+							</div>
+						</div>
+
+						<!-- Pane 4: Esquema JSON -->
+						<div id="pane-esquema" class="pipeline-pane">
+							<div class="pipeline-viewer-header">
+								<div>
+									<span class="pipeline-viewer-tag">Colección: db.asistencias (Schema)</span>
+									<h3 class="pipeline-viewer-title">Documento Origen NoSQL (JSON Modelo)</h3>
+								</div>
+								<div class="pipeline-stages-row">
+									<span class="pipeline-stage-pill">BSON Document</span>
+									<span class="pipeline-stage-arrow">→</span>
+									<span class="pipeline-stage-pill">Embedded Array: registros[]</span>
+								</div>
+							</div>
+							<div class="pipeline-code-box">
+								<pre><code class="language-json">{
+  "_id": "P00123",
+  "nombre_practicante": "Jose Ramirez",
+  "sede": "Lima Norte",
+  "carrera": "Desarrollo de Software",
+  "registros": [
+    {
+      "fecha_asistencia": "2026-08-03",
+      "hora_entrada": "08:58",
+      "hora_salida": "13:02",
+      "estado_justificacion": "justificada",
+      "horas_acumuladas": 0
+    },
+    {
+      "fecha_asistencia": "2026-08-04",
+      "hora_entrada": null,
+      "hora_salida": null,
+      "estado_justificacion": "injustificada",
+      "horas_acumuladas": 4
+    },
+    {
+      "fecha_asistencia": "2026-08-05",
+      "hora_entrada": "09:10",
+      "hora_salida": "13:00",
+      "estado_justificacion": "pendiente",
+      "horas_acumuladas": 0
+    }
+  ]
 }</code></pre>
-				<div class="quote" style="margin-top:0.8em">
-					"En Lima Norte, los practicantes con 3 o más faltas injustificadas en agosto acumulan más del 60% de
-					las
-					horas de recuperación sin resolver: la falta injustificada es un indicador temprano de abandono, más
-					confiable que las horas pendientes por sí solas."
+							</div>
+							<div class="pipeline-insight-box">
+								<svg class="pipeline-insight-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+								<div>
+									<strong>Diseño de Esquema NoSQL:</strong> El modelo embebido agrupa todas las marcaciones de un practicante en un único documento, eliminando la necesidad de costosos <code>$lookup</code> (JOINs) y permitiendo analítica de alto rendimiento con <code>$unwind</code> y <code>$group</code>.
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 
-			<!-- 13 · Fase 4: Power BI -->
+			<!-- Fase 4: Introducción -->
+			<section class="slide-fase-intro">
+				<div class="fase-intro-container">
+					<div class="fase-intro-badge">
+						<span class="badge-dot"></span>
+						<span class="badge-text">Business Intelligence & Valor</span>
+					</div>
+					<div class="fase-intro-title-block">
+						<span class="fase-intro-number">Fase 4</span>
+						<h2 class="fase-intro-title">Visualización Analítica y Entrega de Valor</h2>
+					</div>
+					<p class="fase-intro-desc">
+						Construcción y publicación de tableros interactivos en Power BI Service para traducir los resultados analíticos y predictivos en decisiones estratégicas de retención, evaluación de tutores y gestión de talento humano.
+					</p>
+					<div class="fase-intro-cards">
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+								<h3 class="fase-intro-card-title">Dashboards Interactivos</h3>
+							</div>
+							<p class="fase-intro-card-text">Visualizaciones dinámicas con segmentación por sede, carrera, modalidad y estado de justificación.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+								<h3 class="fase-intro-card-title">Monitoreo de KPIs Clave</h3>
+							</div>
+							<p class="fase-intro-card-text">Control de horas acumuladas, tasa de justificación médica, ranking de rendimiento y alertas de abandono.</p>
+						</div>
+						<div class="fase-intro-card">
+							<div class="fase-intro-card-header">
+								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+								<h3 class="fase-intro-card-title">Publicación en Cloud</h3>
+							</div>
+							<p class="fase-intro-card-text">Acceso distribuido mediante Power BI Service e integración web protegida para líderes y coordinadores.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 15 · Fase 4: Power BI -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
@@ -1495,55 +2014,12 @@
 						<span class="head-line"></span>
 					</div>
 					<h2>Visualización en Power BI</h2>
-					<p class="sub">Dashboard de seguimiento de los modelos predictivos</p>
+					<p class="sub">Replica interactiva del dashboard con datos reales (nombres anonimizados P01–P51)</p>
 				</div>
-				<div class="grid">
-					<div class="card">
-						<h4>Tarjetas KPI</h4>
-						<ul>
-							<li>Recuento de practicantes, % continuidad, predicción</li>
-						</ul>
-					</div>
-					<div class="card">
-						<h4>Gráfico de dona</h4>
-						<ul>
-							<li>Distribución de predicciones</li>
-						</ul>
-					</div>
-					<div class="card">
-						<h4>Columnas agrupadas</h4>
-						<ul>
-							<li>Comparación de probabilidades por practicante</li>
-						</ul>
-					</div>
-					<div class="card">
-						<h4>Barras horizontales</h4>
-						<ul>
-							<li>Probabilidad de continuidad por practicante</li>
-						</ul>
-					</div>
-					<div class="card">
-						<h4>Barras agrupadas</h4>
-						<ul>
-							<li>Recomendaciones del modelo</li>
-						</ul>
-					</div>
-					<div class="card">
-						<h4>Columnas por rangos</h4>
-						<ul>
-							<li>Nivel de probabilidad</li>
-						</ul>
-					</div>
-					<div class="card">
-						<h4>Segmentadores</h4>
-						<ul>
-							<li>Filtros por practicante, recomendación y predicción</li>
-						</ul>
-					</div>
-				</div>
+				<div id="fase4-dashboard" class="fase4-dash"></div>
 			</section>
 
-			<!-- 14 · Links del dashboard -->
+			<!-- 16 · Links del dashboard -->
 			<section>
 				<div class="slide-head">
 					<div class="head-badge">
@@ -1552,6 +2028,7 @@
 						<span class="head-line"></span>
 					</div>
 					<h2>Links del dashboard</h2>
+					<p class="sub">Acceso al informe en Power BI Service e integración web</p>
 				</div>
 				<p class="small">Power BI · Servicio</p>
 				<p class="small">
@@ -1568,154 +2045,29 @@
 				</p>
 			</section>
 
-			<!-- 15 · Conclusiones -->
-			<section>
+			<!-- 18 · Cierre -->
+			<section class="title">
 				<div class="slide-head">
 					<div class="head-badge">
 						<span class="head-line"></span>
-						<span class="head-pill">Cierre</span>
+						<span class="head-pill">APM Inversiones EIRL</span>
 						<span class="head-line"></span>
 					</div>
-					<h2>Conclusiones</h2>
+					<h2>¡Gracias!</h2>
+					<p class="sub">¿Preguntas?</p>
 				</div>
-				<ul>
-					<li class="fragment">Ingesta integra 6 fuentes internas y externas en una única capa de datos</li>
-					<li class="fragment">HDFS garantiza disponibilidad y tolerancia a fallos mediante replicación y rack
-						awareness</li>
-					<li class="fragment">El modelado predictivo permite anticipar continuidad y bajo desempeño</li>
-					<li class="fragment">Power BI convierte las predicciones en decisiones operativas accionables</li>
-				</ul>
-			</section>
-
-			<!-- 16 · Cierre -->
-			<section class="title">
-				<p class="tag">APM Inversiones EIRL</p>
-				<h1>¡Gracias!</h1>
-				<p class="sub">¿Preguntas?</p>
 			</section>
 
 		</div>
 	</div>
 
-	<script>
-		(function () {
-			const canvas = document.getElementById('bg-canvas');
-			if (!canvas) return;
-			const ctx = canvas.getContext('2d');
-			let width = 0;
-			let height = 0;
-			let dpr = 1;
-			let particles = [];
-			const particleCount = 70;
-			const maxDist = 125;
-
-			function resize() {
-				dpr = Math.min(window.devicePixelRatio || 1, 2);
-				width = window.innerWidth;
-				height = window.innerHeight;
-				canvas.width = Math.floor(width * dpr);
-				canvas.height = Math.floor(height * dpr);
-				canvas.style.width = width + 'px';
-				canvas.style.height = height + 'px';
-				ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-			}
-
-			function createParticles() {
-				particles = [];
-				for (let i = 0; i < particleCount; i++) {
-					particles.push({
-						x: Math.random() * width,
-						y: Math.random() * height,
-						vx: (Math.random() - 0.5) * 0.38,
-						vy: (Math.random() - 0.5) * 0.38,
-						radius: Math.random() * 1.5 + 1.1,
-						alpha: Math.random() * 0.35 + 0.5,
-						isAccent: Math.random() > 0.75
-					});
-				}
-			}
-
-			function animate() {
-				ctx.clearRect(0, 0, width, height);
-
-				// Draw connecting constellation lines
-				for (let i = 0; i < particles.length; i++) {
-					const p1 = particles[i];
-					for (let j = i + 1; j < particles.length; j++) {
-						const p2 = particles[j];
-						const dx = p1.x - p2.x;
-						const dy = p1.y - p2.y;
-						const dist = Math.hypot(dx, dy);
-						if (dist < maxDist) {
-							const lineAlpha = (1 - dist / maxDist) * 0.24;
-							ctx.strokeStyle = 'rgba(12, 183, 242, ' + lineAlpha + ')';
-							ctx.lineWidth = 0.8;
-							ctx.beginPath();
-							ctx.moveTo(p1.x, p1.y);
-							ctx.lineTo(p2.x, p2.y);
-							ctx.stroke();
-						}
-					}
-				}
-
-				// Update and draw particles
-				for (let i = 0; i < particles.length; i++) {
-					const p = particles[i];
-					p.x += p.vx;
-					p.y += p.vy;
-
-					if (p.x < -10) p.x = width + 10;
-					else if (p.x > width + 10) p.x = -10;
-					if (p.y < -10) p.y = height + 10;
-					else if (p.y > height + 10) p.y = -10;
-
-					ctx.shadowBlur = 6;
-					ctx.shadowColor = 'rgba(12, 183, 242, 0.75)';
-					ctx.fillStyle = p.isAccent
-						? 'rgba(215, 245, 255, ' + p.alpha + ')'
-						: 'rgba(12, 183, 242, ' + p.alpha + ')';
-					ctx.beginPath();
-					ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-					ctx.fill();
-				}
-				ctx.shadowBlur = 0;
-
-				requestAnimationFrame(animate);
-			}
-
-			window.addEventListener('resize', () => {
-				resize();
-				for (let i = 0; i < particles.length; i++) {
-					if (particles[i].x > width) particles[i].x = Math.random() * width;
-					if (particles[i].y > height) particles[i].y = Math.random() * height;
-				}
-			});
-
-			resize();
-			createParticles();
-			requestAnimationFrame(animate);
-		})();
-	</script>
-
-	<script type="module">
-		import Reveal from './node_modules/reveal.js/dist/reveal.mjs';
-		import Markdown from './node_modules/reveal.js/dist/plugin/markdown.mjs';
-		import Highlight from './node_modules/reveal.js/dist/plugin/highlight.mjs';
-		import Notes from './node_modules/reveal.js/dist/plugin/notes.mjs';
-		import Zoom from './node_modules/reveal.js/dist/plugin/zoom.mjs';
-		import Search from './node_modules/reveal.js/dist/plugin/search.mjs';
-
-		Reveal.initialize({
-			hash: true,
-			slideNumber: true,
-			controls: true,
-			progress: true,
-			transition: 'slide',
-			width: 1600,
-			height: 900,
-			plugins: [Markdown, Highlight, Zoom, Notes, Search],
-		});
-	</script>
+	<!-- Background & Presentation Modules -->
+	<script src="js/particles.js"></script>
+	<script src="js/calculator.js"></script>
+	<script src="js/pipelines.js"></script>
+	<script src="js/fase4-data.js"></script>
+	<script src="js/fase4.js"></script>
+	<script type="module" src="js/presentation.js"></script>
 </body>
 
 </html>

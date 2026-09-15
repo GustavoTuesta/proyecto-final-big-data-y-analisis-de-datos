@@ -1,0 +1,411 @@
+/* ==========================================================================
+   Interactive MongoDB Pipelines Explorer Styles (Fase 3 · SENATI)
+   ========================================================================== */
+
+.reveal .pipeline-layout {
+	display: grid;
+	grid-template-columns: 520px 1fr;
+	gap: 1.3rem;
+	width: 100%;
+	max-width: 1540px;
+	margin: 0 auto;
+	height: 720px;
+	box-sizing: border-box;
+	text-align: left;
+}
+
+/* ==========================================================================
+   Left Navigation Column & High-Legibility Cards
+   ========================================================================== */
+
+.reveal .pipeline-nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 0.75rem;
+	height: 100%;
+	box-sizing: border-box;
+	padding-right: 4px;
+	overflow-y: auto;
+}
+
+.reveal .pipeline-nav::-webkit-scrollbar {
+	width: 5px;
+}
+
+.reveal .pipeline-nav::-webkit-scrollbar-thumb {
+	background: #1e355c;
+	border-radius: 4px;
+}
+
+/* Explicit pixel typography on cards (Bypassing browser button default font resets) */
+.reveal .pipeline-card {
+	flex: 1;
+	background: #121c33;
+	border: 1px solid #1f355c;
+	border-left: 6px solid #233c66;
+	border-radius: 14px;
+	padding: 1rem 1.25rem;
+	cursor: pointer;
+	transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+	text-align: left;
+	color: var(--text);
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.35rem;
+	width: 100%;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.reveal .pipeline-card:hover {
+	background: #17274a;
+	border-color: rgba(12, 183, 242, 0.5);
+	border-left-color: #0cb7f2;
+	transform: translateY(-2px);
+	box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+.reveal .pipeline-card.active {
+	background: linear-gradient(135deg, #152d57 0%, #0e1b36 100%);
+	border-color: #0cb7f2;
+	border-left: 7px solid #0cb7f2;
+	box-shadow: 0 14px 36px rgba(12, 183, 242, 0.28);
+}
+
+.reveal .pipeline-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.15rem;
+}
+
+.reveal .pipeline-card-badge {
+	font-size: 12.5px;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	color: #0cb7f2;
+	background: rgba(12, 183, 242, 0.15);
+	padding: 0.22rem 0.65rem;
+	border-radius: 6px;
+	border: 1px solid rgba(12, 183, 242, 0.35);
+	line-height: 1.2;
+}
+
+.reveal .pipeline-card-icon {
+	width: 24px;
+	height: 24px;
+	color: #8ba3b8;
+	transition: all 0.2s ease;
+	flex-shrink: 0;
+}
+
+.reveal .pipeline-card:hover .pipeline-card-icon,
+.reveal .pipeline-card.active .pipeline-card-icon {
+	color: #0cb7f2;
+	transform: scale(1.1);
+}
+
+.reveal .pipeline-card-title {
+	font-size: 21px;
+	font-weight: 800;
+	margin: 0;
+	color: #ffffff;
+	line-height: 1.25;
+	letter-spacing: -0.3px;
+	font-family: inherit;
+}
+
+.reveal .pipeline-card.active .pipeline-card-title {
+	color: #0cb7f2;
+}
+
+.reveal .pipeline-card-desc {
+	font-size: 15.5px;
+	color: #a5c1de;
+	margin: 0;
+	line-height: 1.45;
+	font-family: inherit;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.reveal .pipeline-card.active .pipeline-card-desc {
+	color: #e3f0fc;
+}
+
+/* ==========================================================================
+   Right Panel: Code Viewer & Insights
+   ========================================================================== */
+
+.reveal .pipeline-viewer {
+	background: #0d1628;
+	border: 1px solid #1f355c;
+	border-radius: 16px;
+	padding: 1.2rem 1.4rem;
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.reveal .pipeline-pane {
+	display: none;
+	height: 100%;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.reveal .pipeline-pane.active {
+	display: flex;
+}
+
+/* Header layout: keeps title and pills organized */
+.reveal .pipeline-viewer-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 0.65rem;
+	border-bottom: 1px solid #1c2e50;
+	margin-bottom: 0.6rem;
+	gap: 0.9rem;
+}
+
+.reveal .pipeline-viewer-tag {
+	font-size: 13px;
+	font-weight: 800;
+	color: #8ba3b8;
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	display: block;
+	margin-bottom: 0.15rem;
+}
+
+.reveal .pipeline-viewer-title {
+	font-size: 26px;
+	font-weight: 850;
+	color: #ffffff;
+	margin: 0;
+	line-height: 1.2;
+	letter-spacing: -0.3px;
+}
+
+.reveal .pipeline-stages-row {
+	display: flex;
+	gap: 0.4rem;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.reveal .pipeline-stage-pill {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	font-size: 14px;
+	font-weight: 750;
+	background: #182a4a;
+	border: 1px solid #284778;
+	color: #79c0ff;
+	padding: 0.25rem 0.65rem;
+	border-radius: 6px;
+	line-height: 1.2;
+}
+
+.reveal .pipeline-stage-arrow {
+	font-size: 14px;
+	color: #8ba3b8;
+}
+
+/* Code Display Box: Overriding Reveal's restrictive .reveal pre rules */
+.reveal .pipeline-code-box {
+	flex: 1;
+	min-height: 0;
+	background: #070c17;
+	border: 1px solid #192c4d;
+	border-radius: 12px;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 0.75rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.reveal .pipeline-code-box pre {
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-height: none !important;
+	box-shadow: none !important;
+	border-radius: 0 !important;
+	font-size: 1rem !important; /* Resets .reveal pre .55em cascade */
+	display: flex !important;
+	flex-direction: column !important;
+	overflow: hidden !important;
+	background: transparent !important;
+}
+
+.reveal .pipeline-code-box code {
+	font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+	font-size: 16px !important; /* Crisp, readable font size */
+	line-height: 1.52 !important;
+	padding: 1.1rem 1.35rem !important;
+	max-height: none !important; /* Removes Reveal's 400px restriction */
+	height: 100% !important;
+	box-sizing: border-box !important;
+	overflow-y: auto !important;
+	overflow-x: auto !important;
+	display: block !important;
+	background: transparent !important;
+	color: #e6f1f8 !important;
+}
+
+/* Custom scrollbars for code box */
+.reveal .pipeline-code-box code::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.reveal .pipeline-code-box code::-webkit-scrollbar-thumb {
+	background: #1f355c;
+	border-radius: 4px;
+}
+
+/* Bottom Insight Box */
+.reveal .pipeline-insight-box {
+	background: linear-gradient(90deg, rgba(12, 183, 242, 0.14), rgba(12, 183, 242, 0.04));
+	border: 1px solid rgba(12, 183, 242, 0.38);
+	border-left: 5px solid #0cb7f2;
+	border-radius: 10px;
+	padding: 0.8rem 1.15rem;
+	font-size: 16px;
+	color: #e2f0fc;
+	line-height: 1.45;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.85rem;
+	box-sizing: border-box;
+}
+
+.reveal .pipeline-insight-box strong {
+	color: #0cb7f2;
+}
+
+.reveal .pipeline-insight-icon {
+	width: 24px;
+	height: 24px;
+	color: #0cb7f2;
+	flex-shrink: 0;
+	margin-top: 1px;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+/* Laptops & Moderate Viewports */
+@media screen and (max-width: 1366px) {
+	.reveal .pipeline-layout {
+		grid-template-columns: 460px 1fr;
+		gap: 1.1rem;
+		height: 690px;
+	}
+
+	.reveal .pipeline-card-title {
+		font-size: 19px;
+	}
+
+	.reveal .pipeline-card-desc {
+		font-size: 14.5px;
+	}
+
+	.reveal .pipeline-viewer-title {
+		font-size: 23px;
+	}
+
+	.reveal .pipeline-code-box code {
+		font-size: 15px !important;
+	}
+}
+
+/* Tablets & Small Displays (Horizontal carousel stack) */
+@media screen and (max-width: 1024px) {
+	.reveal .pipeline-layout {
+		grid-template-columns: 1fr;
+		height: auto;
+		max-height: 84vh;
+		overflow-y: auto;
+		gap: 0.9rem;
+	}
+
+	.reveal .pipeline-nav {
+		flex-direction: row;
+		overflow-x: auto;
+		overflow-y: hidden;
+		gap: 0.75rem;
+		height: auto;
+		padding-bottom: 8px;
+	}
+
+	.reveal .pipeline-card {
+		flex: 0 0 280px;
+		min-width: 260px;
+		height: 140px;
+	}
+
+	.reveal .pipeline-card-desc {
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+	}
+
+	.reveal .pipeline-viewer {
+		min-height: 480px;
+		height: auto;
+	}
+
+	.reveal .pipeline-code-box {
+		min-height: 320px;
+	}
+}
+
+/* Low-height Screens */
+@media screen and (max-height: 800px) {
+	.reveal .pipeline-layout {
+		height: 640px;
+		gap: 0.9rem;
+	}
+
+	.reveal .pipeline-card {
+		padding: 0.75rem 1rem;
+		gap: 0.25rem;
+	}
+
+	.reveal .pipeline-card-title {
+		font-size: 18px;
+	}
+
+	.reveal .pipeline-card-desc {
+		font-size: 14px;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+	}
+
+	.reveal .pipeline-code-box code {
+		font-size: 14.5px !important;
+		padding: 0.8rem 1rem !important;
+	}
+
+	.reveal .pipeline-insight-box {
+		padding: 0.6rem 0.9rem;
+		font-size: 14px;
+	}
+}
