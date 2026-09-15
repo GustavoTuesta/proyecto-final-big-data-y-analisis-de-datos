@@ -1218,6 +1218,13 @@
 						<h4>3. Describir la predicción a realizar:</h4>
 						<p> Predecir el porcentaje de probabilidad de que un practicante continúe realizando sus
 							prácticas el siguiente semestre.</p>
+						<ul>
+							<li><code>(Y > 70 %) </code>: probabilidad alta de que continúe el siguiente semestre</li>
+							<li><code>(31% ≤ Y ≤ 70%)</code>: probabilidad media, requiere seguimiento o entrevista
+								adicional
+							</li>
+							<li><code>(Y ≤ 30 %) </code>: probabilidad baja de que continúe</li>
+						</ul>
 					</div>
 					<div class="pred-table-col">
 						<h4 class="pred-table-title">4. Matriz de Variables (Diccionario de Predicción):</h4>
@@ -1233,7 +1240,7 @@
 								<tr>
 									<td>continuara_siguiente_semestre</td>
 									<td>Dependiente</td>
-									<td>Cualitativa continua</td>
+									<td>Cuantitativa continua</td>
 								</tr>
 								<tr>
 									<td>horas_cumplidas_periodo</td>
@@ -1251,14 +1258,9 @@
 									<td>Cuantitativa discreta</td>
 								</tr>
 								<tr>
-									<td>tipo_justificacion</td>
-									<td>Independiente</td>
-									<td>Cualitativa nominal</td>
-								</tr>
-								<tr>
 									<td>registro_incidentes</td>
 									<td>Independiente</td>
-									<td>Cualitativa binaria</td>
+									<td>Cuantitativa discreta</td>
 								</tr>
 							</tbody>
 						</table>
@@ -1288,10 +1290,13 @@
 							mes.</p>
 
 						<h4>3. Describir la predicción a realizar:</h4>
-						<p>El modelo indicará:</p>
+						<p>El modelo calculará el porcentaje de probabilidad de que un practicante presente bajo
+							desempeño el próximo mes.</p>
 						<ul>
-							<li><code>1</code>: tendrá bajo desempeño.</li>
-							<li><code>0</code>: tendrá desempeño normal o alto.</li>
+							<li><code>(Y > 70 %)</code>: riesgo alto de bajo desempeño el próximo mes</li>
+							<li><code>(31% ≤ Y ≤ 70%)</code>: riesgo medio, requiere seguimiento y retroalimentación
+							</li>
+							<li><code>(Y ≤ 30 %)</code>: riesgo bajo de que presente bajo desempeño</li>
 						</ul>
 					</div>
 					<div class="pred-table-col">
@@ -1308,7 +1313,7 @@
 								<tr>
 									<td>bajo_desempeño_proximo_mes</td>
 									<td>Dependiente</td>
-									<td>Cualitativa binaria</td>
+									<td>Cuantitativa continua</td>
 								</tr>
 								<tr>
 									<td>promedio_horas_mes_anterior</td>
@@ -1328,7 +1333,7 @@
 								<tr>
 									<td>incidentes_registrado_mes_anterior</td>
 									<td>Independiente</td>
-									<td>Cualitativa binaria</td>
+									<td>Cuantitativa discreta</td>
 								</tr>
 							</tbody>
 						</table>
@@ -1404,7 +1409,7 @@
 						</tr>
 						<tr>
 							<td>recuperaciones_pendientes</td>
-							<td>integer</td>
+							<td>float</td>
 							<td>Cantidad de horas de recuperación aún no validadas.</td>
 						</tr>
 					</tbody>
@@ -1442,14 +1447,14 @@
 							<td>Cantidad acumulada de reportes disciplinarios del practicante.</td>
 						</tr>
 						<tr>
-							<td>tipo_incidente</td>
+							<td>incidente_recurrente</td>
 							<td>varchar</td>
-							<td>Categoría de incidente (tardanza, desconexion_voz, salida_temprana, baneo).</td>
+							<td>Incidente recurrente (tardanza, desconexion_voz, salida_temprana, baneo).</td>
 						</tr>
 						<tr>
-							<td>nivel_incidente</td>
-							<td>float</td>
-							<td>Puntaje calculado según la gravedad de los incidentes registrados.</td>
+							<td>total_penalizaciones</td>
+							<td>integer</td>
+							<td>Cantidad total de penalizaciones registradas al practicante durante el mes.</td>
 						</tr>
 					</tbody>
 				</table>
