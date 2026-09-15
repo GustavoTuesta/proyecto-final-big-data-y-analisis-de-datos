@@ -309,105 +309,164 @@
 /* ==========================================================================
    Formal Title / Portada Slide
    ========================================================================== */
-.reveal .slide-portada {
-	padding: 0.8em 1.2em;
-	height: 100%;
+/* ==========================================================================
+   Formal Title / Portada Slide (Full Viewport)
+   ========================================================================== */
+/* ==========================================================================
+   Formal Title / Portada Slide (Unified Centered Viewport)
+   ========================================================================== */
+.reveal .slides > section.slide-portada,
+.reveal .slides > section.slide-portada.present {
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: 100% !important;
+	max-height: 100% !important;
+	padding: 2.2rem 4.2rem !important;
 	display: flex !important;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	box-sizing: border-box;
+	flex-direction: column !important;
+	justify-content: center !important;
+	align-items: center !important;
+	box-sizing: border-box !important;
 }
 
 .reveal .portada-container {
 	width: 100%;
-	max-width: 1380px;
+	max-width: 1520px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
-	gap: 1.3em;
+	justify-content: center;
+	gap: 1.8rem;
+	box-sizing: border-box;
 }
 
 /* Top Bar */
 .reveal .portada-header {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	border-bottom: 1px solid rgba(12, 183, 242, 0.25);
-	padding-bottom: 0.7em;
+	justify-content: flex-start;
+	border-bottom: 1.5px solid rgba(12, 183, 242, 0.3);
+	padding-bottom: 1.1rem;
 }
 
-.reveal .portada-header .senati-logo {
-	display: block;
-}
-
-.reveal .portada-header .portada-badge {
+.reveal .senati-brand {
 	display: flex;
 	align-items: center;
-	gap: 10px;
 }
 
-.reveal .portada-header .badge-pill {
-	background: rgba(12, 183, 242, 0.12);
-	border: 1px solid var(--accent);
-	color: var(--accent);
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 14px;
+.reveal .senati-banner-img {
+	height: 68px;
+	width: auto;
+	display: block;
+	filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.35));
+	transition: filter 0.3s ease;
+}
+
+.reveal .senati-banner-img:hover {
+	filter: drop-shadow(0 0 18px rgba(12, 183, 242, 0.7));
+}
+
+/* Hero Section (Title + Big Data Illustration) */
+.reveal .portada-hero {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2.5rem;
+	margin: 0;
+}
+
+.reveal .portada-hero-text {
+	text-align: left;
+	flex: 1;
+}
+
+.reveal .portada-category {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	background: rgba(14, 165, 233, 0.14);
+	border: 1px solid rgba(14, 165, 233, 0.45);
+	padding: 7px 20px;
+	border-radius: 999px;
+	font-size: 16px;
 	font-weight: 700;
 	letter-spacing: 2px;
 	text-transform: uppercase;
-	padding: 6px 20px;
-	border-radius: 999px;
+	color: #38bdf8;
+	margin-bottom: 0.9rem;
 }
 
-/* Main Title Block */
-.reveal .portada-main {
-	text-align: left;
+.reveal .portada-category .pill-dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #38bdf8;
+	box-shadow: 0 0 10px #38bdf8;
 }
 
 .reveal .portada-title {
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 64px !important;
-	font-weight: 800;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 86px !important;
+	font-weight: 900;
 	color: #ffffff;
-	letter-spacing: -1.2px;
-	margin: 0 0 0.25em 0 !important;
-	line-height: 1.15;
+	letter-spacing: -2px;
+	margin: 0 !important;
+	line-height: 1.05;
 	text-transform: none;
-	background: linear-gradient(135deg, #ffffff 40%, #7dd3fc 100%);
+	background: linear-gradient(135deg, #ffffff 40%, #38bdf8 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	text-shadow: 0 10px 32px rgba(0, 0, 0, 0.6);
 }
 
-.reveal .portada-subtitle {
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 21px;
-	color: var(--muted);
-	line-height: 1.5;
-	max-width: 1150px;
-	margin: 0;
-	font-weight: 400;
-	text-align: left;
+.reveal .portada-hero-img {
+	height: 240px;
+	width: auto;
+	max-width: 460px;
+	object-fit: contain;
+	flex-shrink: 0;
+	display: block;
+	filter: drop-shadow(0 0 24px rgba(12, 183, 242, 0.5));
+	animation: heroFloat 5s ease-in-out infinite alternate;
 }
 
-/* Dual Metadata Cards Grid */
+@keyframes heroFloat {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(-8px);
+	}
+}
+
+/* 2 Metadata Cards Grid (Larger & Expansive) */
 .reveal .portada-grid {
 	display: grid;
 	grid-template-columns: 1fr 1.35fr;
-	gap: 1.4em;
+	gap: 2rem;
 	align-items: stretch;
-	margin-top: 0.3em;
+	margin: 0;
 }
 
 .reveal .portada-card {
-	background: rgba(19, 29, 48, 0.75);
-	border: 1px solid rgba(28, 47, 77, 0.9);
-	border-radius: 16px;
-	padding: 1.2em 1.5em;
+	background: rgba(18, 28, 51, 0.88);
+	border: 1.5px solid #233a63;
+	border-radius: 20px;
+	padding: 1.8rem 2.2rem;
 	text-align: left;
-	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 	position: relative;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.reveal .portada-card-integrantes {
+	justify-content: flex-start;
+	gap: 1.4rem;
 }
 
 .reveal .portada-card::before {
@@ -415,81 +474,82 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 4px;
+	width: 5px;
 	height: 100%;
-	background: var(--accent);
+	background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
 }
 
 .reveal .portada-card .card-tag {
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 13px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 15px;
 	font-weight: 700;
 	color: var(--accent);
 	letter-spacing: 2px;
 	text-transform: uppercase;
-	margin-bottom: 0.5em;
+	margin-bottom: 0.6rem;
 }
 
 .reveal .empresa-name {
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 28px !important;
-	font-weight: 700;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 32px !important;
+	font-weight: 800;
 	color: #ffffff;
-	margin: 0 0 0.2em 0 !important;
+	margin: 0 0 0.5rem 0 !important;
 	letter-spacing: -0.5px;
 	text-transform: none;
 }
 
 .reveal .empresa-desc {
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 17px;
-	color: #b0c4d8;
-	line-height: 1.55;
-	margin: 0;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 18px;
+	color: #94a3b8;
+	line-height: 1.6;
+	margin: 0 0 1.2rem 0;
 }
 
 .reveal .tech-stack-badges {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: 10px;
 }
 
 .reveal .tech-badge {
-	background: rgba(12, 183, 242, 0.1);
-	border: 1px solid rgba(12, 183, 242, 0.35);
+	background: rgba(12, 183, 242, 0.12);
+	border: 1px solid rgba(12, 183, 242, 0.4);
 	color: #7dd3fc;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 13px;
-	font-weight: 600;
-	padding: 4px 12px;
-	border-radius: 6px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	padding: 6px 16px;
+	border-radius: 8px;
 	letter-spacing: 0.5px;
 }
 
 /* Integrantes Grid */
 .reveal .integrantes-list {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 0.7em 1.2em;
-	margin-top: 0.2em;
+	grid-template-columns: 1.15fr 1fr;
+	gap: 1rem 1.6rem;
+	margin-top: 0.5rem;
 }
 
 .reveal .integrante-item {
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	font-size: 18px;
-	color: #e6f1f8;
-	font-weight: 500;
+	gap: 12px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 19px;
+	color: #f1f5f9;
+	font-weight: 600;
+	white-space: nowrap;
 }
 
 .reveal .integrante-item .dot {
-	width: 7px;
-	height: 7px;
+	width: 9px;
+	height: 9px;
 	border-radius: 50%;
 	background: var(--accent);
-	box-shadow: 0 0 8px var(--accent);
+	box-shadow: 0 0 10px var(--accent);
 	flex-shrink: 0;
 }
 
@@ -498,11 +558,6 @@
    ========================================================================== */
 
 .reveal .slide-fase-intro {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
 	padding: 1.5rem 2rem;
 	box-sizing: border-box;
 	text-align: center;
@@ -593,6 +648,11 @@
 	width: 100%;
 	max-width: 1180px;
 	margin-top: 0.4rem;
+}
+
+.reveal .fase-intro-cards.fase-intro-cards-2 {
+	grid-template-columns: repeat(2, 1fr);
+	max-width: 860px;
 }
 
 .reveal .fase-intro-card {

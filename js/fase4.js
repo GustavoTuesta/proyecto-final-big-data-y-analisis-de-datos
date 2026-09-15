@@ -34,11 +34,14 @@ function initFase4Dashboard() {
 	const prom = meta.promedioContinuidad;
 	const niveles = ['Alta', 'Media', 'Baja'];
 	const colors = { Alta: '#22c55e', Media: '#f59e0b', Baja: '#ef4444' };
-
 	const recFont = 'Arial, Helvetica, sans-serif';
 
-	// ---------- Layout: KPI + donut + ranking + detail ----------
+	let sortMode = 'rank'; // 'rank' | 'id'
+	let selectedId = practicantes[0].id;
+
+	// ---------- Reorganized 3-Panel Layout (strictly bounded) ----------
 	container.innerHTML = `
+		<!-- Panel 1: Resumen General y Donut -->
 		<div class="fase4-panel">
 			<p class="fase4-panel-title"><span class="dot"></span>Resumen general</p>
 			<div class="fase4-kpis">
@@ -63,14 +66,33 @@ function initFase4Dashboard() {
 			<div class="fase4-legend"></div>
 		</div>
 
+		<!-- Panel 2: Gráfico de Barras con los 51 practicantes -->
 		<div class="fase4-panel">
-			<p class="fase4-panel-title"><span class="dot" style="--f4-color:#22c55e"></span>Probabilidad por practicante <em style="text-transform:none;font-weight:600">(clic para seleccionar)</em></p>
+			<div class="fase4-chart-header">
+				<p class="fase4-panel-title"><span class="dot" style="--f4-color:#22c55e"></span>Probabilidad por practicante</p>
+				<div class="fase4-chart-tools">
+					<button class="fase4-btn-sort active" id="f4-sort-rank" title="Ordenar de mayor a menor">Ranking ↓</button>
+					<button class="fase4-btn-sort" id="f4-sort-id" title="Ordenar por identificador P01 a P51">Por ID</button>
+				</div>
+			</div>
 			<div class="fase4-rank-tools">
 				<select class="fase4-select" id="f4-select" aria-label="Seleccionar practicante"></select>
 			</div>
-			<ul class="fase4-rank-list" id="f4-rank-list"></ul>
+			<div class="fase4-barchart-wrap" id="f4-barchart-wrap"></div>
+			<div class="fase4-chart-legend">
+				<div class="fase4-chart-legend-items">
+					<div class="fase4-chart-legend-item"><span class="fase4-chart-legend-swatch" style="background:#22c55e"></span>Alta (≥70%)</div>
+					<div class="fase4-chart-legend-item"><span class="fase4-chart-legend-swatch" style="background:#f59e0b"></span>Media (30–69%)</div>
+					<div class="fase4-chart-legend-item"><span class="fase4-chart-legend-swatch" style="background:#ef4444"></span>Baja (&lt;30%)</div>
+				</div>
+				<div class="fase4-chart-legend-item" style="color:#0cb7f2">
+					<svg width="20" height="6" style="vertical-align:middle"><line x1="0" y1="3" x2="20" y2="3" stroke="#0cb7f2" stroke-dasharray="3,2" stroke-width="1.8"/></svg>
+					Promedio cohorte (${String(prom).replace('.', ',')}%)
+				</div>
+			</div>
 		</div>
 
+		<!-- Panel 3: Detalle del Practicante seleccionado -->
 		<div class="fase4-panel">
 			<p class="fase4-panel-title"><span class="dot" style="--f4-color:#0cb7f2"></span>Detalle del practicante</p>
 			<div class="fase4-detail-id" id="f4-detail-id"></div>
@@ -92,7 +114,7 @@ function initFase4Dashboard() {
 
 	// ---------- Donut (3 niveles) ----------
 	const donutWrap = container.querySelector('.fase4-donut-wrap');
-	const r = 80, C = 2 * Math.PI * r;
+	const r = 76, C = 2 * Math.PI * r;
 	let filled = 0;
 	const segs = niveles
 		.filter(nv => meta.porNivel[nv] > 0)
@@ -105,7 +127,7 @@ function initFase4Dashboard() {
 		});
 	donutWrap.innerHTML = `
 		<svg class="fase4-donut-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-			${segs.map(s => `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${s.color}" stroke-width="34" stroke-dasharray="${s.len.toFixed(2)} ${(C - s.len).toFixed(2)}" transform="rotate(${s.rot} 100 100)"/>`).join('')}
+			${segs.map(s => `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${s.color}" stroke-width="28" stroke-dasharray="${s.len.toFixed(2)} ${(C - s.len).toFixed(2)}" transform="rotate(${s.rot} 100 100)"/>`).join('')}
 		</svg>
 		<div class="fase4-donut-center">
 			<div class="big">${N}</div>
@@ -118,41 +140,130 @@ function initFase4Dashboard() {
 		`<div class="fase4-legend-row"><span class="fase4-legend-swatch" style="background:${s.color}"></span><span>${s.nv === 'Alta' ? 'Continúa' : s.nv === 'Media' ? 'Tal vez (Media)' : 'Probablemente no'}</span><span class="fase4-legend-val">${s.val} · ${Math.round((s.val / N) * 100)}%</span></div>`
 	).join('');
 
-	// ---------- Ranking ----------
-	const sorted = [...practicantes].sort((a, b) => b.prob - a.prob);
+	// ---------- Select Dropdown (Panel 2) ----------
 	const select = container.querySelector('#f4-select');
-	sorted.forEach(p => {
+	const sortedForSelect = [...practicantes].sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+	sortedForSelect.forEach(p => {
 		const opt = document.createElement('option');
 		opt.value = p.id;
-		opt.textContent = `${p.id} — ${p.prob}% (${p.nivel})`;
+		opt.textContent = `${p.id} — ${p.prob}% (${p.nivel}) · Nota: ${String(p.nota).replace('.', ',')}`;
 		select.appendChild(opt);
 	});
-
-	const list = container.querySelector('#f4-rank-list');
-	function renderRank() {
-		list.innerHTML = sorted.map(p => `
-			<li class="fase4-rank-item" data-id="${p.id}">
-				<span class="fase4-rank-id">${p.id}</span>
-				<span class="fase4-rank-bar-track"><span class="fase4-rank-bar" style="width:${p.prob}%;--f4-color:${colors[p.nivel]}"></span></span>
-				<span class="fase4-rank-pct">${p.prob}%</span>
-			</li>
-		`).join('');
-	}
-	renderRank();
-
-	let selectedId = practicantes[0].id;
 	select.value = selectedId;
+	select.addEventListener('change', () => selectPractitioner(select.value));
+
+	// ---------- Bar Chart de 51 Practicantes ----------
+	const chartWrap = container.querySelector('#f4-barchart-wrap');
+
+	function getSortedPracticantes() {
+		if (sortMode === 'rank') {
+			return [...practicantes].sort((a, b) => b.prob - a.prob);
+		}
+		return [...practicantes].sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+	}
+
+	function renderBarChart() {
+		const currentList = getSortedPracticantes();
+		const left = 30, right = 8, top = 22, bottom = 38;
+		const W = 720, H = 290;
+		const chartW = W - left - right;
+		const chartH = H - top - bottom;
+		const count = currentList.length;
+		const step = chartW / count;
+		const barW = 8.8;
+
+		const yAvg = top + chartH * (1 - prom / 100);
+
+		// Grid lines
+		const ticks = [0, 25, 50, 75, 100];
+		const gridSvg = ticks.map(t => {
+			const y = top + chartH * (1 - t / 100);
+			return `
+				<line x1="${left}" y1="${y}" x2="${left + chartW}" y2="${y}" stroke="#16233d" stroke-dasharray="2,2" stroke-width="1"/>
+				<text x="${left - 4}" y="${y + 3}" text-anchor="end" font-size="7.5" fill="#64748b" font-family="${recFont}">${t}%</text>
+			`;
+		}).join('');
+
+		// Average benchmark line
+		const avgSvg = `
+			<line x1="${left}" y1="${yAvg}" x2="${left + chartW}" y2="${yAvg}" stroke="#0cb7f2" stroke-dasharray="3,2" stroke-width="1.5"/>
+			<rect x="${left + chartW - 95}" y="${yAvg - 13}" width="95" height="13" rx="3" fill="#090e1a" stroke="#0cb7f2" stroke-width="0.8"/>
+			<text x="${left + chartW - 47.5}" y="${yAvg - 3.5}" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#0cb7f2" font-family="${recFont}">Prom: ${String(prom).replace('.', ',')}%</text>
+		`;
+
+		// Bars
+		const barsSvg = currentList.map((p, i) => {
+			const x = left + i * step + (step - barW) / 2;
+			const h = Math.max(3, (p.prob / 100) * chartH);
+			const y = top + chartH - h;
+			const isSelected = p.id === selectedId;
+			const col = colors[p.nivel];
+
+			let marker = '';
+			if (isSelected) {
+				marker = `
+					<polygon points="${x + barW / 2},${y - 2} ${x + barW / 2 - 2.5},${y - 5.5} ${x + barW / 2 + 2.5},${y - 5.5}" fill="#38bdf8"/>
+					<text x="${x + barW / 2}" y="${y - 7}" text-anchor="middle" font-size="7" font-weight="bold" fill="#38bdf8" font-family="${recFont}">${p.prob}%</text>
+				`;
+			}
+
+			return `
+				<g class="f4-bar-group" data-id="${p.id}" style="cursor:pointer">
+					<rect class="f4-bar-rect" data-id="${p.id}" x="${x}" y="${y}" width="${barW}" height="${h}" rx="2" fill="${col}"
+						${isSelected ? 'stroke="#38bdf8" stroke-width="1.6" style="filter:drop-shadow(0 0 4px #0cb7f2)"' : 'opacity="0.82"'} />
+					${marker}
+					<text class="f4-bar-label" data-id="${p.id}" x="${x + barW / 2}" y="${top + chartH + 5}"
+						transform="rotate(-90 ${x + barW / 2} ${top + chartH + 5})" text-anchor="end" font-size="7"
+						font-weight="${isSelected ? 'bold' : 'normal'}" fill="${isSelected ? '#38bdf8' : '#8fa0b5'}" font-family="${recFont}">${p.id}</text>
+				</g>
+			`;
+		}).join('');
+
+		chartWrap.innerHTML = `
+			<svg class="fase4-barchart-svg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+				${gridSvg}
+				${avgSvg}
+				${barsSvg}
+			</svg>
+		`;
+	}
+
+	// Sort buttons
+	const btnSortRank = container.querySelector('#f4-sort-rank');
+	const btnSortId = container.querySelector('#f4-sort-id');
+
+	btnSortRank.addEventListener('click', () => {
+		if (sortMode === 'rank') return;
+		sortMode = 'rank';
+		btnSortRank.classList.add('active');
+		btnSortId.classList.remove('active');
+		renderBarChart();
+	});
+
+	btnSortId.addEventListener('click', () => {
+		if (sortMode === 'id') return;
+		sortMode = 'id';
+		btnSortId.classList.add('active');
+		btnSortRank.classList.remove('active');
+		renderBarChart();
+	});
+
+	// Bar chart click interaction
+	chartWrap.addEventListener('click', (e) => {
+		const group = e.target.closest('.f4-bar-group');
+		if (group) {
+			selectPractitioner(group.dataset.id);
+		}
+	});
 
 	function selectPractitioner(id) {
 		selectedId = id;
-		select.value = id;
-		list.querySelectorAll('.fase4-rank-item').forEach(li => {
-			li.classList.toggle('selected', li.dataset.id === id);
-		});
+		if (select.value !== id) select.value = id;
+		renderBarChart();
 		renderDetail(id);
 	}
 
-	// ---------- Detail ----------
+	// ---------- Detail Panel ----------
 	const detailIdEl = container.querySelector('#f4-detail-id');
 	const gaugeWrap = container.querySelector('.fase4-detail-gauge');
 
@@ -164,20 +275,18 @@ function initFase4Dashboard() {
 		detailIdEl.innerHTML = `Practicante ${p.id} <span class="fase4-badge ${p.nivel}">${p.nivel}</span>`;
 
 		// Gauge semicircular (representa 0-100)
-		const g = 200;
-		const arcR = 70;
-		const cx = 100, cy = 100;
+		const arcR = 64;
+		const cx = 85, cy = 85;
 		const ang = Math.min(p.prob, 100) / 100 * Math.PI; // 0..180°
 		const xEnd = cx + arcR * Math.cos(Math.PI - ang);
 		const yEnd = cy - arcR * Math.sin(Math.PI - ang);
 		const dArc = `M ${cx - arcR} ${cy} A ${arcR} ${arcR} 0 ${ang > Math.PI ? 1 : 0} 1 ${xEnd} ${yEnd}`;
 		gaugeWrap.innerHTML = `
-			<svg class="fase4-gauge-svg" viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg" font-family="${recFont}">
-				<path d="M 30 100 A 70 70 0 0 1 170 100" fill="none" stroke="#182642" stroke-width="16" stroke-linecap="round"/>
-				<path d="${dArc}" fill="none" stroke="${color}" stroke-width="16" stroke-linecap="round" style="filter:drop-shadow(0 0 6px ${color})"/>
-				<text x="100" y="92" text-anchor="middle" font-size="30" font-weight="bold" fill="#ffffff">${p.prob}%</text>
+			<svg class="fase4-gauge-svg" viewBox="0 0 170 95" xmlns="http://www.w3.org/2000/svg" font-family="${recFont}">
+				<path d="M 21 85 A 64 64 0 0 1 149 85" fill="none" stroke="#182642" stroke-width="14" stroke-linecap="round"/>
+				<path d="${dArc}" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round" style="filter:drop-shadow(0 0 5px ${color})"/>
+				<text x="85" y="80" text-anchor="middle" font-size="25" font-weight="bold" fill="#ffffff">${p.prob}%</text>
 			</svg>
-			<div class="fase4-gauge-center" style="display:none"></div>
 		`;
 
 		document.getElementById('f4-m-nota').textContent = String(p.nota).replace('.', ',');
@@ -189,12 +298,6 @@ function initFase4Dashboard() {
 		document.getElementById('f4-rec').textContent = p.recomendacion;
 	}
 
-	// ---------- Events ----------
-	list.addEventListener('click', (e) => {
-		const li = e.target.closest('.fase4-rank-item');
-		if (li) selectPractitioner(li.dataset.id);
-	});
-	select.addEventListener('change', () => selectPractitioner(select.value));
-
+	// Inicializar vista
 	selectPractitioner(practicantes[0].id);
 }

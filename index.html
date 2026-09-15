@@ -24,55 +24,46 @@
 	<div class="reveal">
 		<div class="slides">
 
-			<!-- 1 · Portada Formal -->
+			<!-- 1 · Portada Formal (Full Viewport) -->
 			<section class="slide-portada">
 				<div class="portada-container">
 					<!-- Cabecera Institucional SENATI -->
 					<div class="portada-header">
 						<div class="senati-brand">
-							<svg class="senati-logo" viewBox="0 0 240 60" width="180" height="45" role="img"
-								aria-label="Logo SENATI">
-								<g transform="scale(0.65)">
-									<path fill="#0cb7f2"
-										d="M 26 0 L 74 0 L 84 17 L 31 17 L 21 38 L 65 38 L 57 55 L 14 55 L 0 28 Z" />
-									<path fill="#0cb7f2" transform="rotate(180 42 42.5)"
-										d="M 26 0 L 74 0 L 84 17 L 31 17 L 21 38 L 65 38 L 57 55 L 14 55 L 0 28 Z" />
-								</g>
-								<text x="72" y="38"
-									font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-									font-size="34" font-weight="900" fill="#0cb7f2" letter-spacing="3">SENATI</text>
-							</svg>
-						</div>
-						<div class="portada-badge">
-							<span class="badge-pill">Proyecto Final · Sustentación</span>
+							<img src="banner-fondo-transparente.svg" alt="SENATI Logo" class="senati-banner-img" />
 						</div>
 					</div>
 
-					<!-- Bloque de Título Principal -->
-					<div class="portada-main">
-						<h1 class="portada-title">Big Data y Análisis de Datos</h1>
-						<p class="portada-subtitle">
-							Ingesta, almacenamiento distribuido en HDFS, modelado predictivo/NoSQL y visualización en
-							Power BI orientados a la gestión y retención de practicantes
-						</p>
+					<!-- Bloque de Hero: Título Principal + Ilustración Big Data -->
+					<div class="portada-hero">
+						<div class="portada-hero-text">
+							<div class="portada-category">
+								<span class="pill-dot"></span>
+								Escuela de Tecnologías de la Información · ETI
+							</div>
+							<h1 class="portada-title">Big Data y<br>Análisis de Datos</h1>
+						</div>
+						<img src="big-data-img.png" alt="Big Data & Analytics" class="portada-hero-img" />
 					</div>
 
-					<!-- Tarjetas de Metadatos de Negocio y Equipo -->
+					<!-- Grid de 2 Columnas: Empresa y Equipo -->
 					<div class="portada-grid">
 						<!-- Empresa de Formación -->
 						<div class="portada-card">
 							<div class="card-tag">Empresa de Formación Práctica</div>
 							<h3 class="empresa-name">APM Inversiones EIRL</h3>
 							<p class="empresa-desc">
-								Desarrollo de soluciones tecnológicas, plataformas web y servicios digitales
-								empresariales, con un programa intensivo de formación profesional y gestión de
-								practicantes en modalidad remota.
+								Desarrollo de soluciones tecnológicas y analítica empresarial, con programa intensivo de formación profesional y gestión de practicantes en modalidad remota.
 							</p>
+							<div class="tech-stack-badges">
+								<span class="tech-badge">Modalidad Remota</span>
+								<span class="tech-badge">Supervisión Continua</span>
+							</div>
 						</div>
 
 						<!-- Integrantes del Proyecto -->
-						<div class="portada-card">
-							<div class="card-tag">Integrantes del Equipo</div>
+						<div class="portada-card portada-card-integrantes">
+							<div class="card-tag">Integrantes del Equipo (5)</div>
 							<div class="integrantes-list">
 								<div class="integrante-item">
 									<span class="dot"></span>
@@ -112,9 +103,7 @@
 						<h2 class="fase-intro-title">Ingesta y Consolidación de Datos</h2>
 					</div>
 					<p class="fase-intro-desc">
-						Captura, validación y consolidación de datos transaccionales, conductuales y académicos
-						provenientes de 6 fuentes heterogéneas hacia una zona cruda centralizada (Data Lake),
-						estandarizando identidades mediante la API de RENIEC.
+						proceso inicial en la gestión de información, donde se recolectan datos de múltiples fuentes para unificarlos en un solo lugar.
 					</p>
 					<div class="fase-intro-cards">
 						<div class="fase-intro-card">
@@ -126,10 +115,9 @@
 									<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
 									<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
 								</svg>
-								<h3 class="fase-intro-card-title">6 Fuentes Heterogéneas</h3>
+								<h3 class="fase-intro-card-title">6 Fuentes identificadas</h3>
 							</div>
-							<p class="fase-intro-card-text">Extracción de MySQL, SQL Server, MongoDB, planillas Excel,
-								logs CSV y validación DNI en RENIEC.</p>
+							<p class="fase-intro-card-text">4 internas y 2 externas.</p>
 						</div>
 						<div class="fase-intro-card">
 							<div class="fase-intro-card-header">
@@ -697,7 +685,7 @@
 							<p>Reduce el almacenamiento y acelera la descompresión en consultas analíticas</p>
 						</div>
 					</div>
-					<svg class="sim-redesign" viewBox="170 160 1260 555" width="100%" height="100%" role="img"
+					<svg class="sim-redesign" viewBox="130 45 1340 670" width="100%" height="100%" role="img"
 						aria-label="Fase 2 · Simulación de distribución en el clúster"
 						xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<defs>
@@ -710,7 +698,12 @@
 									flood-opacity="0.25" />
 							</filter>
 
-							<!-- Gradients for Block Cards -->
+							<!-- Gradients for NameNode Container and Block Cards -->
+							<linearGradient id="sim2-namenode-container-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+								<stop offset="0%" stop-color="#0b172a" />
+								<stop offset="35%" stop-color="#0d1f3b" />
+								<stop offset="100%" stop-color="#081220" />
+							</linearGradient>
 							<linearGradient id="sim2-card-blk101" x1="0%" y1="0%" x2="0%" y2="100%">
 								<stop offset="0%" stop-color="#0f2640" />
 								<stop offset="100%" stop-color="#0b1726" />
@@ -742,7 +735,45 @@
 							<path id="route-s2-g3" d="M 1200 276 C 1100 340, 560 420, 470 575" />
 						</defs>
 
-						<!-- ================= TOP ROW: BLOCKS ================= -->
+						<!-- ================= MASTER TIER: NAMENODE ENCLOSURE ================= -->
+						<!-- NameNode Master Container Enclosure (Encapsula los Bloques) -->
+						<rect x="180" y="65" width="1240" height="225" rx="20" fill="url(#sim2-namenode-container-grad)"
+							stroke="rgba(12, 183, 242, 0.45)" stroke-width="1.8" />
+
+						<!-- NameNode Top Label Badge -->
+						<rect x="630" y="51" width="340" height="28" rx="14" fill="#0c1728"
+							stroke="#0cb7f2" stroke-width="1.4" />
+						<text x="800" y="70" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif"
+							font-size="12" font-weight="800" letter-spacing="2" fill="#38d1ff">NAMENODE · MASTER NODE</text>
+
+						<!-- NameNode Master Header Info -->
+						<g transform="translate(210, 82)">
+							<!-- Master Server Blade Icon -->
+							<rect x="0" y="0" width="42" height="46" rx="8" fill="#07111e" stroke="#0cb7f2" stroke-width="2" />
+							<rect x="6" y="7" width="30" height="8" rx="2" fill="#0c2340" stroke="#38bdf8" stroke-width="1" />
+							<circle cx="11" cy="11" r="1.8" fill="#22c55e" />
+							<line x1="17" y1="11" x2="30" y2="11" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" />
+							<rect x="6" y="19" width="30" height="8" rx="2" fill="#0c2340" stroke="#38bdf8" stroke-width="1" />
+							<circle cx="11" cy="23" r="1.8" fill="#22c55e" />
+							<line x1="17" y1="23" x2="30" y2="23" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" />
+							<rect x="6" y="31" width="30" height="8" rx="2" fill="#0c2340" stroke="#0cb7f2" stroke-width="1" />
+							<circle cx="11" cy="35" r="1.8" fill="#38bdf8" />
+							<line x1="17" y1="35" x2="25" y2="35" stroke="#0cb7f2" stroke-width="1.5" stroke-linecap="round" />
+
+							<!-- Title and Subtitle (Sin redundancia) -->
+							<text x="56" y="19" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#ffffff">Catálogo de Metadatos &amp; Namespace HDFS</text>
+							<text x="56" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">
+								Control de topología y monitoreo de Heartbeats (3s)
+							</text>
+						</g>
+
+						<!-- Subtle Header Divider inside NameNode -->
+						<line x1="210" y1="152" x2="1390" y2="152" stroke="rgba(12, 183, 242, 0.2)" stroke-width="1" stroke-dasharray="6 4" />
+						<text x="210" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#7dd3fc">
+							BLOQUES FÍSICOS ASIGNADOS AL DATASET:
+						</text>
+
+						<!-- ================= ENCAPSULATED BLOCKS ================= -->
 						<!-- Card 1: BLK-101 (Cyan) -->
 						<g filter="url(#sim2-card-shadow)">
 							<rect x="230" y="180" width="340" height="88" rx="16" fill="url(#sim2-card-blk101)"
@@ -1040,27 +1071,6 @@
 				</div>
 			</section>
 
-			<!-- 9 · Fase 2: tolerancia a fallos -->
-			<section>
-				<div class="slide-head">
-					<div class="head-badge">
-						<span class="head-line"></span>
-						<span class="head-pill">Fase 2</span>
-						<span class="head-line"></span>
-					</div>
-					<h2>Tolerancia a fallos · caída de DataNode 2</h2>
-					<p class="sub">Detección de ausencia de heartbeats y recuperación de réplicas</p>
-				</div>
-				<div class="step">
-					<p class="fragment"><span class="n">1</span>El NameNode detecta la ausencia de heartbeats (10
-						minutos por defecto).</p>
-					<p class="fragment"><span class="n">2</span>Identifica que BLK-101 y BLK-102 quedan sub-replicados
-						(factor 2 en lugar de 3).</p>
-					<p class="fragment"><span class="n">3</span>Ordena a DataNodes activos replicar los bloques hacia
-						DataNode 4, restaurando el factor 3 sin downtime para las aplicaciones.</p>
-				</div>
-			</section>
-
 			<!-- 9.1 · Fase 2: simulación de tolerancia a fallos · caída de DataNode 2 -->
 			<section class="slide-sim-redesign slide-title-top">
 				<div class="slide-head">
@@ -1117,7 +1127,7 @@
 							<p>Se restablece el factor de redundancia 3 sin interrumpir la operación del clúster.</p>
 						</div>
 					</div>
-					<svg class="sim-redesign" viewBox="170 160 1260 555" width="100%" height="100%" role="img"
+					<svg class="sim-redesign" viewBox="130 45 1340 670" width="100%" height="100%" role="img"
 						aria-label="Fase 2 · Simulación de tolerancia a fallos · caída de DataNode 2"
 						xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<defs>
@@ -1130,7 +1140,12 @@
 									flood-opacity="0.25" />
 							</filter>
 
-							<!-- Gradients for Block Cards -->
+							<!-- Gradients for NameNode Container and Block Cards -->
+							<linearGradient id="sim3-namenode-container-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+								<stop offset="0%" stop-color="#141824" />
+								<stop offset="35%" stop-color="#182033" />
+								<stop offset="100%" stop-color="#0b101c" />
+							</linearGradient>
 							<linearGradient id="sim3-card-blk101" x1="0%" y1="0%" x2="0%" y2="100%">
 								<stop offset="0%" stop-color="#0f2640" />
 								<stop offset="100%" stop-color="#0b1726" />
@@ -1165,7 +1180,61 @@
 							<path id="route-s3-g4" d="M 1200 276 C 1230 350, 1225 490, 1190 575" />
 						</defs>
 
-						<!-- ================= TOP ROW: BLOCKS ================= -->
+						<!-- ================= MASTER TIER: NAMENODE ENCLOSURE ================= -->
+						<!-- NameNode Master Container Enclosure (Encapsula los Bloques con Alerta y Auto-healing) -->
+						<rect x="180" y="65" width="1240" height="225" rx="20" fill="url(#sim3-namenode-container-grad)"
+							stroke="#f59e0b" stroke-width="1.8" />
+
+						<!-- NameNode Top Label Badge -->
+						<rect x="620" y="51" width="360" height="28" rx="14" fill="#181308"
+							stroke="#f59e0b" stroke-width="1.4" />
+						<text x="800" y="70" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif"
+							font-size="12" font-weight="800" letter-spacing="2" fill="#fbbf24">NAMENODE · TOLERANCIA A FALLOS</text>
+
+						<!-- NameNode Master Header Info -->
+						<g transform="translate(210, 82)">
+							<!-- Master Server Blade Icon (Alert & Auto-healing) -->
+							<rect x="0" y="0" width="42" height="46" rx="8" fill="#07111e" stroke="#f59e0b" stroke-width="2" />
+							<rect x="6" y="7" width="30" height="8" rx="2" fill="#0c2340" stroke="#38bdf8" stroke-width="1" />
+							<circle cx="11" cy="11" r="1.8" fill="#22c55e" />
+							<line x1="17" y1="11" x2="30" y2="11" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" />
+							<rect x="6" y="19" width="30" height="8" rx="2" fill="#261014" stroke="#ef4444" stroke-width="1" />
+							<circle cx="11" cy="23" r="1.8" fill="#ef4444" />
+							<line x1="17" y1="23" x2="30" y2="23" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" />
+							<rect x="6" y="31" width="30" height="8" rx="2" fill="#0c2340" stroke="#22c55e" stroke-width="1" />
+							<circle cx="11" cy="35" r="1.8" fill="#22c55e" />
+							<line x1="17" y1="35" x2="25" y2="35" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" />
+
+							<!-- Title & Alert Subtitle (Sin redundancia) -->
+							<text x="56" y="19" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#ffffff">Detección de Falla &amp; Orquestación de Réplicas</text>
+							<text x="56" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#e2e8f0">
+								<tspan fill="#fca5a5">Ausencia de Heartbeat en DataNode 2 (10m)</tspan> ➔ <tspan fill="#86efac">Orden: Re-replicar hacia DataNode 4</tspan>
+							</text>
+
+							<!-- Status Badge on Right -->
+							<rect x="915" y="2" width="245" height="42" rx="10" fill="rgba(34, 197, 94, 0.14)" stroke="rgba(34, 197, 94, 0.45)" stroke-width="1.4" />
+							<circle cx="935" cy="23" r="4.5" fill="#22c55e">
+								<animate attributeName="opacity" values="1;0.3;1" dur="1.2s" repeatCount="indefinite" />
+							</circle>
+							<text x="950" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#4ade80" letter-spacing="1">AUTO-HEALING ACTIVO</text>
+							<text x="950" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#86efac">Factor 3 Restaurado</text>
+						</g>
+
+						<!-- Subtle Header Divider inside NameNode -->
+						<line x1="210" y1="152" x2="1390" y2="152" stroke="rgba(245, 158, 11, 0.25)" stroke-width="1" stroke-dasharray="6 4" />
+						<text x="210" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#fde68a">
+							BLOQUES AFECTADOS BAJO RE-ORQUESTACIÓN EN MEMORIA:
+						</text>
+
+						<!-- Alert Line from NameNode Enclosure to DataNode 2 -->
+						<path d="M 180 140 C 130 180, 130 520, 220 619" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.85" />
+						<text x="145" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#fca5a5" transform="rotate(-90 145 360)">TIMEOUT HEARTBEAT (10m)</text>
+
+						<!-- Command Line from NameNode Enclosure to DataNode 4 -->
+						<path d="M 1420 140 C 1470 180, 1470 520, 1380 619" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.85" />
+						<text x="1455" y="370" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#86efac" transform="rotate(90 1455 370)">ORDEN RE-REPLICACIÓN</text>
+
+						<!-- ================= ENCAPSULATED BLOCKS ================= -->
 						<!-- Card 1: BLK-101 (Cyan) -->
 						<g filter="url(#sim3-card-shadow)">
 							<rect x="230" y="180" width="340" height="88" rx="16" fill="url(#sim3-card-blk101)"
@@ -1523,7 +1592,7 @@
 								<h3 class="fase-intro-card-title">Simulador Interactivo</h3>
 							</div>
 							<p class="fase-intro-card-text">Calculadora integrada en tiempo real para simular scoring
-								probabilístico según horas, incidentes y sede.</p>
+								probabilístico según horas e incidentes.</p>
 						</div>
 					</div>
 				</div>
@@ -1627,10 +1696,9 @@
 						<p>El modelo calculará el porcentaje de probabilidad de que un practicante presente bajo
 							desempeño el próximo mes.</p>
 						<ul>
-							<li><code>(Y > 70 %)</code>: riesgo alto de bajo desempeño el próximo mes</li>
-							<li><code>(31% ≤ Y ≤ 70%)</code>: riesgo medio, requiere seguimiento y retroalimentación
-							</li>
-							<li><code>(Y ≤ 30 %)</code>: riesgo bajo de que presente bajo desempeño</li>
+							<li><code>(Y &gt; 50 %)</code>: riesgo alto de bajo desempeño el próximo mes</li>
+							<li><code>(25% ≤ Y ≤ 50%)</code>: riesgo medio, requiere seguimiento y retroalimentación</li>
+							<li><code>(Y &lt; 25 %)</code>: riesgo bajo de que presente bajo desempeño</li>
 						</ul>
 					</div>
 					<div class="pred-table-col">
@@ -1658,11 +1726,6 @@
 									<td>total_faltas_mes_anterior</td>
 									<td>Independiente</td>
 									<td>Cuantitativa discreta</td>
-								</tr>
-								<tr>
-									<td>justificacion_mas_frecuente</td>
-									<td>Independiente</td>
-									<td>Cualitativa nominal</td>
 								</tr>
 								<tr>
 									<td>incidentes_mes_anterior</td>
@@ -1777,27 +1840,11 @@
 
 							<div class="calc-field">
 								<div class="calc-field-header">
-									<span>Tipo de Justificación Más Frecuente</span>
+									<span>Registro de Incidentes</span>
+									<span id="calc-val-incidentes" class="calc-field-val">0 incidentes</span>
 								</div>
-								<div class="calc-pill-group">
-									<div class="calc-pill-option calc-justif-btn selected" data-val="academica">
-										Académica</div>
-									<div class="calc-pill-option calc-justif-btn" data-val="medica">Médica</div>
-									<div class="calc-pill-option calc-justif-btn" data-val="personal">Personal</div>
-									<div class="calc-pill-option calc-justif-btn" data-val="sin_justificar">Sin
-										Justificar</div>
-								</div>
-							</div>
-
-							<div class="calc-field">
-								<div class="calc-field-header">
-									<span>Registro de Incidentes Disciplinarios</span>
-								</div>
-								<div class="calc-pill-group">
-									<div class="calc-pill-option calc-inc-btn selected" data-val="0">Sin Incidentes (0)
-									</div>
-									<div class="calc-pill-option calc-inc-btn" data-val="1">Con Reportes (1)</div>
-								</div>
+								<input type="range" id="calc-incidentes" class="calc-slider" min="0" max="5" step="1"
+									value="0" />
 							</div>
 						</div>
 					</div>
@@ -1834,14 +1881,6 @@
 								<div id="calc-action-badge" class="calc-action-badge">Recomendación de Negocio</div>
 								<p id="calc-action-desc" class="calc-action-desc">Evaluando variables...</p>
 							</div>
-
-							<div class="calc-formula-card">
-								<div class="calc-formula-header">
-									<span>Fundamento Matemático · Función Sigmoide Logística</span>
-									<span id="calc-formula-desc">P = 1 / (1 + e^(-z))</span>
-								</div>
-								<p id="calc-formula-code" class="calc-formula-code">z = ...</p>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -1855,7 +1894,7 @@
 						<span class="head-pill">Fase 3 · Modelado Descriptivo</span>
 						<span class="head-line"></span>
 					</div>
-					<h2>Tabla de Evaluación del Practicante</h2>
+					<h2>Tabla de Evaluación del Practicante para enviarlo a Producción</h2>
 					<p class="sub">Desarrollo Técnico de la Fase 3</p>
 				</div>
 				<table class="desc-table desc-table-eval">
@@ -2039,7 +2078,7 @@
 									<line x1="16" y1="13" x2="8" y2="13" />
 									<line x1="16" y1="17" x2="8" y2="17" />
 								</svg>
-								<span class="pipeline-card-badge">Esquema BSON</span>
+								<span class="pipeline-card-badge">JSON MODELO</span>
 							</div>
 							<h4 class="pipeline-card-title">Documento Origen (Modelo NoSQL)</h4>
 							<p class="pipeline-card-desc">Estructura semiestructurada de la colección asistencias con
@@ -2340,11 +2379,9 @@
 						<h2 class="fase-intro-title">Visualización Analítica y Entrega de Valor</h2>
 					</div>
 					<p class="fase-intro-desc">
-						Construcción y publicación de tableros interactivos en Power BI Service para traducir los
-						resultados analíticos y predictivos en decisiones estratégicas de retención, evaluación de
-						tutores y gestión de talento humano.
+						Construcción y publicación de tableros interactivos para traducir los resultados analíticos y predictivos en decisiones estratégicas de retención, evaluación de tutores y gestión de talento humano.
 					</p>
-					<div class="fase-intro-cards">
+					<div class="fase-intro-cards fase-intro-cards-2">
 						<div class="fase-intro-card">
 							<div class="fase-intro-card-header">
 								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none"
@@ -2356,8 +2393,7 @@
 								</svg>
 								<h3 class="fase-intro-card-title">Dashboards Interactivos</h3>
 							</div>
-							<p class="fase-intro-card-text">Visualizaciones dinámicas con segmentación por sede,
-								carrera, modalidad y estado de justificación.</p>
+							<p class="fase-intro-card-text">Visualizaciones dinámicas para el análisis y seguimiento de la información.</p>
 						</div>
 						<div class="fase-intro-card">
 							<div class="fase-intro-card-header">
@@ -2369,23 +2405,7 @@
 								</svg>
 								<h3 class="fase-intro-card-title">Monitoreo de KPIs Clave</h3>
 							</div>
-							<p class="fase-intro-card-text">Control de horas acumuladas, tasa de justificación médica,
-								ranking de rendimiento y alertas de abandono.</p>
-						</div>
-						<div class="fase-intro-card">
-							<div class="fase-intro-card-header">
-								<svg class="fase-intro-card-icon" viewBox="0 0 24 24" width="22" height="22" fill="none"
-									stroke="currentColor" stroke-width="2" stroke-linecap="round"
-									stroke-linejoin="round" aria-hidden="true">
-									<circle cx="12" cy="12" r="10" />
-									<line x1="2" y1="12" x2="22" y2="12" />
-									<path
-										d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-								</svg>
-								<h3 class="fase-intro-card-title">Publicación en Cloud</h3>
-							</div>
-							<p class="fase-intro-card-text">Acceso distribuido mediante Power BI Service e integración
-								web protegida para líderes y coordinadores.</p>
+							<p class="fase-intro-card-text">Control de horas acumuladas, ranking de rendimiento y alertas de abandono.</p>
 						</div>
 					</div>
 				</div>
@@ -2405,32 +2425,6 @@
 				<div id="fase4-dashboard" class="fase4-dash"></div>
 			</section>
 
-			<!-- 16 · Links del dashboard -->
-			<section>
-				<div class="slide-head">
-					<div class="head-badge">
-						<span class="head-line"></span>
-						<span class="head-pill">Fase 4</span>
-						<span class="head-line"></span>
-					</div>
-					<h2>Links del dashboard</h2>
-					<p class="sub">Acceso al informe en Power BI Service e integración web</p>
-				</div>
-				<p class="small">Power BI · Servicio</p>
-				<p class="small">
-					<a
-						href="https://app.powerbi.com/links/MBgghZozTi?ctid=b4a40545-7779-4b38-aff7-1f1738f80840&pbi_source=linkShare">
-						app.powerbi.com/links/MBgghZozTi
-					</a>
-				</p>
-				<p class="small">
-					<a
-						href="https://app.powerbi.com/view?r=eyJrIjoiNTk5OWQ3MTYtZjUyZS00YjQ1LTlmZjEtZTU5MDE5MmE1NDc3IiwidCI6ImI0YTQwNTQ1LTc3NzktNGIzOC1hZmY3LTFmMTczOGY4MDg0MCIsImMiOjR9">
-						app.powerbi.com/view (integración)
-					</a>
-				</p>
-			</section>
-
 			<!-- 18 · Cierre -->
 			<section class="title">
 				<div class="slide-head">
@@ -2440,7 +2434,6 @@
 						<span class="head-line"></span>
 					</div>
 					<h2>¡Gracias!</h2>
-					<p class="sub">¿Preguntas?</p>
 				</div>
 			</section>
 

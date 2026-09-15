@@ -32,15 +32,13 @@ function initPredictiveCalculator() {
 		nota: 15.0,
 		horasPct: 90,
 		faltas: 0,
-		justificacion: 'academica',
 		incidentes: 0
 	};
 
 	// Model 2 State (Riesgo Bajo Desempeño Mensual)
 	const stateP2 = {
-		horasSemanales: 34,
+		horasSemanales: 32,
 		faltas: 1,
-		justificacion: 'academica',
 		incidentes: 0
 	};
 
@@ -56,8 +54,8 @@ function initPredictiveCalculator() {
 	const sliderFaltas = document.getElementById('calc-faltas');
 	const valFaltas = document.getElementById('calc-val-faltas');
 
-	const justifButtons = document.querySelectorAll('.calc-justif-btn');
-	const incidentesButtons = document.querySelectorAll('.calc-inc-btn');
+	const sliderIncidentes = document.getElementById('calc-incidentes');
+	const valIncidentes = document.getElementById('calc-val-incidentes');
 
 	// DOM Elements - Tabs & Presets
 	const tabContinuidad = document.getElementById('tab-continuidad');
@@ -112,8 +110,8 @@ function initPredictiveCalculator() {
 			sliderFaltas.value = stateP1.faltas;
 			valFaltas.textContent = `${stateP1.faltas} falta${stateP1.faltas !== 1 ? 's' : ''}`;
 
-			setActivePill(justifButtons, stateP1.justificacion);
-			setActivePill(incidentesButtons, String(stateP1.incidentes));
+			sliderIncidentes.value = stateP1.incidentes;
+			valIncidentes.textContent = `${stateP1.incidentes} incidente${stateP1.incidentes !== 1 ? 's' : ''}`;
 		} else {
 			fieldNota.style.display = 'none';
 			labelHoras.textContent = 'Horas Semanales Promedio (Mes Anterior)';
@@ -126,19 +124,9 @@ function initPredictiveCalculator() {
 			sliderFaltas.value = stateP2.faltas;
 			valFaltas.textContent = `${stateP2.faltas} falta${stateP2.faltas !== 1 ? 's' : ''}`;
 
-			setActivePill(justifButtons, stateP2.justificacion);
-			setActivePill(incidentesButtons, String(stateP2.incidentes));
+			sliderIncidentes.value = stateP2.incidentes;
+			valIncidentes.textContent = `${stateP2.incidentes} incidente${stateP2.incidentes !== 1 ? 's' : ''}`;
 		}
-	}
-
-	function setActivePill(nodeList, value) {
-		nodeList.forEach(btn => {
-			if (btn.dataset.val === value) {
-				btn.classList.add('selected');
-			} else {
-				btn.classList.remove('selected');
-			}
-		});
 	}
 
 	// Sliders Listeners
@@ -171,33 +159,15 @@ function initPredictiveCalculator() {
 		calculate();
 	});
 
-	// Pill Options Listeners
-	justifButtons.forEach(btn => {
-		btn.addEventListener('click', () => {
-			justifButtons.forEach(b => b.classList.remove('selected'));
-			btn.classList.add('selected');
-			const val = btn.dataset.val;
-			if (currentModel === 'continuidad') {
-				stateP1.justificacion = val;
-			} else {
-				stateP2.justificacion = val;
-			}
-			calculate();
-		});
-	});
-
-	incidentesButtons.forEach(btn => {
-		btn.addEventListener('click', () => {
-			incidentesButtons.forEach(b => b.classList.remove('selected'));
-			btn.classList.add('selected');
-			const val = parseInt(btn.dataset.val, 10);
-			if (currentModel === 'continuidad') {
-				stateP1.incidentes = val;
-			} else {
-				stateP2.incidentes = val;
-			}
-			calculate();
-		});
+	sliderIncidentes?.addEventListener('input', (e) => {
+		const val = parseInt(e.target.value, 10);
+		if (currentModel === 'continuidad') {
+			stateP1.incidentes = val;
+		} else {
+			stateP2.incidentes = val;
+		}
+		valIncidentes.textContent = `${val} incidente${val !== 1 ? 's' : ''}`;
+		calculate();
 	});
 
 	// Presets
@@ -206,14 +176,12 @@ function initPredictiveCalculator() {
 			stateP1.nota = 18.0;
 			stateP1.horasPct = 100;
 			stateP1.faltas = 0;
-			stateP1.justificacion = 'academica';
 			stateP1.incidentes = 0;
 			sliderNota.value = '18.0';
 			valNota.textContent = '18.0 / 20';
 		} else {
-			stateP2.horasSemanales = 38;
+			stateP2.horasSemanales = 36;
 			stateP2.faltas = 0;
-			stateP2.justificacion = 'academica';
 			stateP2.incidentes = 0;
 		}
 		syncInputsForModel();
@@ -222,17 +190,15 @@ function initPredictiveCalculator() {
 
 	presetSeguimiento?.addEventListener('click', () => {
 		if (currentModel === 'continuidad') {
-			stateP1.nota = 13.5;
+			stateP1.nota = 14.0;
 			stateP1.horasPct = 85;
 			stateP1.faltas = 1;
-			stateP1.justificacion = 'personal';
 			stateP1.incidentes = 0;
-			sliderNota.value = '13.5';
-			valNota.textContent = '13.5 / 20';
+			sliderNota.value = '14.0';
+			valNota.textContent = '14.0 / 20';
 		} else {
 			stateP2.horasSemanales = 30;
-			stateP2.faltas = 2;
-			stateP2.justificacion = 'personal';
+			stateP2.faltas = 1;
 			stateP2.incidentes = 0;
 		}
 		syncInputsForModel();
@@ -244,14 +210,12 @@ function initPredictiveCalculator() {
 			stateP1.nota = 10.0;
 			stateP1.horasPct = 68;
 			stateP1.faltas = 4;
-			stateP1.justificacion = 'sin_justificar';
 			stateP1.incidentes = 1;
 			sliderNota.value = '10.0';
 			valNota.textContent = '10.0 / 20';
 		} else {
 			stateP2.horasSemanales = 22;
-			stateP2.faltas = 4;
-			stateP2.justificacion = 'sin_justificar';
+			stateP2.faltas = 3;
 			stateP2.incidentes = 1;
 		}
 		syncInputsForModel();
@@ -273,26 +237,16 @@ function initPredictiveCalculator() {
 	}
 
 	function calculateContinuidad() {
-		// Justification weight lookup
-		const justifWeights = {
-			academica: 0.45,
-			medica: 0.35,
-			personal: -0.25,
-			sin_justificar: -0.85
-		};
-
 		const b0 = 0.5;
 		const deltaNota = (stateP1.nota - 12.5) * 0.42;
 		const deltaHoras = (stateP1.horasPct - 82) * 0.055;
 		let penaltyFaltas = stateP1.faltas * 0.72;
-		// MongoDB insight: 3+ unexcused absences trigger disproportionate risk of attrition
 		if (stateP1.faltas >= 3) {
 			penaltyFaltas += 0.95;
 		}
-		const penaltyIncidentes = stateP1.incidentes === 1 ? 1.35 : 0;
-		const effectJustif = justifWeights[stateP1.justificacion] || 0;
+		const penaltyIncidentes = stateP1.incidentes * 1.1;
 
-		const z = b0 + deltaNota + deltaHoras - penaltyFaltas - penaltyIncidentes + effectJustif;
+		const z = b0 + deltaNota + deltaHoras - penaltyFaltas - penaltyIncidentes;
 		const prob = Math.min(Math.max(sigmoid(z) * 100, 1.2), 99.4);
 		const probRounded = Math.round(prob);
 
@@ -300,8 +254,6 @@ function initPredictiveCalculator() {
 		metricNumber.textContent = `${probRounded}%`;
 		progressBar.style.width = `${probRounded}%`;
 
-		// Set dynamic styling colors based on Power BI thresholds:
-		// Alta (> 70%), Media (30% - 70%), Baja (< 30%)
 		let color, glow, levelText, actionTitle, actionText, predBinary;
 
 		if (prob >= 70) {
@@ -338,31 +290,23 @@ function initPredictiveCalculator() {
 		actionBadge.textContent = actionTitle;
 		actionDesc.textContent = actionText;
 
-		formulaCode.textContent = `z = 0.5 + 0.42·(Nota-12.5) + 0.055·(Horas-82) - ${penaltyFaltas.toFixed(2)} [Faltas] - ${penaltyIncidentes.toFixed(2)} [Inc] + ${effectJustif.toFixed(2)} [Justif] = ${z.toFixed(2)}`;
-		formulaDesc.textContent = `P(Continuar) = 1 / (1 + e^(-z)) = ${prob.toFixed(1)}%`;
+		if (formulaCode) formulaCode.textContent = `z = ${z.toFixed(2)}`;
+		if (formulaDesc) formulaDesc.textContent = `P(Continuar) = ${prob.toFixed(1)}%`;
 
 		// Subcards info
 		subcard1Title.textContent = 'Horas Cumplidas vs Meta';
 		subcard1Val.textContent = `${stateP1.horasPct}% (${Math.round(stateP1.horasPct * 5.76)} hrs)`;
 		subcard2Title.textContent = 'Impacto Disciplinario';
-		subcard2Val.textContent = stateP1.faltas >= 3 ? 'Crítico (≥3 faltas)' : (stateP1.incidentes ? 'Advertencia' : 'Limpio');
+		subcard2Val.textContent = stateP1.faltas >= 3 || stateP1.incidentes >= 2 ? 'Crítico' : ((stateP1.faltas > 0 || stateP1.incidentes > 0) ? 'Advertencia' : 'Limpio');
 	}
 
 	function calculateDesempeno() {
-		const justifWeights = {
-			academica: -0.4,
-			medica: -0.3,
-			personal: 0.35,
-			sin_justificar: 0.9
-		};
+		const b0 = -0.85;
+		const deltaHoras = -(stateP2.horasSemanales - 30) * 0.08;
+		const faltasImpact = stateP2.faltas * 0.65;
+		const incidentesImpact = stateP2.incidentes * 0.9;
 
-		const b0 = -0.7;
-		const deltaHoras = -(stateP2.horasSemanales - 32) * 0.085;
-		const faltasImpact = stateP2.faltas * 0.68;
-		const incidentesImpact = stateP2.incidentes === 1 ? 1.4 : 0;
-		const effectJustif = justifWeights[stateP2.justificacion] || 0;
-
-		const z = b0 + deltaHoras + faltasImpact + incidentesImpact + effectJustif;
+		const z = b0 + deltaHoras + faltasImpact + incidentesImpact;
 		const prob = Math.min(Math.max(sigmoid(z) * 100, 1.5), 98.8);
 		const probRounded = Math.round(prob);
 
@@ -375,21 +319,21 @@ function initPredictiveCalculator() {
 		if (prob >= 50) {
 			color = '#ef4444'; // High risk
 			glow = 'rgba(239, 68, 68, 0.4)';
-			levelText = 'Riesgo Alto (Alerta)';
+			levelText = 'Riesgo Alto (> 50%)';
 			predBinary = '1 · Tendrá bajo desempeño (≤10/20)';
 			actionTitle = 'Intervención y Tutoría Inmediata';
-			actionText = 'El modelo alerta que el practicante tiene alta probabilidad de reprobar o promediar ≤ 10 en el siguiente mes. Intervenir preventivamente.';
+			actionText = 'El modelo alerta que el practicante tiene alta probabilidad de bajo desempeño en el siguiente mes. Intervenir preventivamente.';
 		} else if (prob >= 25) {
 			color = '#f59e0b';
 			glow = 'rgba(245, 158, 11, 0.4)';
-			levelText = 'Riesgo Moderado';
+			levelText = 'Riesgo Medio (25% ≤ Y ≤ 50%)';
 			predBinary = '0 · Desempeño vulnerable';
 			actionTitle = 'Refuerzo y Monitoreo Semanal';
-			actionText = 'Riesgo latente de caída en notas. Programar sesiones de apoyo en dudas técnicas para asegurar cumplimiento de tareas.';
+			actionText = 'Riesgo moderado de bajo desempeño. Programar sesiones de apoyo en dudas técnicas para asegurar cumplimiento de tareas.';
 		} else {
 			color = '#10b981';
 			glow = 'rgba(16, 185, 129, 0.4)';
-			levelText = 'Riesgo Bajo (Controlado)';
+			levelText = 'Riesgo Bajo (< 25%)';
 			predBinary = '0 · Desempeño Normal o Alto (>10/20)';
 			actionTitle = 'Desempeño Estable';
 			actionText = 'Comportamiento dentro de parámetros esperados. Continuar con la rutina normal de entregables y mentoría regular.';
@@ -406,8 +350,8 @@ function initPredictiveCalculator() {
 		actionBadge.textContent = actionTitle;
 		actionDesc.textContent = actionText;
 
-		formulaCode.textContent = `z = -0.7 - 0.085·(Horas-32) + ${faltasImpact.toFixed(2)} [Faltas] + ${incidentesImpact.toFixed(2)} [Inc] + ${effectJustif.toFixed(2)} [Justif] = ${z.toFixed(2)}`;
-		formulaDesc.textContent = `P(Bajo Desempeño) = 1 / (1 + e^(-z)) = ${prob.toFixed(1)}%`;
+		if (formulaCode) formulaCode.textContent = `z = ${z.toFixed(2)}`;
+		if (formulaDesc) formulaDesc.textContent = `P(Bajo Desempeño) = ${prob.toFixed(1)}%`;
 
 		subcard1Title.textContent = 'Déficit Estimado de Horas';
 		const horasDeficit = Math.max(0, 36 - stateP2.horasSemanales);
